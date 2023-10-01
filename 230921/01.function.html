@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 新增一個function叫Goodmorning1
+    function Goodmorning1 () {
+      document.write(`<p>早上好，現在我有冰淇淋</p>`)
+    }
+    // 呼叫function 可以重複呼叫
+    Goodmorning1()
+
+    const Goodmorning2 = function(){
+      document.write(`<p>早上好，現在我有冰淇淋</p>`)
+    }
+    Goodmorning2()
+
+    function Goodmorning3 (time, item) {
+      // 顯示所有傳入的參數 會是陣列 ex: ['早上', '冰淇淋']
+      console.log(arguments) 
+      document.write(`<p>${time}好，現在我有${item}</p>`)
+    }
+
+    const Goodmorning4 = function(time, item){
+      document.write(`<p>${time}好，現在我有${item}</p>`)
+    }
+    Goodmorning4('早上', '冰淇淋')
+    Goodmorning4('中午', '豬血糕')
+    Goodmorning4('晚上', '熱牛奶')
+    Goodmorning4() // undefined好，現在我有undefined
+
+    // 預設值: '早上' '冰淇淋'
+    function Goodmorning5(time = '早上', item = '冰淇淋') {
+      document.write(`<p>${time}好，現在我有${item}</p>`)
+    }
+    Goodmorning5()
+    Goodmorning5('中午')
+    Goodmorning5(undefined, '切爾西')
+
+    function Goodmorning6(time = '早上', item = '冰淇淋') {
+      return `${time}好，現在我有${item}` // return可以把跑好的結果丟出去
+      // return後就會停止 後面的東西都不會執行
+    }
+    const text = Goodmorning6()
+    console.log(text)
+    document.write(`<h1>${Goodmorning6('中午', '桂格超大便當')}</h1>`)
+
+    // 箭頭函式
+    const Goodmorning7 = (time = '早上', item = '冰淇淋') => {
+      // 不能用arguments: Uncaught ReferenceError: arguments is not defined
+      // console.log(arguments)
+      return `${time}好，現在我有${item}`
+    }
+    document.write(`<h1>${Goodmorning7('中午', '桂格超大便當')}</h1>`)
+
+    // 只有一個參數且沒有預設值時 不用加()
+    const Goodmorning8 = time =>{
+      return `${time}好，現在我有冰淇淋`
+    }
+    console.log(Goodmorning8('中午'))
+
+    // 如果function內只有一行return，且return的不是{}，不用加{}和return
+    const Goodmorning = time => `${time}好，現在我有冰淇淋<br>`
+    document.write(Goodmorning('早上'))
+
+    const Goodmorning9 = (time, thing) => 
+    `${time}好，現在我有冰淇淋和${thing}`
+    document.write(Goodmorning9('中午', '巧克力'))
+  </script>
+</body>
+
+</html>

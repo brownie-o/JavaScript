@@ -1,0 +1,39 @@
+  <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // const isEven = (num) => {
+    //   return num % 2 === 0
+    // }
+
+    const isEven1 = (num) => {
+      if (num % 2 === 0) {
+        return true
+      } else {
+        return false
+      }
+    }
+
+    /**
+     * JSdoc
+     * function的註解寫法
+     * 判斷是不是偶數
+     * @參數 {回傳結果} 名字 回傳說明
+     * @param {number} num 一個數字
+     * @return {boolean} 判斷結果
+     */ 
+    const isEven = (num) => num % 2 === 0
+
+    const num = parseInt(prompt('這是偶數嗎?'))
+    console.log(isEven1(num))
+    </script>
+</body>
+
+</html>

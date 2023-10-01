@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const gua = (array) => {
+      const data = ['坤', '乾', '兌', '離', '震', '巽', '坎', '艮']
+      const down = data[array[0] % 8]
+      const up = data[array[1] % 8]
+      const yao = array[2] % 6 || 6
+      // 若 array[2] % 6 為 0 (false) || 則會回傳最後一個值 6
+      return [down, up, yao]
+    }
+
+    const number1 = parseInt(prompt('第一個數字'))
+    const number2 = parseInt(prompt('第二個數字'))
+    const number3 = parseInt(prompt('第三個數字'))
+    const numbers = [number1, number2, number3]
+    const result = gua(numbers)
+    console.log(result[0]) // 輸出 離
+    console.log(result[1]) // 輸出 震
+    console.log(result[2]) // 輸出 2
+  </script>
+</body>
+
+</html>

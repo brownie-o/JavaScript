@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 文字跑迴圈
+    // for (const t of text){
+    //   console.log(t)
+    // }
+
+    const isPalindrome = (text) => {
+      let i = 1
+      for (const t of text) {
+        if (t === text[text.length - i]) {
+          if (i >= text.length - i) {
+            return true
+          }
+          i++
+        } else {
+          return false
+        }
+      }
+      const result = isPalindrome(prompt('輸入文字'))
+      console.log(result)
+
+      const isPalindrome1 = (text) => {
+        for (let i = 0; i < text.length / 2; i++) {
+          if (text[i] != text[text.length - 1 - i]) {
+            return false
+          }
+        } return true
+      }
+
+      const result1 = isPalindrome2(prompt('輸入文字'))
+      console.log(result1)
+    }
+  </script>
+</body>
+
+</html>

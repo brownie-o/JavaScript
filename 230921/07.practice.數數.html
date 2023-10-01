@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 數數 n+1
+    const calculate = (n, m) => {
+      let count = 0
+      let total = 0
+      // 如果不確定次數用while迴圈
+      while (total <= m) {
+        total += (n + count)
+        count++
+      }
+      return count
+    }
+
+    const number1 = parseInt(prompt('n'))
+    const number2 = parseInt(prompt('m'))
+    console.log(calculate(number1, number2))
+
+    // const calculate = (n, m) => {
+    //   // 紀錄次數
+    //   let count = 0
+    //   // 記錄數過的總和 
+    //   let total = 0
+    //   while (total <= m) {
+    //     total += n
+    //     n++
+    //     count++
+    //   }
+    //   return count
+    // }
+
+    // const number1 = parseInt(prompt('n'))
+    // const number2 = parseInt(prompt('m'))
+    // console.log(calculate(number1, number2))
+  </script>
+</body>
+
+</html>

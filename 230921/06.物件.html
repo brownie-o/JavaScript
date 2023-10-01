@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const Teacher1 = {
+      firstName: '宇翔',
+      lastName: '鄭',
+      fullName: function () {
+        console.log(this)
+        // this 指這個物件
+        return this.firstName + this.lastName
+      },
+      sayHi: () => {
+        // 箭頭函式的this指的是window - 瀏覽器視窗
+        console.log(this)
+        // window 沒有fullName這個function，所以會是undefined
+        return`你好，我是` + this.fullName()
+      },
+      sayHi2 () {
+        return`你好，我是` + this.fullName()
+      }
+    }
+    console.log(Teacher1.firstName)
+    console.log(Teacher1.fullName())
+    console.log(Teacher1.sayHi2())
+    // console.log(Teacher1.sayHi()) // ReferenceError: reutrn is not defined at Object.sayHi
+
+    const Teacher2 = {
+      firstName: '坤炎',
+      lastName: '蔡',
+      fullName () {
+        return this.firstName + this.lastName
+      },
+      sayHi2 () {
+        return `你好，我是` + this.fullName()
+      }
+    }
+    console.log(Teacher2.sayHi2())
+
+    // 有個叫Teacher的類別
+    class Teacher {
+      // 物件被建立時(new) 可以執行constructor的function
+      constructor (firstName, lastName){
+        this.firstName = firstName
+        this.lastName = lastName
+      }
+      fullName () {
+        return this.firstName + this.lastName
+      }
+      sayHi2 () {
+        return `你好，我是` + this.fullName()
+      }
+    }
+    const Kaifu = new Teacher ('凱富', '張')
+    console.log(Kaifu.sayHi2())
+    const Liu = new Teacher ('勤永', '劉')
+    console.log(Liu.sayHi2())
+    const Jeon = new Teacher ('圓佑', '全')
+    console.log(Jeon.sayHi2())
+    const Ann = new Teacher ('正煥', '安') 
+    console.log(Ann.sayHi2())
+  </script>
+</body>
+
+</html>

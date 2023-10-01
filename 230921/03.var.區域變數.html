@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // var 可以重複宣告 
+    // 新的會把舊的結果蓋掉
+    var a = 1
+    a = 100
+    var a = 2
+    console.log(a) // 2
+
+    var b = 1
+    function f (){
+      var b = 2
+      console.log('in', b) // in 2
+    }
+    f()
+    console.log('out', b) // out 1
+
+    function f (){
+      b = 2
+      console.log('in', b) // in 2
+    }
+    f()
+    console.log('out', b) // out 2
+  </script>
+</body>
+</html>

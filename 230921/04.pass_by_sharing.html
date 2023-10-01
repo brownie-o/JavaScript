@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // pass by sharing
+
+    const obj1 = { name: 'XXX' }
+    const test1 = (data) => {
+      data = { name: 'OOO' }
+      console.log(obj1) // { name: 'XXX' }
+      console.log(data) // { name: 'OOO' }
+    }
+    test1(obj1)
+    console.log(obj1) // { name: 'XXX' }
+
+    const obj2 = { name: 'XXX' }
+    const test2 = (data) => {
+      data.name = 'OOO'
+      console.log(obj2) // { name: 'OOO' }
+      console.log(data) // { name: 'OOO' }
+    }
+    test2(obj2)
+    console.log(obj2) // { name: 'OOO' }
+
+    let person1 = { money: 100 }
+    let person2 = person1
+    console.log(person1) // { money: 100 }
+    console.log(person2) // { money: 100 }
+
+     // 重新賦值後 pass by reference的連結就會斷開
+    person1 = { money: 1000 }
+    console.log(person1) // { money: 1000 }
+    console.log(person2) // { money: 100 }
+    // 變成pass by value(?)
+
+    let product1 = { price: 100 }
+    let product2 = product1
+    console.log(product1) // { price: 100 }
+    console.log(product2) // { price: 100 }
+    let product3 = { price: 1000 }
+    product1 = product3 // pass by reference
+    console.log(product1) // {price: 1000}
+    console.log(product2) // {price: 100}
+    console.log(product3) // {price: 1000}
+
+    // Impure function
+    // 一樣的輸入，布一樣的輸出
+    // 改到funcion外的變數
+    let value = 0
+    const add = (data) => {
+      value += data
+      return value
+    }
+    console.log(add(2)) // 2
+    console.log(add(2)) // 4
+    
+    // pure function
+    // 一樣的輸入，一樣的輸出
+    // 不會改道function外的變數
+    const add1 = (data) => {
+      const value = 0
+      return value + data
+    }
+    console.log(add1(2)) // 2
+    console.log(add1(2)) // 2
+  </script>
+</body>
+
+</html>
