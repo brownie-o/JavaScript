@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // while: 不限定次數的迴圈 只要判斷式成立就會一直執行 
+    // 不確定要跑幾次才會得到結果的時候可以用
+    let input = 'end'
+    let count = 0
+    while (input !== 'end') {
+      input = prompt('輸入end')
+      count++
+    }
+    document.write(`輸入了 ${count} 次`)
+
+    // 先判斷才做 如果預設input是'end' 會直接變成: 輸入了0次
+  </script>
+</body>
+</html>

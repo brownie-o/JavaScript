@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>球</title>
+</head>
+
+<body>
+  <script>
+    // j=反彈次數 i=高度
+
+    let totalheight = -100
+    for (let j = 0, i = 100; j <= 9 && i > 0; j++, i /= 2) {
+      totalheight += i * 2
+    }
+    document.write(totalheight)
+
+    document.write('<hr>')
+
+    for (let j = 0, i = 100; j <= 10 && i > 0; j++, i /= 2) {
+      document.write(j + '. ' + i + '<br>')
+    }
+
+  </script>
+</body>
+
+</html>

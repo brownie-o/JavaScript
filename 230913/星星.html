@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const input1 = prompt('想要幾層星星塔')
+    for (let i = 1; i <= input1; i++) {
+      for (let j = 1; j <= i; j++) {
+        document.write(`★`)
+      }
+      document.write(`<br>`)
+    }
+
+    // const input = prompt()
+    // for (let i=1; i<=input; i++){
+    //   for (let j=1; j<=i; j++) {
+    //     document.write(`★`)
+    //   }
+    //   document.write('<br>')
+    // }
+    document.write('<hr>')
+
+    const input2 = prompt('想要幾層大星星塔')
+    for (let i = 1; i <= input2; i++) {
+      for (let k = input2 - i; k >= 1; k--) {
+        document.write(`☆`)
+      }
+      for (let j = 1; j <= i * 2 - 1; j++) {
+        document.write(`★`)
+      }
+      for (let k = input2 - i; k >= 1; k--) {
+        document.write(`☆`)
+      }
+      document.write(`<br>`)
+    }
+    
+    document.write('<hr>')
+
+    const input3 = prompt('想要幾層大星星塔2')
+    for (let i = 1; i <= input3; i++) {
+      for (let j = 1; j <= input3 - i; j++) {
+        document.write(`☆`)
+      }
+      for (let j = 1; j <= 2 * i - 1; j++) {
+        document.write(`★`)
+      }
+      for (let j = 1; j <= input3 - i; j++) {
+        document.write(`☆`)
+      }
+      document.write(`<br>`)
+    }
+  </script>
+</body>
+
+</html>

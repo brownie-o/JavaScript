@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // Boolean() 會回傳false的狀況
+    // false, 0, '', null, undefined, NaN
+
+    // || 回傳第一個 Boolean() 判斷是true的值
+    // 如果都是false則回傳最後一個值
+    const x = null || 0 || undefined || 123 || 'abc'
+    console.log(x) // 123
+
+
+
+    // &&回傳第一個Boolean() 判斷是false的值
+    const y = 123 && 'abc' && 0 && null && undefined
+    console.log(y) // 0
+
+    // ?? 回傳第一個不是null也不是undefined的值
+    const z = undefined ?? null ?? 0 ?? '' ?? '111' ?? false
+    console.log(z) // 0
+
+    const player = prompt('請輸入玩家名稱') || '路人'
+    console.log(player) 
+    // 是下面的簡寫
+
+    // let player = prompt('請輸入玩家名稱')
+    // if (player === '' || player === null) {
+    //   player= '路人'
+    // }
+    // console.log(player)
+  </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let input='end'
+    let count=0
+    do {
+      input = prompt('輸入end')
+      count++
+    } while (input !== 'end')
+    document.write(`輸入了 ${count} 次`)
+
+    // 先做再判斷 即使預設input是'end' 也會先跑prompt出來
+  </script>
+</body>
+</html>

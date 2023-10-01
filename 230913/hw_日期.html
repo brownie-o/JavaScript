@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日期</title>
+</head>
+
+<body>
+  <script>
+    // 文字變數字
+    // parseInt('123') 
+    // Number('123') 
+    // '123'*1
+
+    //   使用者可以輸入西元年、月、日，三個 prompt()
+    // 顯示使用者輸入的是該年的第幾天
+
+    // 以 3/5 為例，將前兩個月的天數加起來，再加上 5 天即可
+    // 需考慮閏年 +1
+    // 某些月份的天數是 30，某些月份的天數是 31
+    // parseInt(變數或是數字的文字) 可以把文字轉數字
+
+    let year = parseInt(prompt('幾年?'))
+    let month = parseInt(prompt('幾月?'))
+    let date = parseInt(prompt('幾號?'))
+
+    let totalday = 0
+
+    for (let i = 1; i < year; i++) {
+      if ((i % 4 === 0 && i % 100 !== 0) || year % 400 === 0) {
+        totalday += 366
+      } else { totalday += 365 }
+    }
+    console.log(totalday)
+
+    for (let i = 1; i < month; i++) {
+      if (i === 2) {
+        if (
+          (year % 4 === 0 && year % 100 !== 0) ||
+          (year % 400 === 0)) {
+          totalday += 29
+          console.log(totalday)
+        } else { 
+          totalday += 28
+          console.log(totalday)
+        }
+      } else if (
+        (i <= 7 && i % 2 === 0) ||
+        (i >= 8 && i % 2 === 1)
+      ) {
+        totalday += 30
+        console.log(totalday)
+      } else if (
+        (i <= 7 && i % 2 === 1) ||
+        (i >= 8 && i % 2 === 0)
+      ) {
+        totalday += 31
+        console.log(totalday)
+      }
+    }
+
+    document.write(totalday + date * 1)
+  </script>
+  <a href="./hw_球.html" style="background: lemonchiffon; ;">next</a>
+</body>
+
+</html>
