@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const products = [
+      {
+        name: 'Nothing Phone (2)',
+        price: 21999,
+        tags: ['3C', '手機'],
+        producer: {
+          name: 'Nothing',
+          url: 'https://tw.nothing.tech/',
+        }
+      },
+      {
+        name: 'iPhone 15',
+        price: 29900
+      }
+    ]
+    for (let i=0; i<products.length; i++){
+      document.write(`
+      <p>
+        ${products[i].name}，價格為${products[i].price}
+        製造商為
+        <a href="${products[i].producer?.url || '#'}">${products[i].producer?.name || '不明'}</a>
+      </p>
+      `)
+    }
+    // Uncaught TypeError: Cannot read properties of undefined (reading 'url')
+    // +? 後變undefined
+    // || '不明' -->短路求值，最後一個做為預設
+
+  </script>
+</body>
+</html>

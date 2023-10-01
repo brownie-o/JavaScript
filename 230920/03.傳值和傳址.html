@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // Pass by reference (傳址) 
+    // 通常只有物件和陣列才會發生
+    const a = [1, 2, 3]
+    const b = a
+    b[0] = 100
+    console.log(a) // [100, 2, 3,]
+    console.log(b) // [100, 2, 3,]
+    console.log(a===b) // true
+
+    const obj1 = { a: 1, b: 2, c: 3 }
+    const obj2 = obj1
+    obj1.a = 100
+    console.log(obj1) // [100, 2, 3,]
+    console.log(obj2) // [100, 2, 3,]
+
+    // Pass by value (傳值)
+    // 一般情況下都是傳值
+    let test1 = 1
+    let test2 = test1
+    test2 = 100
+    console.log(test1) // 1
+    console.log(test2) //100
+
+    const c = [4, 5, 6]
+    let d = c[0]
+    console.log(d) // 4
+    d = 100
+    console.log(c) // [4, 5, 6,]
+    console.log(d) // 100
+
+    const obj3 = { a: 1, b: 2, c: 3 }
+    const obj4 = { a: obj3.a, b: obj3.b, c: obj3.c }
+    obj4.a = 100
+    console.log(obj3) // { a: 1, b: 2, c: 3 }
+    console.log(obj4) // { a: 100, b: 2, c: 3 }
+
+
+    // Pass by sharing
+    // to be continued...
+  </script>
+</body>
+
+</html>

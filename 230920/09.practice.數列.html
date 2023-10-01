@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //     宣告一個數字陣列
+    // let numbers = [33, 75, 69, 41, 50, 19]
+
+    // 印出陣列 第 x 個數字為 y
+    // 求 41 是第幾個數字
+    // 有幾個奇數和幾個偶數
+    // 最大數字和最小數字
+
+    let numbers = [33, 75, 69, 41, 50, 19]
+
+    for (const i in numbers) {
+      document.write(`${i * 1 + 1}. ${numbers[i]}<br>`)
+    }
+    document.write('<hr>')
+
+    let j = 0
+    for (let i = 0; i < numbers.length; i++) {
+      if (numbers[i] == 41) {
+        document.write(`41是第${i + 1}個數字<br>`)
+      }
+      if (numbers[i] % 2 === 0) {
+        j++
+      }
+    }
+    document.write(`奇數${numbers.length - j}個，偶數${j}個`)
+    document.write('<hr>')
+
+    // for (const number of numbers) {
+    //   if (number == 41) {
+    //     document.write(`41是第${numbers[number]}個數字`)
+    //   }
+    // }
+
+    let max = numbers[0]
+    let min = numbers[0]
+    for (const number in numbers) {
+      if (number > max) {
+        max = number
+      }
+      if (number<numbers[0]){
+        min = number
+      }    
+    } document.write(`最大是${max}，最小是${min}`)
+  </script>
+</body>
+
+</html>

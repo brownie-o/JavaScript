@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 陣列: 相似的東西的集合
+    // 物件: 一個東西的各種不同資料
+    const fruits = [
+      {name: 'apple', price: 50}, 
+      {name: 'banana', price: 20}, 
+      {name: 'orange', price: 30}
+    ]
+    console.table(fruits) // 在console中印出表格
+
+    document.write('<ul>')
+    for(let i=0; i<fruits.length; i++){
+      document.write('<li>')
+      document.write(`第${i+1}個水果是 ${fruits[i].name}, ${fruits[i].price}元`)
+      document.write('</li>')
+    }
+    document.write('</ul>')
+
+    // const member =[
+    //   {name: 'S.coups', team: }
+    // ]
+
+
+    const nothing ={
+      name: 'Nothing',
+      url: 'https://tw.nothing.tech/',
+      products: [
+        {name: 'Phone (1)', price: 14900}, 
+        {name: 'Phone (2)', price: 21900},
+        {name: 'Ear (2)', price: 4590},
+      ]
+    }
+    document.write(`<a href="${nothing.url}">${nothing.name}</a>`)
+    document.write('<table border="1">')
+    for (let i=0; i<nothing.products.length; i++){
+      document.write('<tr>')
+      document.write(`<td>${nothing.products[i].name}</td>`)
+      document.write(`<td>${nothing.products[i].price}</td>`)
+      document.write('</tr>')
+    }
+    document.write('</table>')
+  </script>
+</body>
+</html>

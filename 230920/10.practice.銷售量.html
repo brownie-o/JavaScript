@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const sales = [
+      [33, 32, 56, 45, 33],
+      [77, 33, 68, 45, 23],
+      [43, 55, 43, 67, 65]
+    ]
+
+    const price = [12, 16, 10, 14, 15]
+
+    // 全部印出來
+    // for (let i in sales) {
+    //   for (let j in sales[i]) {
+    //     console.log(sales[i][j])
+    //   }
+    // }
+
+    for (const i in sales) {
+      let totalperSalesman = 0
+      for (const j in sales[i]) {
+        totalperSalesman += (sales[i][j] * price[j])
+      } document.write(`第${i * 1 + 1} 位銷售員的銷售額是${totalperSalesman} 元<br>`)
+    }
+
+    let i = 0
+    for (const j in sales[i]) {
+      let totalperProduct = 0
+      for (const i in sales) {
+        // console.log(i)
+        totalperProduct += sales[i][j]
+      } totalperProduct *= price[j]
+      document.write(`第${j * 1 + 1} 個產品的銷售額是${totalperProduct} 元<br>`)
+    }
+
+
+    const salesmanTotal = [0, 0, 0]
+    const productTotal = [0, 0, 0, 0, 0]
+    for (let i = 0; i < sales.length; i++) {
+      for (let j = 0; j < sales[i].length; j++) {
+        const total = sales[i][j] * price[j]
+        salesmanTotal[i] += total
+        productTotal[j] += total
+      }
+    }
+    document.write(salesmanTotal+'<br>')
+    document.write(productTotal)
+  </script>
+</body>
+
+</html>

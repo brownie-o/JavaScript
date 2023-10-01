@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const temperature = [
+      [18.2, 23.8, 20.6],
+      [17.3, 25.1, 21.5],
+      [15.0, 20.6, 18.4],
+      [13.4, 17.8, 15.7]
+    ]
+
+    document.write('<table border ="1">')
+    for (const temp in temperature) {
+      document.write('<tr>')
+      for (let i = 0; i < temperature[temp].length; i++) {
+        document.write(`<td>${temperature[temp][i]}</td>`)
+      }
+      document.write('</tr>')
+    }
+    document.write('</table>')
+
+    document.write('<hr>')
+
+    for (const i in temperature) {
+      let dailyAverage = 0
+      for (const temp of temperature[i]) {
+        dailyAverage += temp
+        console.log(dailyAverage)
+      } document.write(dailyAverage / 3 + '<br>')
+    }
+
+    document.write('<hr>')
+
+    let i = 0
+    for (const j in temperature[i]) {
+      let timeAverage = 0
+      for (const i in temperature) {
+        timeAverage += temperature[i][j]
+      }
+      document.write(`時段${j * 1 + 1}的平均溫度是${timeAverage / 4}<br>`)
+    }
+
+    let max = temperature[0][0]
+    let min = temperature[0][0]
+    for (let i = 0; i < temperature.length; i++) {
+      for (const temp of temperature[i]) {
+        if (temp >= max) {
+          max = temp
+        } else if (temp <= min) {
+          min = temp
+        }
+      }
+    }
+    document.write(`最高溫是${max}，最低溫是${min}`)
+
+  </script>
+</body>
+
+</html>

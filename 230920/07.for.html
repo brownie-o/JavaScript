@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const alphabets = ['a', 'b', 'c', 'd']
+    // for (值 of 陣列 only) 有幾個值就跑幾遍
+    // 無法在回圈內改陣列的值
+    for (const alphabet of alphabets){
+      document.write(alphabet + '<br>')
+      // 第一次迴圈: alphabet = ['a']
+      // 第二次迴圈: alphabet = ['b']...
+    }
+
+    document.write('<hr>')
+
+    // for (索引 in 陣列或物件) 有幾個索引/key就跑幾遍
+    // alphabets 有 a b c d 四個索引，所以i 會有 0 1 2 3
+    // i 的資料型態是文字
+    for (const i in alphabets){
+      document.write(`${i*1+1}: ${alphabets[i]}<br>`)
+    }
+
+    document.write('<hr>')
+
+    const obj = {a: 1, b: 2, c: 3}
+    for(const key in obj){
+      document.write(`${key}: ${obj[key]}<br>`)
+    }
+  </script>
+</body>
+</html>

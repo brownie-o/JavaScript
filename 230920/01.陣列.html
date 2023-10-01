@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+
+    // 取陣列長度用 .length
+    document.write(`有${alphabets.length}個字母`)
+
+    document.write('<hr>')
+
+    // [索引]取指定位置的資料
+    document.write(alphabets[0] + '<br>')
+    document.write(alphabets[1] + '<br>')
+    document.write(alphabets[2] + '<br>')
+    document.write(alphabets[100] + '<br>') // undefined
+
+    document.write('<hr>')
+
+
+    for (let i = 0; i < alphabets.length; i++) {
+      document.write(alphabets[i] + '<br>')
+    }
+
+    document.write('<hr>')
+
+
+  </script>
+</body>
+
+</html>
