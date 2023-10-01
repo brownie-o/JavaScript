@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let text = '   Aa sdlfSalkfj Al  '
+    /*
+    console.log(text)
+    // 文字.trim = 移除前號欄位空白，回傳是文字
+    text = text.trim()
+    console.log(text)
+    // 文字.toUpperCase = 文字轉大寫
+    text = text.toUpperCase()
+    console.log(text)
+    // 文字.toLowerCase = 文字轉小寫
+    text = text.toLowerCase()
+    console.log(text)
+    */
+
+    // 只要資料型態對 就可以直接串著寫
+    text = text.trim().toUpperCase().toLowerCase()
+    console.log(text) // aa sdlfsalkfj al
+
+    let text2 = '外賣 咖哩拌飯 咖哩潤餅'
+    // 文字.includes(尋找文字，從第幾個字開始找) = 是否有包含尋找文字，回傳Boolean
+    let hasCurry = text2.includes('咖哩')
+    console.log(hasCurry) // true
+    // 從第10個開始找(選填)，預設是0
+    let hasCurry10 = text2.includes('咖哩', 10)
+    console.log(hasCurry10) // false
+
+    // 文字.indexOf(尋找文字，從第幾個字開始找) = 尋找文字，回傳索引，找不到是 -1
+    // 從第幾個開始找是選填，預設是0
+    let indexCurry = text2.indexOf('咖哩')
+    console.log(indexCurry) // 3 (空白也算一個字)
+    let indexCurry2 = text2.indexOf('蛋包飯')
+    console.log(indexCurry2) // -1
+
+    // 正則表達式: /內容/規則
+    // g = (global)回傳兩個以上
+
+    // 文字.match(Regex正則表達式) = 把符合的結果用陣列回傳
+    let matchCurry = text2.match(/咖哩/g)
+    console.log(matchCurry) // (2) ['咖哩', '咖哩']
+
+    // 文字.matchAll(Regex正則表達式) = 把符合的結果用陣列回傳
+    let matchAllCurry = text2.matchAll(/咖哩/g)
+    console.log(matchAllCurry) // RegExpStringIterator {}
+    // RegExpStringIterator 物件只能用迴圈取資料，不能直接console.log
+    for (const match of matchAllCurry) {
+      console.log(match)
+      // ['咖哩', index: 3, input: '外賣 咖哩拌飯 咖哩潤餅', groups: undefined]
+      // ['咖哩', index: 8, input: '外賣 咖哩拌飯 咖哩潤餅', groups: undefined]
+    }
+
+    // 文字.replace.(搜尋文字, 取代文字)
+    // 只會取代第一個文字
+    let replaceCurry = text2.replace('咖哩', '三色豆')
+    console.log(replaceCurry) // 外賣 三色豆拌飯 咖哩潤餅
+
+    // 文字.replace.(Regex, 取代文字)
+    // 可以使用g全部取代，回傳取代後的文字
+    let replaceallCurry = text2.replace(/咖哩/g, '三色豆')
+    console.log(replaceallCurry) // 外賣 三色豆拌飯 三色豆潤餅
+
+    let email = 'asdad@gmail.com'
+    let emailMatch = email.match(/^[0-9a-zA-Z]+@[0-9a-zA-Z]+\.[0-9a-zA-Z]+\.{0,1}[0-9a-zA-Z]+$/g)
+    // 如果emailMatch(驗證結果)是true 就會有東西 => true
+    // 如果驗證結果不對，則會回傳null
+    // Boolean(null) = false
+    // if (null)
+    if (emailMatch) {
+      console.log('email 格式正確')
+    } else {
+      console.log('email 格式不正確') // email 格式不正確
+    }
+    // 也可用三元運算子
+    console.log(emailMatch ? 'email 格式正確' : 'email 格式不正確')
+
+    // Regex 的() 代表群組
+    // 取代時可以用 $數字代表第幾個群組的字
+    let emailReplace = email.replace(
+      /^([0-9a-zA-Z]+)@([0-9a-zA-Z]+\.[0-9a-zA-Z]+)$/g,
+      '帳號是 $1，網域是 $2'
+    )
+    console.log(emailReplace)
+
+    let emailRegexGroup = /^([0-9a-zA-Z]+)@([0-9a-zA-Z]+\.[0-9a-zA-Z]+)$/g
+    let emailReplace1 = email.replace(emailRegexGroup, '帳號是 $1，網域是 $2')
+    let emailMatchAll = email.matchAll(emailRegexGroup)
+    console.log(emailReplace1)
+    for (const match of emailMatchAll) {
+      console.log(match)
+      // 0: "asdad@gmail.com"
+      // 1: "asdad"
+      // 2: "gmail.com"
+      // groups: undefined
+      // index: 0
+    }
+
+    let emailRegexGroup2 = /^(?<account>[0-9a-zA-Z]+)@(?<domain>[0-9a-zA-Z]+\.[0-9a-zA-Z]+)$/g
+    let emailReplace2 = email.replace(emailRegexGroup2, '帳號是 $<account>，網域是 $<domain>')
+    console.log(emailReplace2) // 帳號是 asdad，網域是 gmail.com
+    let emailMatchAll2 = email.matchAll(emailRegexGroup2)
+    for (const match of emailMatchAll2) {
+      console.log(match)
+      // 0: "asdad@gmail.com"
+      // 1: "asdad"
+      // 2: "gmail.com"
+      // groups: {
+      //   account: 'asdad', 
+      //   domain: 'gmail.com'
+      // }
+      // index: 0
+    }
+
+    let text3 = 'abcdefg'
+    //           0123456
+    //         - 7654321 
+
+    // 文字.substr(開始位置, 長度)
+    // 位置可以放負數，代表倒數，-1是倒數第一個字
+    // 長度不寫會直接取到結尾
+    // text3.substr(-2, 3)
+    // text3.length = 7
+    // -2 => 7 - 2 = 5, 第五個數開始取三個 => text3.substr(-2, 3) = text3.substr(5, 3)
+    console.log(text3.substr(-2, 3)) // fg
+    console.log(text3.substr(1)) // bcdefg
+
+    // 文字.substring(開始位置, 結束位置)
+    // 不包含結束位置
+    // 沒放結束位置會直接取到結尾
+    console.log(text3.substring(2, 6)) // cdef
+    console.log(text3.substring(3)) // defg
+
+    // 文字.slice(開始位置, 結束位置)
+    // 不包含結束位置
+    // 沒放結束位置會直接取到結尾
+    // 位置可以放負數，代表倒數，-1是倒數第一個字
+    console.log(text3.slice(2, 6)) // cdef
+    console.log(text3.slice(-4, -2)) // de
+
+    let num1 = '123456.789'
+    console.log(parseInt(num1)) // 123456
+    console.log(parseFloat(num1)) // 123456.789
+    console.log(num1 * 1) // 123456.789
+    console.log(Number(num1)) // 123456.789
+
+    let num2 = 'abc'
+    console.log(parseInt(num2)) // NaN
+    console.log(parseFloat(num2)) // NaN
+    console.log(num2 * 1) // NaN
+    console.log(Number(num2)) // NaN
+
+    // 要判斷是否為NaN要用isNaN
+    console.log(num2 * 1 === NaN) // false
+    console.log(isNaN(num2 * 1)) // true
+
+    let text4 = 'aaa1,bbb1,ccc1,ddd1'
+    console.log(text4.split(',')) // ['aaa1', 'bbb1', 'ccc1', 'ddd1']
+    console.log(email.split('@')) // ['asdad', 'gmail.com']
+    console.log(text4.split('1')) // ['aaa', ',bbb', ',ccc', ',ddd', '']
+
+    let filename = 'edrwdfas.uowieurqowutjka..jpg'
+    let filenamearray = filename.split('.')
+    console.log(filenamearray) // ['edrwdfas', 'uowieurqowutjka', '', 'jpg']
+    console.log(filenamearray[filenamearray.length - 1]) // jpg
+    console.log(filenamearray.at(-1)) // jpg
+  </script>
+</body>
+
+</html>

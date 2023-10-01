@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>天天吃雞</title>
+  <style>
+    body {
+      background: #7BA6DE;
+      color: white;
+      font-size: 2rem;
+      position: relative;
+      height: 100%;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 100%;
+    }
+
+    button {
+      color: #7BA6DE;
+      font-size: 100%;
+      font-family: 'Times New Roman', Times, serif;
+      border: none;
+      box-shadow: 3px 3px 5px rgba(255, 255, 255, 0.5);
+      padding: 5px 15px;
+      display: block;
+      position: relative;
+      margin: auto;
+    }
+
+    button:hover {
+      color: #8abaf9;
+      background-color: rgb(219, 219, 219);
+      box-shadow: 5px 5px 8px rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+    }
+
+    p {
+      display: inline-block;
+      position: relative;
+      font-size: 100%;
+      text-align: center;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  </style>
+</head>
+
+<body>
+  <h2>This is your lucky number: </h2>
+  <button onclick="showLottery()">Roll</button>
+
+  <script>
+    const showLottery = () => {
+      let lotteryA = []
+      for (let i = 0; i < 6; i++) {
+        const lottery = Math.round(Math.random() * 38)
+        lotteryA += lottery + ', '
+      }
+
+      const lotteryB = Math.round(Math.random() * 7) + 1
+
+      document.getElementById("demo").innerHTML = `${lotteryA}${lotteryB}<br>祝薇恩中大獎 天天吃雞`
+    }
+  </script>
+  <p id="demo"></p>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 第一題
+    for (let i = 0; i < 200; i++) {
+      const num = Math.round((Math.random() * 100))
+      console.log(num)
+    }
+
+    // 第二題
+    const rand = (min, max) => {
+      return Math.round(Math.random() * (max - min)) + min
+    }
+
+    const num1 = prompt('從幾') * 1
+    const num2 = prompt('到幾') * 1
+
+    for (let i = 0; i < 200; i++) {
+      console.log(rand(num1, num2))
+    }
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>常用: filter配上findIndex</title>
+</head>
+
+<body>
+  <script>
+    const numbers = [100, 200, 300, 400, 500]
+
+    // 陣列.includes(搜尋內容)
+    // 陣列是否包含搜尋內容 回傳Boolean
+    console.log('includes', numbers.includes(100)) // includes true
+
+    // 陣列.indexOf(搜尋內容)
+    // 陣列搜尋內容位置 , -1表示找不到
+    console.log('indexOf', numbers.indexOf(400)) // indexOf 3
+
+    // {} => 建立新物件，兩個{}=兩個物件。兩邊所指到的{a:1}是不同物件 
+    const arr = [{ a: 1 }]
+    console.log(arr.includes({ a: 1 })) // false
+
+    // 指到同一個 {b:2}
+    const obj = { b: 2 }
+    const arr2 = [obj]
+    console.log(arr2.includes(obj)) // true
+
+    // 陣列.some(function(value, index, array))
+    // 陣列裡有沒有一個東西執行function後reutrn true，回傳Boolean
+    const hasMoreThan300 = numbers.some((value) => {
+      return value > 300
+    })
+    // 縮寫 const hasMoreThan300 = numbers.some(value => value > 300)
+    console.log(hasMoreThan300) // true
+
+    // 陣列.every(function(value, index, array))
+    // 陣列裡是不是所有東西執行function後reutrn true，回傳Boolean
+    const allMoreThan300 = numbers.every(value => value > 300)
+    console.log(allMoreThan300) // false
+
+    // 陣列.find(function)
+    // 回傳第一個執行function結果為true的值
+    const find300 = numbers.find(value => {
+      return value > 300
+    })
+    console.log(find300) // 400
+
+    // 陣列.findLast(function)
+    // 回傳最後一個執行function結果為true的值
+    const findLast300 = numbers.findLast(value => {
+      return value > 300
+    })
+    console.log(findLast300) // 500
+
+    // 陣列.findIndex(function)
+    // 回傳第一個執行function結果為true的索引
+    const findIndex300 = numbers.findIndex(value => {
+      return value > 300
+    })
+    console.log(findIndex300) // 3
+
+    // 陣列.findLastIndex(function)
+    // 回傳最後一個執行function結果為true的索引
+    const findLastIndex300 = numbers.findLastIndex(value => {
+      return value > 300
+    })
+    console.log(findLastIndex300) // 4
+
+    // 陣列.filter(function)
+    // 回傳所有return true的值的陣列
+    // 會產生一個新的陣列，不會動到原陣列
+    const filter300 = numbers.filter(value => {
+      return value > 300
+    })
+    console.log(filter300) // [400, 500]
+    console.log(numbers) // [100, 200, 300, 400, 500]
+
+    // 找到過濾出的[400, 500]之中的400在numbers中是第幾個(index)
+    const findIndex400 = numbers.findIndex(value=>{
+      return value == 400
+    })
+    console.log(findIndex400) // 3
+  </script>
+</body>
+
+</html>

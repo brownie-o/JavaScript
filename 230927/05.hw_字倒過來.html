@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 將 prompt() 輸入的文字移除前後空白後倒過來後顯示在網頁上
+    // let text = prompt('請輸入文字')
+    // console.log(text)
+    document.write(prompt('請輸入文字').trim().split('').reverse().join('') + '<br>') 
+    
+    const input = prompt()
+    const output = input.trim().split('').reverse().join('')
+    document.write(output)
+
+    // 將 prompt() 輸入的英文文字大寫轉小寫，小寫轉大寫後顯示在網頁上
+    // let text = prompt('請輸入英文')
+    // document.write(text)
+    // [a-z] [A-Z]
+  </script>
+</body>
+</html>

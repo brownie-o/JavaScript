@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>注意: map**; reduce</title>
+</head>
+<body>
+  <script>
+    const numbers = [100, 200, 300]
+    // 陣列.map(function)
+    // 將陣列每個東西執行function後的return值變成新陣列
+    // 會產生一個新陣列，不會動到原陣列
+    const double = numbers.map(value => {
+      return value*2
+    })
+    console.log(double, numbers) // [200, 400, 600], [100, 200, 300]
+
+    const data = [
+      {name: 'A', age: 18},
+      {name: 'B', age: 20}
+    ]
+    const newData = data.map(value => {
+      // 會動到原物件
+      // value.job = 'Student'
+      // return value
+
+      // 新建物件: {} 不會動到原物件
+
+      // return {
+      //   name: value.name,
+      //   age: value.age, 
+      //   job: 'Student'
+      // }
+
+      // 原本的value,再加上新的key(job)
+      return {
+        ...value, 
+        job: 'Student'
+      }
+    })
+    console.log(newData, data)
+    // 0: {name: 'A', age: 18, job: 'Student'}
+    // 1: {name: 'B', age: 20, job: 'Student'}
+
+    const numbers2 = [100, 200, 300, 400, 500]
+
+    // 陣列.reduce(function(累計值, 現在值) => {}, 初始值) = 累加器
+    // 初始值預設是0
+    const total = numbers2.reduce((total, value)=>{
+      console.log(total, value)
+      return total + value
+    }, 10000)
+    console.log(total) // 11500
+
+    const numbers3 = [12432,345,8914,543,675123]
+
+    // 陣列.sort((a, b) => {})
+    // 兩個數字比較，a代表後面的數字，b代表前面的數字
+    // return 0    => 順序不變
+    // return < 0  => a 在 b 前面
+    // return > 0  => a 在 b 後面
+    // return a - b => 正序
+    // return b - a => 倒序
+    numbers3.sort((a, b) => {
+      console.log(a, b)
+      return a - b
+      // return b - a // [345, 543, 8914, 12432, 675123]
+    })
+    console.log(numbers3) // [345, 543, 8914, 12432, 675123]
+
+    const cn = ['零', '一', '二', '三', '四', '五']
+    cn.sort((a, b)=>{
+      // a.localeCompare(b, 語言代碼)
+      // 比較字元編碼順序
+      // a 在前面 => -1
+      // a 在後面 => 1
+      // 相等  => 0
+      return a.localeCompare(b)
+    })
+    console.log(cn) // ['一', '三', '二', '五', '四', '零'] (錯)
+  </script>
+</body>
+</html>

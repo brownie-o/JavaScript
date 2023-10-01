@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 文字迴圈
+    const isPalindrome = (text) => {
+      for (let i = 0; i < text.length / 2; i++) {
+        if (text[i] != text[text.length - 1 - i]){
+          return false
+        }
+      }
+      return true
+    }
+    const result = isPalindrome(prompt('輸入文字'))
+    console.log(result)
+
+    // 括號迴圈閉合
+    const isClose = (text) => {
+      let count = 0
+      for (let i = 0; i < text.length; i++){
+        if (text[i] === '('){
+          count++
+        } else{
+          count--
+        }
+
+        if (count < 0){
+          return false
+        }
+      }
+      // 判斷count算出來的結果是否為0
+      return count === 0
+      // if (count === 0){
+      //   return true
+      // } else {
+      //   return false
+      // }
+    }
+    const result1 = isClose(prompt('輸入文字'))
+    console.log(result1)
+
+  </script>
+</body>
+
+</html>
