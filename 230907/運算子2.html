@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let a = 10
+    // a + 1
+    a++
+    console.log(a)  // 11
+
+    let b = 10
+    // b - 1
+    b--
+    console.log(b)  // 9
+
+    let x = 0
+    let y = 10
+    x = ++y
+    // 先執行y = y + 1 才執行 x = y
+    console.log(x, y) // 11 11
+
+    let xx = 0
+    let yy = 10
+    // 先執行xx = yy 才執行yy = yy + 1
+    xx = yy++
+    console.log(xx, yy) // 10 11
+
+    let x3 = 777
+    let y2 = x % 7 + 7
+    console.log(y2)
+
+    let x4 = 123
+    x4 += 456
+    console.log(x4)
+
+  </script>
+</body>
+
+</html>

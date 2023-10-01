@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let a = 1
+    if (true) {
+      let a = 2
+      console.log(a)  // 2
+    }
+    console.log(a)  // 1
+
+
+    let b = 1
+    if (true) {
+      // 被新的 b = 2 蓋掉
+      b = 2
+      console.log(b)  // 2
+    }
+    console.log(b)  // 2
+
+    var c = 1
+    if (true) {
+      // var 是全域變數 會被 c = 2 蓋掉
+      var c = 2
+      console.log(c)  // 2
+    }
+    console.log(c)  // 2
+  </script>
+</body>
+
+</html>
