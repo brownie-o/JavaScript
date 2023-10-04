@@ -14,10 +14,10 @@
       return Math.round(Math.random() * (max - min)) + min
     }
 
+    // 方法 1
     const groupA = []
     const lotteryB = random(1, 8)
 
-    // 方法 1
     for (let i = 0; i < 6; i++) {
       // 每次隨機數字
       const number = random(1, 38)
@@ -31,25 +31,33 @@
       }
     }
 
-    document.write(groupA.join(','), lotteryB, '<br>')
+    groupA.push(lotteryB)
+    document.write(groupA.join(',')+ '<br>')
     
 
     // 方法 2
     // (不知道要跑幾遍才能取到六個不同隨機數)
-    while (groupA.length < 6) {
+    const groupA2 = []
+    const lotteryB2 = random(1, 8)
+
+    while (groupA2.length < 6) {
       // 每次隨機數字
       const number = random(1, 38)
       // 檢查重複
-      if (!groupA.includes(number)) {
+      if (!groupA2.includes(number)) {
         // 沒有重複就放進數列
-        groupA.push(number)
+        groupA2.push(number)
       }
     }
 
-    document.write(groupA.join(','), lotteryB, '<br>')
+    groupA2.push(lotteryB2)
+    document.write(groupA2.join(',')+ '<br>')
 
     // 方法 3
     // 建立一個有38個數字的陣列
+    const groupA3 = []
+    const lotteryB3 = random(1, 8)
+
     const numbers = []
     for (let i = 1; i <= 38; i++) {
       numbers.push(i)
@@ -59,12 +67,13 @@
       // 每次隨機一個數字陣列索引
       const index = random(0, numbers.length - 1)
       // 取出
-      groupA.push(numbers[index])
+      groupA3.push(numbers[index])
       // 將取道的數字從數字陣列移除
       numbers.splice(index, 1)
     }
 
-    document.write(groupA.join(','), lotteryB, '<br>')
+    groupA3.push(lotteryB3)
+    document.write(groupA3.join(',')+ '<br>')
 
     // 從文字建立一個陣列
     Array.from('abc') // ['a', 'b', 'c']
@@ -80,6 +89,9 @@
 
     // 方法 4
     // 快速取38個數的陣列
+    const groupA4 = []
+    const lotteryB4 = random(1, 8)
+
     const numbers2 = Array.from({length:38}, (value, index) => {
       return index +1
     })
@@ -88,12 +100,13 @@
       // 每次隨機一個數字陣列索引
       const index = random(0, numbers.length - 1)
       // 取出
-      groupA.push(numbers[index])
+      groupA4.push(numbers[index])
       // 將取道的數字從數字陣列移除
       numbers.splice(index, 1)
     }
     
-    document.write(groupA.join(','), lotteryB, '<br>')
+    groupA4.push(lotteryB4)
+    document.write(groupA4.join(',')+ '<br>')
   </script>
 </body>
 
