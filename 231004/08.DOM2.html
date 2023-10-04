@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .text-blue {
+      color: blue;
+    }
+
+    .border {
+      border: 1px solid black
+    }
+
+    .inline-block {
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>.children 選取下一層所有元素</h2>
+  <div id="links">
+    <a href="https://x.com">X</a>
+    <a href="https://github.com">Github</a>
+  </div>
+  <h2>.classList.add() 加上class</h2>
+  <ul id="list1">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+  </ul>
+  <h2>.classList.remove 移除class</h2>
+  <ul id="list2">
+    <li class="text-blue">1</li>
+    <li class="border">2</li>
+    <li id="list2-li3">3</li>
+    <li class="border">4</li>
+    <li class="text-blue">5</li>
+  </ul>
+  <script>
+    // .children 下一層所有元素
+    const links = document.getElementById('links').children
+    for (const element of links) {
+      // .屬性
+      console.log(element.href) // https://x.com/ & https://github.com/
+      element.href = 'https://google.com'
+      element.target = '_blank'
+      element.innerText = 'Google'
+    }
+
+    const list1 = document.getElementById('list1')
+    // .firstElementChild 下一層的第一個
+    // .classList.add() 加上class
+    list1.firstElementChild.classList.add('text-blue')
+
+    // .lastElementChild 下一層的最後一個
+    list1.lastElementChild.classList.add('text-blue', 'border', 'inline-block')
+    const classes = ['text-blue', 'border']
+    list1.lastElementChild.classList.add(...classes)
+
+    // .classList.value 取所有class, 回傳以空白分隔的文字
+    console.log(list1.lastElementChild.classList.value) // text-blue border inline-block
+
+    const list2li3 = document.getElementById('list2-li3')
+    // .previousElementSibling 同層的前一個
+    // .classList.remove 移除class, 語法和.add()一樣
+    list2li3.previousElementSibling.classList.remove('border')
+
+    // 前兩層的選法 
+    // list2li3.previousElementSibling.previousElementSibling.classList.toggle('text-blue')
+    // 可以用迴圈跑
+    let el = document.getElementById('list2-li3')
+    for (let i = 0; i < 2; i++) {
+      el = el.previousElementSibling
+    }
+    // .classList.toggle() 開關: 切換 class，沒有就新增，有就移除
+    el.classList.toggle('text-blue')
+
+    // .nextElementSibling 同層的後一個
+    // .classList.replace(A, B) 取代class A換成B
+    list2li3.nextElementSibling.classList.replace('border', 'text-blue')
+
+    // 用迴圈跑同一層的後兩個
+    let el2 = document.getElementById('list2-li3')
+    for (let i = 0; i<2; i++){
+      el2 = el2.nextElementSibling
+    }
+
+    // .classList.contains() 是否有包含 class
+    console.log(el2.classList.contains('border')) // false
+    // 後兩個的class已經被replace成text-blue了 不包含border, 所以得到false
+
+    // .parentElement 取上一層(ul)
+    list2li3.parentElement.style.backgroundColor = 'grey'
+  </script>
+</body>
+
+</html>
