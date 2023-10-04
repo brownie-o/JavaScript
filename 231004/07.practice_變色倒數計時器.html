@@ -6,14 +6,21 @@
   <title>Document</title>
 </head>
 <body>
-  <h1 id="timer">剩餘 X 秒</h1>
+  <h1 id="timer"></h1>
 
   <script>
-    let time = (prompt('倒數幾秒'))*1
-    
-    const timer = setInterval(()=>{
+    let number = (prompt('倒數幾秒'))*1
+
+    let timer = setInterval(()=>{
       const text = document.getElementById('timer')
-      text.innerText = '剩餘 X 秒'
+      text.style.color = 'blue'
+      text.innerText = `剩餘 ${number} 秒`
+      if (number == 0){
+        text.style.color = 'red'
+        text.innerText = `時間到`
+        clearInterval(timer)
+      }
+      number--
     }, 1000)
   </script>
 </body>
