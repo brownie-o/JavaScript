@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1 id="timer">剩餘 X 秒</h1>
+
+  <script>
+    const timer = setInterval(()=>{
+      const text = document.getElementById('timer')
+      text.innerText = '剩餘 X 秒'
+    }, 1000)
+  </script>
+</body>
+</html>
