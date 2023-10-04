@@ -7,6 +7,7 @@
 </head>
 <body>
   <h1 id="timer"></h1>
+  <h1 id="text"></h1>
 
   <script>
     let number = (prompt('倒數幾秒'))*1
@@ -22,6 +23,29 @@
       }
       number--
     }, 1000)
+
+    // 詳解
+    const text = document.getElementById('text')
+    let number2 = parseInt(prompt(''))
+
+    // 為了讓倒數器不要隔一秒才開始 將要倒數的東西拉到setInterval外面
+    // 為了不要重複寫兩串東西 可以用function包起來
+    const countdown = () => {
+      if (number2 === 0) {
+        text.innerText = '時間到'
+        text.style.color = 'red'
+        clearInterval(timer2)
+      } else {
+        text.innerText = '剩餘 ' + number2 + ' 秒'
+        text.style.color = 'blue'
+        number2--
+      }
+    }
+
+    const timer2 = setInterval(countdown, 1000)
+    // 為了讓倒數器不要隔一秒才開始 將要倒數的東西拉到setInterval外面
+    // 無延遲第一次
+    countdown()
   </script>
 </body>
 </html>
