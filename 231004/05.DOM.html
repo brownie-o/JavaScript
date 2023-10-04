@@ -6,9 +6,67 @@
   <title>Document</title>
 </head>
 <body>
+  <li>用id 抓元素</li>
   <h1 id="title">標題</h1>
+  <li>用標籤抓元素</li>
+  <h2>
+    <i>111</i>
+  </h2>
+  <h2>
+    <i>222</i>
+  </h2>
+
+  <li>用class抓元素</li>
+  <h3 class="text-red">aaa</h3>
+  <h3 class="text-red">aaa</h3>
+  <h3 class="text-red">aaa</h3>
+
+  <li>用CSS選擇器抓元素</li>
+  <h3 class="text-center">中間</h3>
+  <h3 class="text-center">中間</h3>
+  <h3 class="text-center">中間</h3>
   <script>
-    
+    // 用id去抓元素
+    const title = document.getElementById('title')
+    // .innerText = 文字
+    console.log(title.innerText) // 標題
+    title.innerText = 'ABC標題' // 網頁顯示: ABC標題
+    console.log(title.innerText) // ABC標題
+
+    // 用標籤抓元素
+    const h2 = document.getElementsByTagName('h2') // elements = 抓下來是陣列
+    // .innerHTML = HTML 文字
+    console.log(h2[0].innerHTML) ///     <i>111</i>
+
+    for(let i = 0; i < h2.length; i++){
+      console.log(h2[i].innerHTML)
+      h2[i].innerHTML = '<del>AAA</del>'
+    }  // 網頁顯示: ~AAA~ ~AAA~
+
+    // 網頁抓下來的陣列不能使用 .forEach
+    // h2.forEach() // h2.forEach is not a function
+
+    // 可以用for in 和 for of
+    for (const element of h2){
+
+    }
+
+    // 用class抓元素
+    const red = document.getElementsByClassName('text-red') // elements 是複數 = 取出來是陣列
+    for (const elememt of red){
+      // .style = 行內樣式
+      elememt.style.color = 'red'
+      // .text-align 有hyphen的不能直接. , 要改用CSS選擇器
+    }
+
+    // 用CSS選擇器抓元素
+    // .querySelector -> 符合的第一個, 回傳元素
+    // .querySelectorAll -> 符合的全部, 回傳陣列
+    const center = document.querySelectorAll('.text-center')
+    for (const element of center){
+      element.style.textAlign = 'center'
+      element.style['text-align'] = 'center'
+    }
   </script>
 </body>
 </html>
