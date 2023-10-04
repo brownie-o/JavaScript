@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    .text-blue {
+      color: blue;
+    }
+  </style>
 </head>
 <body>
   <li>用id 抓元素</li>
@@ -25,6 +30,11 @@
   <h3 class="text-center">中間</h3>
   <h3 class="text-center">中間</h3>
   <h3 class="text-center">中間</h3>
+  
+  <h3 class="text-blue">藍色</h3>
+  <h3 class="text-blue">藍色</h3>
+  <h3 class="text-blue">藍色</h3>
+
   <script>
     // 用id去抓元素
     const title = document.getElementById('title')
@@ -66,6 +76,16 @@
     for (const element of center){
       element.style.textAlign = 'center'
       element.style['text-align'] = 'center'
+    }
+
+    const blue = document.getElementsByClassName('text-blue')
+    for (const element of blue) {
+      // 空文字 因為樣式是CSS style設定 不是行內
+      console.log(element.style.color) // 空的
+      // 使用getComputedStyle 取最終顯示樣式
+      // getComputedStyle(元素, 偽元素)
+      // getComutedStyle(element, '::before')
+      console.log(getComputedStyle(element).color) // rgb(0, 0, 255)
     }
   </script>
 </body>
