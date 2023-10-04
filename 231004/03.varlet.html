@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    for (let i = 1; i <= 5; i++) {
+      setTimeout(() => {
+        document.write(i)
+      }, 3000)
+    }
+    //  1 2 3 4 5
+    // 因為let是區域變數 迴圈跑的當下是多少就會顯示多少
+
+    for (var i = 1; i <= 5; i++) {
+      setTimeout(() => {
+        document.write(i)
+      }, 3000)
+    }
+    //  6 6 6 6 6 
+    // 因為var是全域變數
+  </script>
+</body>
+
+</html>
