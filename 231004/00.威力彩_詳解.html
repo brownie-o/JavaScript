@@ -31,6 +31,9 @@
       }
     }
 
+    document.write(groupA.join(','), lotteryB, '<br>')
+    
+
     // 方法 2
     // (不知道要跑幾遍才能取到六個不同隨機數)
     while (groupA.length < 6) {
@@ -42,6 +45,8 @@
         groupA.push(number)
       }
     }
+
+    document.write(groupA.join(','), lotteryB, '<br>')
 
     // 方法 3
     // 建立一個有38個數字的陣列
@@ -58,6 +63,8 @@
       // 將取道的數字從數字陣列移除
       numbers.splice(index, 1)
     }
+
+    document.write(groupA.join(','), lotteryB, '<br>')
 
     // 從文字建立一個陣列
     Array.from('abc') // ['a', 'b', 'c']
@@ -86,7 +93,7 @@
       numbers.splice(index, 1)
     }
     
-    document.write(groupA.join(','), lotteryB)
+    document.write(groupA.join(','), lotteryB, '<br>')
   </script>
 </body>
 
