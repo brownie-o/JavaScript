@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="div1">
+    <p>euqioriwefklashdfkyoiurqioweur</p>
+  </div>
+  <hr>
+  <div id="div2">
+    <p>asoduifqwerqkenkasuvewqro3i2908egj</p>
+  </div>
+  <script>
+    const div1 = document.getElementById('div1')
+    // .insertAdjacentHTML(位置, HTML文字)
+    // beforebegin = 開始標籤前
+    div1.insertAdjacentHTML('beforebegin', '<h1>beforebegin</h1>')
+    // beforeend = 開始標籤後
+    div1.insertAdjacentHTML('beforeend', '<h1>beforeend</h1>')
+    // afterbegin = 結束標籤前
+    div1.insertAdjacentHTML('afterbegin', '<h1>afterbegin</h1>')
+    // afterend = 結束標籤後
+    div1.insertAdjacentHTML('afterend', '<h1>afterend</h1>')
+    
+    const div2 = document.getElementById('div2')
+    // .createElement 建立一個元素，使用的是img標籤
+    const image = document.createElement('img')
+    image.width = 100
+    image.height = 100
+    image.src = 'https://github.com/brownie-o.png'
+    // .prepend() 開始標籤後
+    // .append() 結尾標籤前
+    // .insertAdjacentElement(位置, 元素)
+    // 若元素不在DOM的話 會新增，已經在DOM的話 會移動位置
+    div2.prepend(image) // 新增image到開始標籤後
+    div2.append(image) // 移動image位置到結尾標籤前
+    div2.insertAdjacentElement('beforebegin', image) // 移動image位置到開始標籤前
+
+    console.log(div2.outerHTML) 
+    // <div id="div2">
+    //   <p>asoduifqwerqkenkasuvewqro3i2908egj</p>
+    // </div>
+
+    // .remove() 移除元素
+    // div2.remove()
+  </script>
+</body>
+</html>
