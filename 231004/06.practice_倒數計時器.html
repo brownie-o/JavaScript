@@ -21,6 +21,14 @@
     setTimeout(() => {
       clearInterval(timer)
     }, 11000)
+
+    // 第一種
+    for (let i = 10; i >= 0; i--) {
+      setTimeout(() => {
+        document.write(i + '<br>')
+      }, 1000 * (11 - i))
+    }
+
   </script>
 </body>
 
