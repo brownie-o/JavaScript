@@ -1,11 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
+
 <body>
-  
+  <script>
+    // 取 n~m 之間的隨機數
+    const random = (min, max) => {
+      return Math.round(Math.random() * (max - min)) + min
+    }
+
+    const groupA = []
+
+    for (let i = 0; i < 6; i++){
+      // 每次隨機數字
+      const number = random(1, 38)
+      // 檢查重複
+      if (groupA.includes(number)){
+        // 重複時抵銷掉 i++  就可以再跑一次 
+        i--
+      } else {
+        // 沒有重複就放進陣列
+        groupA.push(number)
+      }
+    }
+  </script>
 </body>
+
 </html>
