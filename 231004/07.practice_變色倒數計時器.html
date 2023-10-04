@@ -9,6 +9,8 @@
   <h1 id="timer">剩餘 X 秒</h1>
 
   <script>
+    let time = (prompt('倒數幾秒'))*1
+    
     const timer = setInterval(()=>{
       const text = document.getElementById('timer')
       text.innerText = '剩餘 X 秒'
