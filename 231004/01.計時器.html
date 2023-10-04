@@ -16,6 +16,25 @@
     setTimeout(()=>{
       document.write('三秒鐘')
     }, 3000)
+
+    const write = () => {
+      document.write('三秒鐘')
+    }
+    setTimeout(write, 3000)
+    // 如果寫 setTimeout(write(), 3000) 會變成undefined
+
+    // funcion內有參數的寫法 (因為不能直接 setTimeout(function(參數), ms)
+    const write2 = (ms, text) => {
+      document.write(ms + ',' + text)
+    }
+    // setTimeout(function name, 毫秒, function 參數)
+    setTimeout(write2, 3000, 4000, 'abc')
+
+    const timer = setTimeout(() => {
+      document.write('aaaa')
+    }, 5000)
+    // 停止計時器
+    clearTimeout(timer) // 此timer直接被清除
   </script>
 </body>
 </html>
