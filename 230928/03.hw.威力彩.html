@@ -54,16 +54,24 @@
   <button onclick="showLottery()">Roll</button>
 
   <script>
+    const random = (min, max) => {
+      return Math.round(Math.random() * (max - min)) + min
+    }
+
     const showLottery = () => {
-      let lotteryA = []
+      const lotteryA = []
       for (let i = 0; i < 6; i++) {
-        const lottery = Math.round(Math.random() * 38)
-        lotteryA += lottery + ', '
+        const number = random(1, 38)
+        if (lotteryA.includes(number)){
+          i--
+        } else {
+          lotteryA.push(number)
+        }
       }
 
-      const lotteryB = Math.round(Math.random() * 7) + 1
+      const lotteryB = random(1, 8)
 
-      document.getElementById("demo").innerHTML = `${lotteryA}${lotteryB}`
+      document.getElementById("demo").innerHTML = `${lotteryA},${lotteryB}`
     }
   </script>
   <p id="demo"></p>
