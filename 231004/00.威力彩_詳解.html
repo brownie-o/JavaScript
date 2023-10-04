@@ -15,12 +15,14 @@
     }
 
     const groupA = []
+    const lotteryB = random(1, 8)
 
-    for (let i = 0; i < 6; i++){
+    // 方法 1
+    for (let i = 0; i < 6; i++) {
       // 每次隨機數字
       const number = random(1, 38)
       // 檢查重複
-      if (groupA.includes(number)){
+      if (groupA.includes(number)) {
         // 重複時抵銷掉 i++  就可以再跑一次 
         i--
       } else {
@@ -28,6 +30,63 @@
         groupA.push(number)
       }
     }
+
+    // 方法 2
+    // (不知道要跑幾遍才能取到六個不同隨機數)
+    while (groupA.length < 6) {
+      // 每次隨機數字
+      const number = random(1, 38)
+      // 檢查重複
+      if (!groupA.includes(number)) {
+        // 沒有重複就放進數列
+        groupA.push(number)
+      }
+    }
+
+    // 方法 3
+    // 建立一個有38個數字的陣列
+    const numbers = []
+    for (let i = 1; i <= 38; i++) {
+      numbers.push(i)
+    }
+    // 取數字
+    for (let i = 0; i < 6; i++) {
+      // 每次隨機一個數字陣列索引
+      const index = random(0, numbers.length - 1)
+      // 取出
+      groupA.push(numbers[index])
+      // 將取道的數字從數字陣列移除
+      numbers.splice(index, 1)
+    }
+
+    // 從文字建立一個陣列
+    Array.from('abc') // ['a', 'b', 'c']
+    Array.from([0, 1, 2])
+    Array.from({ length: 10 }) // 產生有10個undefined的空數列[undefined, *10]
+    // 接上map function
+    Array.from({length:10}).map((value, index) => { return index + 1 })
+    // 縮寫
+    Array.from({ length: 10 }, (value, index) => { return index + 1 }) // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+    // 在瀏覽器建立物件
+    new Array(10) // [empty x 10] length: 10 array
+
+    // 方法 4
+    // 快速取38個數的陣列
+    const numbers2 = Array.from({length:38}, (value, index) => {
+      return index +1
+    })
+    // 取數字
+    for (let i = 0; i < 6; i++) {
+      // 每次隨機一個數字陣列索引
+      const index = random(0, numbers.length - 1)
+      // 取出
+      groupA.push(numbers[index])
+      // 將取道的數字從數字陣列移除
+      numbers.splice(index, 1)
+    }
+    
+    document.write(groupA.join(','), lotteryB)
   </script>
 </body>
 
