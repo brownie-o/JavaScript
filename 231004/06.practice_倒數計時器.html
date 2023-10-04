@@ -24,10 +24,10 @@
 
     // 我的更新版 (完完全不需要for)
     let time1 = 10
-    const timer1 = setInterval(()=>{
+    const timer1 = setInterval(() => {
       document.write(time1 + '<br>')
       time1--
-      if (time1 < 0){
+      if (time1 < 0) {
         clearInterval(timer1)
       }
     }, 1000)
@@ -41,10 +41,10 @@
 
     // 第二種
     let number = 10
-    let timer2 = setInterval(()=>{
+    let timer2 = setInterval(() => {
       document.write(number + '<br>')
       number--
-      if (number<0){
+      if (number < 0) {
         clearInterval(timer2)
       }
     }, 1000)
