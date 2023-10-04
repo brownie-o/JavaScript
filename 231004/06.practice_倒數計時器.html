@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let time = 10
+    const timer = setInterval(() => {
+      for (let i = 0; i < 11; i++) {
+        time -= 1
+        break
+      }
+      document.write((time + 1) + '<br>')
+    }, 1000)
+
+    setTimeout(() => {
+      clearInterval(timer)
+    }, 11000)
+  </script>
+</body>
+
+</html>
