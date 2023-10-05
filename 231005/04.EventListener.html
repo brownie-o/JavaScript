@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="button" value="btn" class="btn"></input>
+  <input type="button" value="btn" class="btn"></input>
+  <input type="button" value="btn" class="btn"></input>
+  <input type="button" value="unbind" id="btn-unbind"></input>
+  <script>
+    const hi = () =>{
+      alert('ABCD')
+    }
+
+    const btn = document.getElementsByClassName('btn')
+    for (const el of btn) {
+      // .addEventListener('事件', function) 新增事件監聽者
+      // 建議把function獨立出去寫
+      // el.addEventListener('click', () => {
+      //   alert('ABCD')
+      // })
+      el.addEventListener('click', hi)
+    }
+
+    // 解除綁定時要對到add的function name 所以要把做事的function獨立出去寫 (才有名字)
+    const btnUnbind = document.getElementById('btn-unbind')
+    btnUnbind.addEventListener('click', ()=>{
+      for (const el of btn){
+        el.removeEventListener('click', hi)
+      }
+    })
+  </script>
+</body>
+</html>
