@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #out {
+      width: 300px;
+      height: 300px;
+      background: pink;
+    }
+
+    #in {
+      width: 100px;
+      height: 100px;
+      background: lightblue;
+    }
+  </style>
+</head>
+<body>
+  <h2>.preventDefault = 停止預設動作</h2>
+  <a href="https://x.com" id="link">twitter</a>
+  <h2>冒泡</h2>
+  <div id="out">
+    <div id="in"></div>
+  </div>
+  <script>
+    const link = document.querySelector('#link')
+    //  ('事件', (事件資訊, 名字隨意取) => {})
+    link.addEventListener('click', (event) => {
+      // 連結的預設是會跳頁 .preventDefault = 停止預設動作，點連結時就不會跳頁
+      event.preventDefault()
+    })
+
+    // 冒泡
+    const inDiv = document.querySelector('#in')
+    const outDiv = document.querySelector('#out')
+    inDiv.addEventListener('click', (event) => {
+      // 停止冒泡 event.stopPropagation()
+      event.stopPropagation()
+      console.log('in', event.target)
+      // 冒泡時: in & out 皆被觸發，target 都是 <div id="in"></div>
+      // 停止冒泡時: 只會觸發到 in
+    }) 
+    outDiv.addEventListener('click', (event) => {
+      console.log('out', event.target)
+    })
+  </script>
+</body>
+</html>
