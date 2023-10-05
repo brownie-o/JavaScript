@@ -11,6 +11,12 @@
   <input type="button" value="btn" class="btn">
   <input type="button" value="btn" class="btn">
   <input type="button" value="btn" class="btn">
+  <hr>
+  <input type="button" value="btn2" class="btn2">
+  <input type="button" value="btn2" class="btn2">
+  <input type="button" value="btn2" class="btn2">
+  <hr>
+  <input type="button" value="btn-unbind" id="btn-unbind">
   <script>
     const btn1 = document.getElementById('btn1')
     // btn1.onclick = function () {}
@@ -23,6 +29,27 @@
     for (const el of btn) {
       el.onclick = () => {
         alert('abcd')
+      }
+    }
+
+    // 把function獨立出去寫
+    const hi = () =>{
+      alert('ABCDE')
+    }
+    const btn2 = document.getElementsByClassName('btn2')
+    for (const el of btn2) {
+      el.onclick = hi
+    }
+
+    // 解除綁定
+    const btnUnbind = document.getElementById('btn-unbind')
+    btnUnbind.onclick = () => {
+      btn1.onclick = null
+      for (const el of btn){
+        el.onclick = null
+      }
+      for (const el of btn2){
+        el.onclick = null
       }
     }
   </script>
