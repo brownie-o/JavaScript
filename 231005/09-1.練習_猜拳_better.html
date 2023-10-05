@@ -20,11 +20,8 @@
   <script>
     const buttons = document.getElementsByTagName('input')
     console.log(buttons)
-    console.log(buttons[0].value) // 剪刀
-    console.log(buttons[1].value) // 石頭
-    console.log(buttons[2].value) // 布
 
-    const all = [剪刀, 石頭, 布]
+    const options = ['剪刀', '石頭', '布']
 
     const win = document.getElementById('win')
     const lose = document.getElementById('lose')
@@ -36,27 +33,28 @@
       return Math.round(Math.random() * 2)
     }
 
-
-
-    // player.addEventListener('click', () => {
-    //   let computer = all[random(0, 2)]
-    //   if (computer === player) {
-    //     draw++
-    //     alert(`你出剪刀，電腦出剪刀，平手`)
-    //     count.innerText = `贏: ${win} 輸: ${lose} 平手: ${draw}`
-    //     record.innerHTML = '<li>你出剪刀，電腦出剪刀，平手</li>'
-    //   } else if (computer === rock) {
-    //     lose++
-    //     alert(`你出剪刀，電腦出石頭，輸`)
-    //     count.innerText = `贏: ${win} 輸: ${lose} 平手: ${draw}`
-    //     record.innerHTML = '<li>你出剪刀，電腦出石頭，輸</li>'
-    //   } else {
-    //     win++
-    //     alert(`你出剪刀，電腦出布，贏`)
-    //     count.innerText = `贏: ${win} 輸: ${lose} 平手: ${draw}`
-    //     record.innerHTML = '<li>你出剪刀，電腦出布，贏</li>'
-    //   }
-    // })
+    for (const el in buttons) {
+      buttons[el].addEventListener('click', () => {
+        let computer = random()
+        let text = `你出${options[el]}，電腦出${options[computer]}，`
+        if (el == computer) {
+          draw.innerText++
+          text += '平手'
+        } else if (
+          (el == 0 && computer == 2) || 
+          (el == 1 && computer == 0) ||
+          (el == 2 && computer == 1)
+        ) {
+          win.innerText++
+          text += '贏'
+        } else {
+          lose.innerText++
+          text += '輸'
+        }
+        alert(text)
+        record.insertAdjacentHTML('beforeend', `<li>${text}</li>`)
+      })
+    }
   </script>
 </body>
 </html>
