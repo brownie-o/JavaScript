@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="button" value="btn1" id="btn1">
+  <hr>
+  <input type="button" value="btn" class="btn">
+  <input type="button" value="btn" class="btn">
+  <input type="button" value="btn" class="btn">
+  <script>
+    const btn1 = document.getElementById('btn1')
+    // btn1.onclick = function () {}
+    btn1.onclick = () =>{
+      alert('hi')
+    }
+
+    // 多個事件綁定: 設相同的class, 再用for迴圈把要綁定的事件都跑過一遍
+    const btn = document.getElementsByClassName('btn')
+    for (const el of btn) {
+      el.onclick = () => {
+        alert('abcd')
+      }
+    }
+  </script>
+</body>
+</html>
