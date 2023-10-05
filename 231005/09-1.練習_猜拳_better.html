@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="button" value="剪刀" class="player">
+  <input type="button" value="石頭" class="player">
+  <input type="button" value="布" class="player">
+  <hr>
+  <p id="count">贏: 輸: 平手: </p>
+  <ul id="record">
+  </ul>
+
+  <script>
+    const player = document.getElementsByClassName('player') //[0, 1, 2]
+    console.log(player[0].value) // 剪刀
+    console.log(player[1].value) // 石頭
+    console.log(player[2].value) // 布
+
+    const all = [剪刀, 石頭, 布]
+
+    const count = document.getElementById('count')
+    const record = document.getElementById('record')
+
+    let win = 0
+    let lose = 0
+    let draw = 0
+
+    const random = (min, max) => {
+      return Math.round(Math.random() * (max - min)) + min
+    }
+
+    player.addEventListener('click', () => {
+      let computer = all[random(0, 2)]
+      if (computer === player) {
+        draw++
+        alert(`你出剪刀，電腦出剪刀，平手`)
+        count.innerText = `贏: ${win} 輸: ${lose} 平手: ${draw}`
+        record.innerHTML = '<li>你出剪刀，電腦出剪刀，平手</li>'
+      } else if (computer === rock) {
+        lose++
+        alert(`你出剪刀，電腦出石頭，輸`)
+        count.innerText = `贏: ${win} 輸: ${lose} 平手: ${draw}`
+        record.innerHTML = '<li>你出剪刀，電腦出石頭，輸</li>'
+      } else {
+        win++
+        alert(`你出剪刀，電腦出布，贏`)
+        count.innerText = `贏: ${win} 輸: ${lose} 平手: ${draw}`
+        record.innerHTML = '<li>你出剪刀，電腦出布，贏</li>'
+      }
+    })
+  </script>
+</body>
+</html>
