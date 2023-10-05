@@ -19,14 +19,69 @@
       /* 垂直置中 */
       top: calc(50% - 150px);
     }
+
+    #hour{
+      position: absolute;
+      width: 20%;
+      height: 10px;
+      background: white;
+      top: calc(50% - 5px);
+      left: 30%;
+      border-radius: 5px;
+      transform-origin: right center;
+    }
+
+    #minute{
+      position: absolute;
+      width: 40%;
+      height: 10px;
+      background: lightgoldenrodyellow;
+      top: calc(50% - 5px);
+      left: 10%;
+      border-radius: 5px;
+      transform-origin: right center;
+    }
+
+    #second{
+      position: absolute;
+      width: 45%;
+      height: 4px;
+      background: rgb(165, 184, 202);
+      top: calc(50% - 2px);
+      left: 5%;
+      border-radius: 2px;
+      transform-origin: right center;
+    }
   </style>
 </head>
 <body>
   <div id="clock">
-
+    <div id="hour"></div>
+    <div id="minute"></div>
+    <div id="second"></div>
   </div>
   <script>
+    const elHour = document.getElementById('hour')
+    const elMinute = document.getElementById('minute')
+    const elSecond = document.getElementById('second')
 
+    // 先在外面設function 讓setInterval不要在一秒後才開始
+    const clock = () => {
+      const date = new Date()
+      const hour = date.getHours()
+      const minute = date.getMinutes()
+      const second = date.getSeconds()
+      // 360/12=30 一小時會轉30度
+      elHour.style.transform = `rotate(${hour*30 + 90}deg)`
+      // 360/60=6 deg
+      elMinute.style.transform = `rotate(${minute*6 + 90}deg)`
+      elSecond.style.transform = `rotate(${second*6 + 90}deg)`
+    }
+
+    // 先呼叫第一次 (第一秒時)
+    clock()
+    // 每秒轉指針
+    setInterval(clock, 1000)
   </script>
 </body>
 </html>
