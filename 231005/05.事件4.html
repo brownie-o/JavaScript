@@ -18,7 +18,7 @@
     btnOn.onclick = () =>{
       alert('on 2')
     }
-    // 僅跳出 on2
+    // 僅跳出 on2 - onclick只能綁定一個function
 
     btnListener.addEventListener('click', ()=>{
       alert('listener1')
@@ -26,7 +26,7 @@
     btnListener.addEventListener('click', ()=>{
       alert('listener2')
     })
-    // 1 2 接連跳出
+    // 1 2 接連跳出 - addEventListener可以綁定多個function 依照順序執行
   </script>
 </body>
 </html>
