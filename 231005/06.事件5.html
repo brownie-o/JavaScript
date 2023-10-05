@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #div {
+      width: 100px;
+      height: 100px;
+      background: black;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="div"></div>
+  <p id="key"></p>
+  <input type="range" id="range" min="0" max="100" step="10" value="0">
+  <p id="range-value">0</p>
+  <input type="text" id="email">
+  <script>
+    const div = document.getElementById('div')
+    // div.onclick = (event) => {}
+    div.addEventListener('click', (event) => {
+      console.log(event)
+      event.target.innerText = '已點擊'
+    })
+
+    const key = document.getElementById('key')
+    // document.onkeydown = (event) => {}
+    document.addEventListener('keydown', (event) => {
+      console.log(event)
+      key.innerText = event.key
+    })
+
+    const range = document.getElementById('range')
+    const rangeValue = document.getElementById('range-value')
+    range.addEventListener('input', (event) => {
+      console.log('input')
+      rangeValue.innerText = event.target.value
+    })
+    range.addEventListener('change', () => {
+      console.log('change')
+      // rangeValue.innerText = event.target.value
+    })
+
+    const email = document.getElementById('email')
+    email.addEventListener('focus', () => {
+      console.log('focus')
+    })
+    email.addEventListener('blur', () => {
+      console.log('blur')
+    })
+    email.addEventListener('change', () => {
+      console.log('change')
+    })
+    // 驗證
+    email.addEventListener('input', (event) => {
+      const valid = event.target.value.includes('@')
+      if (valid) {
+        event.target.style.border = '5px solid green'
+      } else {
+        event.target.style.border = '5px solid red'
+      }
+      console.log('input')
+    })
+  </script>
+</body>
+
+</html>
