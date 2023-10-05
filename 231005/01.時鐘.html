@@ -52,6 +52,13 @@
       border-radius: 2px;
       transform-origin: right center;
     }
+
+    #text{
+      text-align: center;
+      color: aliceblue;
+      position: relative;
+      top: 30%;
+    }
   </style>
 </head>
 <body>
@@ -59,11 +66,13 @@
     <div id="hour"></div>
     <div id="minute"></div>
     <div id="second"></div>
+    <p id="text">00:00:00</p>
   </div>
   <script>
     const elHour = document.getElementById('hour')
     const elMinute = document.getElementById('minute')
     const elSecond = document.getElementById('second')
+    const elTime = document.getElementById('text')
 
     // 先在外面設function 讓setInterval不要在一秒後才開始
     const clock = () => {
@@ -76,12 +85,17 @@
       // 360/60=6 deg
       elMinute.style.transform = `rotate(${minute*6 + 90}deg)`
       elSecond.style.transform = `rotate(${second*6 + 90}deg)`
+      // 補0 要將數字轉文字 + .toString()
+      // .padStart(補到幾位, '在前面補什麼字') 在前面補文字
+      elTime.innerText = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`
     }
 
     // 先呼叫第一次 (第一秒時)
     clock()
     // 每秒轉指針
     setInterval(clock, 1000)
+
+    
   </script>
 </body>
 </html>
