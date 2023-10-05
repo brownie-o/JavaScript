@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="button" value="on" id="btn-on">
+  <input type="button" value="on" id="btn-listener">
+  <script>
+    const btnOn = document.getElementById('btn-on')
+    const btnListener = document.getElementById('btn-listener')
+
+    btnOn.onclick = () =>{
+      alert('on 1')
+    }
+    btnOn.onclick = () =>{
+      alert('on 2')
+    }
+    // 僅跳出 on2
+
+    btnListener.addEventListener('click', ()=>{
+      alert('listener1')
+    })
+    btnListener.addEventListener('click', ()=>{
+      alert('listener2')
+    })
+    // 1 2 接連跳出
+  </script>
+</body>
+</html>
