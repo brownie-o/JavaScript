@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="button" value="剪刀">
+  <input type="button" value="石頭">
+  <input type="button" value="布">
+  <hr>
+  <p>
+    贏: <span id="win">0</span>
+    輸: <span id="lose">0</span>
+    平手: <span id="draw">0</span>
+  </p>
+  <ul id="list"></ul>
+
+  <script>
+    // .querySelectorAll('input') 把所有符合input的都選起來 - 陣列
+    const buttons = document.querySelectorAll('input')
+    const win = document.getElementById('win')
+    const lose = document.getElementById('lose')
+    const draw = document.getElementById('draw')
+    const list = document.getElementById('list')
+
+    // 跑回圈 對選取到的東西綁定事件
+    for (const el of buttons) {
+      el.addEventListener('click', () => {
+        const options = ['剪刀', '石頭', '布']
+        const computer = options[Math.round(Math.random() * 2)]
+        let text = `你出${el.value}，電腦出${computer}，`
+        if (el.value === computer) {
+          text += `平手`
+          draw.innerText++
+        } else if (
+          (el.value === '剪刀' && computer === '布') ||
+          (el.value === '石頭' && computer === '剪刀') ||
+          (el.value === '布' && computer === '石頭') 
+        ) {
+          text += '贏'
+          win.innerText++
+        } else {
+          text += '輸'
+          lose.innerText++
+        }
+        alert(text)
+        list.innerHTML += `<li>${text}</li>`
+      })
+    }
+  </script>
+</body>
+
+</html>
