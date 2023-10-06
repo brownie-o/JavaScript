@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    body{
+    body {
       margin: 0;
       background: url('https://kento520.tw/p6SwiM7.png');
       background-size: 150%;
@@ -20,6 +21,7 @@
     }
   </style>
 </head>
+
 <body>
   <div id="content"></div>
   <script>
@@ -28,8 +30,9 @@
       // scrollTop = 元素被捲動的高度
       const top = document.documentElement.scrollTop
       console.log(top)
-      document.body.style.backgroundPosition = `center -${top/100}px`
+      document.body.style.backgroundPosition = `center -${top / 100}px`
     })
   </script>
 </body>
+
 </html>
