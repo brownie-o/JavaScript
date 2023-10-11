@@ -35,6 +35,8 @@
     <audio src="./mixkit-little-cat-attention-meow-86.wav" volume="0" id="audio"></audio>
   </div>
 
+  <!-- 先sweetalert再接自己的script -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     const btnStart = document.getElementById('btn-start')
     const divGame = document.getElementById('game')
@@ -115,6 +117,11 @@
       clearInterval(timer)
       // 啟用按鈕
       btnStart.disabled = false
+      Swal.fire({
+        icon: 'success', 
+        title: '成功', 
+        text: '你花了' + time/100 + '秒'
+      })
     })
   </script>
 </body>
