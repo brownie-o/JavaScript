@@ -47,10 +47,6 @@
     const rangeValue = document.getElementsByTagName('span')
     const randomBtn = document.getElementsByClassName('btn')
 
-    const random = () => {
-      return Math.round(Math.random() * 255)
-    }
-
     for (const el in colorRange) {
       colorRange[el].addEventListener('input', (event) => {
         rangeValue[el].innerText = event.target.value
