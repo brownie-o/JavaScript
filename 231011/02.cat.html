@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      margin: 0;
+    }
+
+    #game{
+      width: 100vw;
+      height: 800px;
+      position: relative;
+      box-sizing: border-box;
+      border: 1px solid black;
+    }
+
+    #img-cat{
+      position: absolute;
+      width: 150px;
+      /* 讓貓不能被拖曳也不能被反白 */
+      user-select: none;
+      -webkit-user-drag: none;
+      -webkit-user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <input type="button" value="開始遊戲" id="btn-start">
+  <p id="text-time">0</p>
+  <div id="game">
+    <img src="./22193-3-adorable-cat.png" id="img-cat">
+    <audio src="./mixkit-little-cat-attention-meow-86.wav" volume="0" id="audio"></audio>
+  </div>
+
+  <script>
+    const btnStart = document.getElementById('btn-start')
+    const divGame = document.getElementById('game')
+    const imgCat = document.getElementById('img-cat')
+    const textTime = document.getElementById('text-time')
+    const audio = document.getElementById('audio')
+
+    // 經過時間 單位: 0.01秒
+    let time = 0
+    // 宣告計時器為一個變數 (計時器需要重複利用)
+    let timer = 0
+
+    btnStart.addEventListener('click', () => {
+      btnStart.disabled = true
+      // 重置遊戲
+      time = 0
+      textTime.innerText = time / 100
+      // 重置音量
+      audio.volume = 0
+      // 隨機放貓
+      // imgCat.style.opacity = 0
+      imgCat.style.top = Math.round(Math.random()* 80) + '%'
+      imgCat.style.left = Math.round(Math.random()* 80) + '%'
+    })
+  </script>
+</body>
+</html>
