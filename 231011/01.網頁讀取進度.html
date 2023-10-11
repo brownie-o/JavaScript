@@ -4,12 +4,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    body{
+      margin: 0;
+    }
+
+    #loading{
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      background-color: rgb(255, 255, 255);
+      /* 讓loading可以垂直置中: 先改display變成表格 再包一層div當td 在下層div加上vertical-align: middle;*/
+      display: table;
+      text-align: center;
+      transition: opacity 3s;
+    }
+
+    #loading-content{
+      display: table-cell;
+      vertical-align: middle;
+    }
+  </style>
 </head>
 <body>
   <div id="loading">
-    
+    <div id="loading-content">
+    <img src="./laoding.svg" alt="">
+    <h3 id="loading-text">0%</h3>
+    </div>
   </div>
   <div id="content">
+    <input type="button" value="1111">
     <img src="https://picsum.photos/1000/1000/?random=10">
     <img src="https://picsum.photos/1000/1000/?random=1">
     <img src="https://picsum.photos/1000/1000/?random=2">
@@ -17,7 +42,31 @@
     <img src="https://picsum.photos/1000/1000/?random=4">
   </div>
   <script>
+    const loading = document.getElementById('loading')
+    const loadingText = document.getElementById('loading-text')
+    const image = document.getElementsByTagName('img')
 
+    // 計算有幾張圖片載入了
+    let loaded = 0
+    for (const el of image) {
+      el.addEventListener('load', () => {
+        loaded++
+        loadingText.innerText = Math.round(loaded / image.length * 100) + '%'
+      })
+    }
+
+    // document.onreadystatechange = () => {}
+    document.addEventListener('readystatechange', () => {
+      console.log(document.readyState)
+    })
+    // window.onload = () => {}
+    window.addEventListener('load', () =>{
+      console.log('window loade') // 表示網頁已跑完
+      loading.style.opacity = 0
+      setTimeout(()=>{
+        loading.style.display= 'none'
+      }, 3000)
+    })
   </script>
 </body>
 </html>
