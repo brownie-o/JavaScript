@@ -1,11 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+    }
+
+    #colorarea {
+      width: 250px;
+      height: 250px;
+      border: 2px solid grey;
+      margin: 10px;
+      background: rgb(0, 0, 0);
+    }
+  </style>
 </head>
+
 <body>
-  
+  <div id="colorarea"></div>
+
+  <p>
+    紅色
+    <input type="range" name="color" class="color-range" value="0" max="255" min="0">
+    <span>0</span>
+    <input type="button" value="隨機" class="btn">
+  </p>
+  <p>
+    綠色
+    <input type="range" name="color" class="color-range" value="0" max="255" min="0">
+    <span>0</span>
+    <input type="button" value="隨機" class="btn">
+  </p>
+  <p>
+    藍色
+    <input type="range" name="color" class="color-range" value="0" max="255" min="0">
+    <span>0</span>
+    <input type="button" value="隨機" class="btn">
+  </p>
+  <script>
+    const colorArea = document.getElementById('colorarea')
+    const colorRange = document.getElementsByClassName('color-range')
+    const rangeValue = document.getElementsByTagName('span')
+    const randomBtn = document.getElementsByClassName('btn')
+
+    const random = () => {
+      return Math.round(Math.random() * 255)
+    }
+
+    for (const el in colorRange) {
+      colorRange[el].addEventListener('input', (event) => {
+        rangeValue[el].innerText = event.target.value
+        colorArea.style.background = `rgb(${colorRange[0].value}, ${colorRange[1].value}, ${colorRange[2].value})`
+      })
+      randomBtn[el].addEventListener('click', (event) => {
+        colorRange[el].value = Math.round(Math.random()*255)
+        rangeValue[el].innerText = colorRange[el].value
+        colorArea.style.background = `rgb(${colorRange[0].value}, ${colorRange[1].value}, ${colorRange[2].value})`
+      })
+    }
+  </script>
 </body>
+
 </html>
