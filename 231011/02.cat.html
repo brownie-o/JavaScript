@@ -32,7 +32,7 @@
   <p id="text-time">0</p>
   <div id="game">
     <img src="./22193-3-adorable-cat.png" id="img-cat">
-    <audio src="./cat-meow-14536.mp3" volume="0" id="audio"></audio>
+    <audio src="./mixkit-little-cat-attention-meow-86.wav" volume="0" id="audio"></audio>
   </div>
 
   <script>
@@ -61,11 +61,21 @@
       // 重置音量
       audio.volume = 0
       // 隨機放貓
-      // imgCat.style.opacity = 0
+      imgCat.style.opacity = 0
       imgCat.style.top = Math.round(Math.random()* 80) + '%'
       imgCat.style.left = Math.round(Math.random()* 80) + '%'
 
-      // 用滑鼠位置調貓叫聲大小
+      // 開始計時
+      timer = setInterval(() => {
+        time++
+        textTime.innerText = time / 100
+        // 設三秒叫一次 (300*10 = 3000毫秒)
+        if (time % 300 === 0){
+          // play 是audio的事件 
+          // 可以用事件()來手動觸發事件
+          audio.play()
+        }
+      }, 10)
     })
 
     divGame.addEventListener('mousemove', event => {
@@ -95,6 +105,16 @@
       // 音量根據離的比例 要越近越大聲(數字越大)所以要 1-
       audio.volume = 1 - (distance / divGameMaxDistance)
       console.log(audio.volume)
+    })
+
+    imgCat.addEventListener('click', () => {
+      // 如果開始按鈕不是停用 = 不在遊戲中，不做事
+      if (!btnStart.disabled) return
+
+      imgCat.style.opacity = 1
+      clearInterval(timer)
+      // 啟用按鈕
+      btnStart.disabled = false
     })
   </script>
 </body>
