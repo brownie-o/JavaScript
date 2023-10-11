@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  #container{
+    height: 300px;
+    overflow-y: scroll;
+    width: 100%;
+  }
+</style>
+<body>
+  <div id="container">
+    <ul>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?</li>
+    </ul>
+  </div>
+  <script>
+    // entries = 所有有互動的元素
+    const observer = new IntersectionObserver((entries) => {
+      // 當觀察的元素出現時
+      if (entries[0].isIntersecting) {
+        // 產生十個項目
+        const html = `<li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste ullam eius sunt. Debitis nobis quasi corporis! Hic sint sit deleniti. Illum rem dicta nobis cumque hic labore possimus ex numquam?`
+        for (let i = 1; i<10; i++) {
+          document.querySelector('#container ul').innerHTML += html
+        } 
+        // 取消觀察元素
+        observer.unobserve(entries[0].target)
+        // 觀察目前倒數第二個
+        observer.observe(document.querySelector('#container li:nth-last-child(2)'))
+      }
+    })
+    // 一開始先觀察倒數第二個
+    observer.observe(document.querySelector('#container li:nth-last-child(2)'))
+  </script>
+</body>
+</html>

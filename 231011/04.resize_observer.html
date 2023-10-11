@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div {
+      width: 100px;
+      height: 100px;
+      background: grey;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <input type="button" value="button" id="btn">
+  <div id="div1"></div>
+  <div id="div2"></div>
+  <script>
+    const div1 = document.getElementById('div1')
+    const div2 = document.getElementById('div2')
+    const btn = document.getElementById('btn')
+
+    // 當觀察的 DOM 元素縮放時會觸發
+    const observer = new ResizeObserver(mutations => {
+      for (const mutation of mutations) {
+        console.log(mutation)
+      }
+    })
+
+    observer.observe(div1, {
+      // 只有觀察內容物的box
+      box: 'content-box'
+    })
+    observer.observe(div2, {
+      // 觀察整個box(含border)
+      box: 'border-box'
+    })
+
+    btn.addEventListener('click', () => {
+      div1.style.border = '10px solid black'
+      div2.style.border = '10px solid black'
+      // 結果console.log只會顯示div2的變化 
+      // 因為觀察border-box會觀察到border變化
+    })
+  </script>
+</body>
+</html>
