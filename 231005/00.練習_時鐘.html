@@ -8,9 +8,61 @@
     body{
       margin: 0;
       height: 100vh;
+      background-image: url('./img/679e0dcabffe421e242a55ff7e372582.jpg');
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
     }
 
+    #clock{
+      border-radius: 50%;
+      width: 300px;
+      height: 300px;
+      position: relative;
+      margin: auto;
+      top: calc((50% - 150px));
+      border: 1px white solid;
+    }
 
+    #center{
+      width: 10px;
+      height: 10px;
+      position: relative;
+      background-color: #fff;
+      border-radius: 50%;
+      margin: auto;
+      top: calc(50% - 5px);
+    }
+
+    #hour{
+      width: 20%;
+      height: 8px;
+      background-color: #fff;
+      position: absolute;
+      transform-origin: right center;
+      left: 30%;
+      top: calc(50% - 4px);
+    }
+
+    #minute{
+      width: 40%;
+      height: 6px;
+      background-color: #fff;
+      position: absolute;
+      transform-origin: right center;
+      left: 10%;
+      top: calc(50% - 3px);
+    }
+
+    #second{
+      width: 45%;
+      height: 4px;
+      background-color: #fff;
+      position: absolute;
+      transform-origin: right center;
+      left: 5%;
+      top: calc(50% - 2px);
+    }
   </style>
 </head>
 <body>
@@ -18,6 +70,7 @@
     <div id="hour"></div>
     <div id="minute"></div>
     <div id="second"></div>
+    <div id="center"></div>
     <p id="text">00:00:00</p>
   </div>
   <script>
@@ -32,9 +85,9 @@
       const minute = date.getMinutes()
       const second = date.getSeconds()
 
-      elHour.style.transform = `rotate(${hour*30}deg)`
-      elMinute.style.transform = `rotate(${mintue*6}deg)`
-      elSecond.style.transform = `rotate(${second*6}deg)`
+      elHour.style.transform = `rotate(${hour*30 + 90}deg)`
+      elMinute.style.transform = `rotate(${minute*6 + 90}deg)`
+      elSecond.style.transform = `rotate(${second*6 + 90}deg)`
 
       elTime.innerText = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`
     }
