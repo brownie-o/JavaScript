@@ -8,14 +8,23 @@
 </head>
 
 <body>
-  <input type="text" id="input-text">
-  <input type="button" value="新增" id="btn">
+  <form id="form">
+    <input type="text" id="input-text">
+    <input type="submit" value="新增" id="btn">
+  </form>
   <ul id="text">
   </ul>
   <script src="./jquery-3.7.1.min.js"></script>
   <script>
-    $('#btn').click(function () {
-      $('#text').append(`<li>${$('#input-text').val()} <input type="button" value="x" id="del"></li>`)
+    $('#form').submit(function () {
+      // 防止submit時跳頁(defalt 動作)
+      event.preventDefault()
+      $('#text').append(`
+        <li>
+          ${$('#input-text').val()} 
+          <input type="button" value="x" id="del">
+        </li>
+      `)
       $('#input-text').val('')
     })
     $('#text').on('click', '#del', function () {
