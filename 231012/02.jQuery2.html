@@ -21,6 +21,22 @@
       <li>c</li>
     </ul>
   </div>
+  <div id="list3">
+    <ul>
+      <li id="list3A">a</li>
+      <li id="list3B">b</li>
+      <li id="list3C">c</li>
+      <li id="list3D">d</li>
+      <li id="list3E">e</li>
+    </ul>
+  </div>
+  <div id="list4">
+    <ul>
+      <li id="list4A">a</li>
+      <li id="list4B">b</li>
+      <li id="list4C">c</li>
+    </ul>
+  </div>
   <script src="./jquery-3.7.1.min.js"></script>
   <script>
     // .find(選擇器) => 往下尋找符合選擇器的東西  
@@ -30,9 +46,38 @@
 
     // .children(選擇器) 往下一層找符合選擇器的東西
     // 選擇器是選填 沒寫就是找全部
-    $('#list2').children('li').eq(1).css('color', 'red') // not working 因為list2的下一層沒有li
+    $('#list2').children('li').eq(1).css('color', 'red') // not working 因為list2的下一層是p跟ul 沒有li 
     $('#list2').children('p').css('color', 'red')
     $('#list2').children().css('background', 'lightyellow')
+
+    // .prev(選擇器) 選取同一層前一個，放選擇器過濾
+    $('#list3C').prev('p') // 找不到 前一個不是p
+    $('#list3C').prev().css('color', 'blue')
+    // .prevAll(選擇器) 選擇同一層前面所有，可放選擇器過濾
+    $('#list3C').prevAll().css('background', 'lightpink')
+    // .prevUntil(選擇器) 選擇同一層前面直到選擇器之間的東西 不包含頭尾
+    $('#list3C').prevUntil('#list3A').css('text-align', 'center')
+
+    // .next(選擇器) 選擇同一層後一個
+    $('#list3C').next().css('color', 'orange')
+    // .nextAll(選擇器) 選擇同一層後面所有
+    $('#list3C').nextAll().css('background', 'lightskyblue')
+    // .nextUntil(選擇器) 選擇同一層後面直到選擇器之間的東西 不包含頭尾
+    $('#list3C').nextUntil('#list3E').css('text-align', 'center')
+
+    // .siblings(選擇器) 選擇同一層其他所有
+    $('#list3C').siblings().css('font-style', 'italic')
+
+    
+    const list4B = $('#list4B')
+    // .parent() 上一層 可以放選擇器過濾
+    list4B.parent().css('background', 'grey')
+    // .parents() 所有上層 可以放選擇器過濾
+    list4B.parents().css('color', 'orange')
+    // .closest(選擇器) 往上層找 直到符合選擇器的第一個
+    list4B.closest('div').css('border', '1px solid black')
+    // .parentsUntil(選擇器) 往上層找 直到選擇器間的東西
+    list4B.parentsUntil('body').css('font-weight', 'bold')
   </script>
 </body>
 </html>
