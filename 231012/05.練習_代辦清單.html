@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text" id="input-text">
+  <input type="button" value="新增" id="btn">
+  <ul id="text">
+  </ul>
+  <script src="./jquery-3.7.1.min.js"></script>
+  <script>
+    $('#btn').click(function () {
+      $('#text').append(`<li>${$('#input-text').val()} <input type="button" value="x" id="del"></li>`)
+      $('#input-text').val('')
+    })
+    $('#text').on('click', '#del', function () {
+      // $(this).parent().remove()
+      $(this).closest('li').remove()
+    })
+  </script>
+</body>
+
+</html>
