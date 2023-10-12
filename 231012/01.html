@@ -4,6 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    .text-red{
+      color: red;
+    }
+    .text-center{
+      text-align: center;
+    }
+    .bg-black{
+      background: #000;
+    }
+  </style>
 </head>
 <body>
   <h1 id="title">lllaaa</h1>
@@ -12,6 +23,22 @@
   <div id="div">
     <p>adsfasd</p>
   </div>
+  <ul id="list1">
+    <li class="a">1</li>
+    <li class="b">2</li>
+    <li class="c">3</li>
+  </ul>
+  <ul id="list2">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+  </ul>
+  <a href="#" id="link">aaa</a>
+  <p id="test">asdjflkutpoqweir</p>
+  <p id="test2">sdsdfasgwergsdir</p>
+
   <!-- 要先跑到jq再跑到自己的script -->
   <script src="./jquery-3.7.1.min.js"></script>
   <script>
@@ -27,7 +54,46 @@
     console.log($('#div').html())
     $('#div').html('<h2>3333</h2>')
 
-    
+    // .filter(選擇器) => 過濾
+    $('#list1 li').filter('.a').text('111')
+
+    // .not(選擇器) => 不是
+    $('#list1 li').not('.a').text('222')
+
+    // .length 取數量
+    console.log($('#list2 li').length) // 5
+
+    // 用[]會變回原生js語法 (後面就要+.innerText)
+    console.log($('#list2 li')[0].innerText)
+    // .eq(第幾個) 取第幾個
+    console.log($('#list2 li').eq(0).text()) // 1
+    // .first() 第一個
+    console.log($('#list2 li').first().text()) // 1
+    // .last() 最後一個
+    console.log($('#list2 li').last().text()) // 5
+
+    // .attr('屬性名') => 取屬性
+    // .attr('屬性名', '值') => 改屬性
+    // .attr({屬性名: '值', 屬性名: '值'}) => 改多個屬性
+    $('#link').attr('href', 'https://google.com')
+    console.log($('#link').attr('href'))
+    $('#link').attr({href: 'https://google.com', target: '_blank'})
+
+    // .css('屬性名') => 取屬性
+    // .css('屬性名', '值') => 改屬性
+    // .css({屬性名: '值', 屬性名: '值'}) => 改多個屬性
+    $('#test').css('color', 'red')
+    console.log($('#test').css('color'))
+    $('#test').css({color: 'red', textAlign: 'center', 'font-size': '20px'})
+
+    // .addClass() 新增class 可用空白分隔加多個class
+    // .removeClass() 移除class 可用空白分隔移除多個
+    // .hasClass() 判斷有沒有class 可空白多個
+    // .toggleClass() 切換class 可空白多個
+    $('#test2').addClass('text-red text-center bg-black')
+    $('#test2').removeClass('bg-black')
+    console.log($('#test2').hasClass('bg-black'))
+    $('#test2').toggleClass('bg-black text-red')
   </script>
 </body>
 </html>
