@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="button" value="點" id="btn">
+  <br>
+  <br>
+  <input type="text" id="input-text">
+  <input type="button" value="解綁" id="btn-text">
+  <p id="text"></p>
+  <br>
+  <input type="button" id="btn-add" value="新增">
+  <div id="target">
+    <p>asdfasgf</p>
+  </div>
+  <div id="btns">
+    <input type="button" value="按鈕" class="btn">
+    <input type="button" value="按鈕" class="btn">
+    <input type="button" value="按鈕" class="btn">
+  </div>
+  <script src="./jquery-3.7.1.min.js"></script>
+  <script>
+    // .click(function) => 綁定事件
+    // .click() => 觸發事件
+    // jQ盡量不要用箭頭函式 因為箭頭函式不能用this
+    $('#btn').click(function (event) {
+      console.log(event.offsetX) // 事件資料可以放這邊
+      // .val() 輸入欄位的值
+      // () 有東西改值 沒東西取值
+      // 事件內的$(this)指的是觸發事件的東西
+      $(this).val('aaa') // this = btn
+    })
+
+    // .on(事件, function) => 綁定事件
+    // document.querySelector('#input-text').addEventListener('input', function () { })
+    $('#input-text').on('input', function () {
+      $('#text').text($(this).val())
+    })
+
+    $('#btn-text').click(function () {
+      // .off(事件, function) => 解綁事件
+      $('#input-text').off('input')
+    })
+
+    $('#btn-add').click(function () {
+      // insertBefore() => 和target div 同一層的前面
+      // $('<p>insertBefore</p>').insertBefore('#target')
+      // .prepend() => target div裡面的前面
+      $('#target').prepend('<p>prepend</p>')
+      // .append() => target div裡面的後面
+      $('#target').append('<p>append</p>')
+      // insertAfter() => 和target div 同一層的後面
+      $('<p>insertAfter</p>').insertAfter('#target')
+      // ()內放現有的元素是移動位置，放HTML文字是新增
+      $('#btn').insertBefore('#target')
+    })
+
+    // 只有頁面載入時綁定已有的按鈕(前三個)，新增的不會綁到
+    // $('.btn').click(function () {
+    //   $('#btns').append(`<input type="button" value="按鈕" class="btn">`)
+    // })
+
+    // 點到#btns 裡面的.btn 時就執行function
+    $('#btns').on('click', '.btn', function () {
+      $('#btns').append(`<input type="button" value="按鈕" class="btn">`)
+    })
+  </script>
+</body>
+
+</html>
