@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1 id="title">lllaaa</h1>
+  <p class="text">1111</p>
+  <p class="text">2222</p>
+  <div id="div">
+    <p>adsfasd</p>
+  </div>
+  <!-- 要先跑到jq再跑到自己的script -->
+  <script src="./jquery-3.7.1.min.js"></script>
+  <script>
+    // $(選擇器)
+    // .text() => ()內沒字=取值；有字=改值
+    console.log($('#title').text())
+    $('#title').text('bbbbb')
+
+    // 如果選擇器有多個 .text() 會把所有字連在一起 修改也會一起改
+    console.log($('.text').text())
+    $('.text').text('asd123')
+
+    console.log($('#div').html())
+    $('#div').html('<h2>3333</h2>')
+
+    
+  </script>
+</body>
+</html>
