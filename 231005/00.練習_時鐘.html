@@ -14,6 +14,33 @@
   </style>
 </head>
 <body>
-  <div id="clock"></div>
+  <div id="clock">
+    <div id="hour"></div>
+    <div id="minute"></div>
+    <div id="second"></div>
+    <p id="text">00:00:00</p>
+  </div>
+  <script>
+    const elHour = document.getElementById('hour')
+    const elMinute = document.getElementById('minute')
+    const elSecond = document.getElementById('second')
+    const elTime = document.getElementById('text')
+
+    const clock = () => {
+      const date = new Date()
+      const hour = date.getHours()
+      const minute = date.getMinutes()
+      const second = date.getSeconds()
+
+      elHour.style.transform = `rotate(${hour*30}deg)`
+      elMinute.style.transform = `rotate(${mintue*6}deg)`
+      elSecond.style.transform = `rotate(${second*6}deg)`
+
+      elTime.innerText = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`
+    }
+
+    clock()
+    setInterval(clock, 1000)
+  </script>
 </body>
 </html>
