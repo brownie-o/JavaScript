@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="list">
+    <ul>
+      <li>a</li>
+      <li>b</li>
+      <li>c</li>
+    </ul>
+  </div>
+  <div id="list2">
+    <p>sdafjsdf</p>
+    <ul>
+      <li>a</li>
+      <li>b</li>
+      <li>c</li>
+    </ul>
+  </div>
+  <script src="./jquery-3.7.1.min.js"></script>
+  <script>
+    // .find(選擇器) => 往下尋找符合選擇器的東西  
+    // 可以一直往下找.find().find()...
+    $('#list').find('li').eq(1).css('color', 'red')
+    // document.getElementById('list').getElementsByTagName('li')[1].style.color = 'red'
+
+    // .children(選擇器) 往下一層找符合選擇器的東西
+    // 選擇器是選填 沒寫就是找全部
+    $('#list2').children('li').eq(1).css('color', 'red') // not working 因為list2的下一層沒有li
+    $('#list2').children('p').css('color', 'red')
+    $('#list2').children().css('background', 'lightyellow')
+  </script>
+</body>
+</html>
