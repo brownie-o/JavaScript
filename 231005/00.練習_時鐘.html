@@ -1,30 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    body{
+    body {
       margin: 0;
       height: 100vh;
       background-image: url('./img/679e0dcabffe421e242a55ff7e372582.jpg');
+      /* background: #000; */
       background-position: center;
       background-size: contain;
       background-repeat: no-repeat;
     }
 
-    #clock{
+    #clock {
       border-radius: 50%;
       width: 300px;
       height: 300px;
       position: relative;
       margin: auto;
       top: calc((50% - 150px));
-      border: 1px white solid;
+      border: 3px white dotted;
     }
 
-    #center{
+    #center {
       width: 10px;
       height: 10px;
       position: relative;
@@ -34,7 +36,7 @@
       top: calc(50% - 5px);
     }
 
-    #hour{
+    #hour {
       width: 20%;
       height: 8px;
       background-color: #fff;
@@ -44,17 +46,27 @@
       top: calc(50% - 4px);
     }
 
-    #minute{
+    #minute {
       width: 40%;
       height: 6px;
-      background-color: #fff;
+      /* background-color: #fff; */
       position: absolute;
       transform-origin: right center;
       left: 10%;
       top: calc(50% - 3px);
     }
 
-    #second{
+    .eggs {
+      width: 40%;
+      height: 6px;
+      /* background-color: #fff; */
+      position: absolute;
+      transform-origin: right center;
+      left: 10%;
+      top: calc(50% - 3px);
+    }
+
+    #second {
       width: 45%;
       height: 4px;
       background-color: #fff;
@@ -63,14 +75,84 @@
       left: 5%;
       top: calc(50% - 2px);
     }
+
+    #text {
+      color: #fff;
+      display: inline-block;
+      font-size: 2rem;
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    #yoshii {
+      position: relative;
+      transform: rotate(-90deg);
+      right: 60px;
+      bottom: 40px;
+    }
+
+    .egg {
+      position: relative;
+      transform: rotate(-90deg);
+      width: 30px;
+      right: 50px;
+      bottom: 10px;
+      /* display: none; */
+    }
+
+    .display-none{
+      display: none;
+    }
   </style>
 </head>
+
 <body>
   <div id="clock">
     <div id="hour"></div>
-    <div id="minute"></div>
+    <div id="minute">
+      <img src="./img/download.png" width="50" id="yoshii">
+    </div>
+    <div class="eggs">
+      <img src="./img/Old school retro gaming collection.png" class="egg display-none">
+    </div>
+    <div class="eggs">
+      <img src="./img/Old school retro gaming collection.png" class="egg display-none">
+    </div>
+    <div class="eggs">
+      <img src="./img/pink.png" class="egg display-none">
+    </div>
+    <div class="eggs">
+      <img src="./img/Old school retro gaming collection.png" class="egg display-none">
+    </div>
+    <div class="eggs">
+      <img src="./img/Old school retro gaming collection.png" class="egg display-none">
+    </div>
+    <div class="eggs">
+      <img src="./img/pink.png" class="egg display-none">
+    </div>
+    <div class="eggs">
+      <img src="./img/Old school retro gaming collection.png" class="egg display-none">
+    </div>
+    <div class="eggs">
+      <img src="./img/Old school retro gaming collection.png" class="egg display-none">
+    </div>
+    <div class="eggs">
+      <img src="./img/pink.png" class="egg display-none">
+    </div>
+    <div class="eggs">
+      <img src="./img/Old school retro gaming collection.png" class="egg display-none">
+    </div>
+    <div class="eggs">
+      <img src="./img/Old school retro gaming collection.png" class="egg display-none">
+    </div>
+    <div class="eggs">
+      <img src="./img/pink.png" class="egg display-none">
+    </div>
     <div id="second"></div>
     <div id="center"></div>
+
     <p id="text">00:00:00</p>
   </div>
   <script>
@@ -79,21 +161,42 @@
     const elSecond = document.getElementById('second')
     const elTime = document.getElementById('text')
 
+    const elEggs = document.getElementsByClassName('eggs')
+    const elEgg = document.getElementsByClassName('egg')
+
     const clock = () => {
       const date = new Date()
       const hour = date.getHours()
       const minute = date.getMinutes()
       const second = date.getSeconds()
 
-      elHour.style.transform = `rotate(${hour*30 + 90}deg)`
-      elMinute.style.transform = `rotate(${minute*6 + 90}deg)`
-      elSecond.style.transform = `rotate(${second*6 + 90}deg)`
+      elHour.style.transform = `rotate(${hour * 30 + 90}deg)`
+      elMinute.style.transform = `rotate(${minute * 6 + 90}deg)`
+      elSecond.style.transform = `rotate(${second * 6 + 90}deg)`
 
       elTime.innerText = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`
+    }
+    
+    const egg = () => {
+      const date = new Date()
+      const hour = date.getHours()
+      const minute = date.getMinutes()
+
+      const hours12 = () => {
+        return date.getHours() % 12 || 12;
+      }      
+      
+      for (i = 0; i < hours12(); i++) {
+        elEggs[i].style.transform = `rotate(${minute * 6 + 67.5 - (22.5 * i)}deg)`
+        elEgg[i].classList.remove('display-none')
+      }
     }
 
     clock()
     setInterval(clock, 1000)
+    egg()
+    setInterval(egg, 1000) 
   </script>
 </body>
+
 </html>

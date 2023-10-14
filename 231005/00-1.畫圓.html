@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // @ http://www.fillano.idv.tw/1188899985000.html
+    function circle (x,y,r) {
+      var points = [];
+      for (let i = 0; i> (-Math.round(r/Math.sqrt(2))-1); i--) {
+        j = Math.sqrt(Math.pow(r,2) - Math.pow(i,2));
+        if (Math.ceil(j)-j > j-Math.floor(j)) {
+        j = Math.floor(j);
+      } else {
+        j = Math.ceil(j);
+      }
+        points.push({"x":i+x,"y":j+y});
+        points.push({"x":i+x,"y":y-j});
+        points.push({"x":x-i,"y":j+y});
+        points.push({"x":x-i,"y":y-j});
+        points.push({"x":j+x,"y":i+y});
+        points.push({"x":j+x,"y":y-i});
+        points.push({"x":x-j,"y":i+y});
+        points.push({"x":x-j,"y":y-i});
+      }
+      return points;
+    }
+
+    function plot (x, y, target) {
+      var div=document.createElement("div");
+      div.style.position = "absolute";
+      div.style.height = "1px";
+      div.style.width = "1px";
+      div.style.left = x + "px";
+      div.style.top = y + "px";
+      div.style.fontSize = "1px";
+      div.innerHTML = " ";
+      div.style.padding = "0px";
+      div.style.margin = "0px";
+      div.style.background = "black";
+      div.style.clip = "rect(0,1,1,0)";
+      target.appendChild(div);
+    }
+
+    var a = circle(300, 300, 250);
+      alert(a.length);
+      for (var m=0; m<a.length; m++) {
+      plot(a[m].x,a[m].y,document.body);
+    }
+  </script>
+</body>
+</html>
