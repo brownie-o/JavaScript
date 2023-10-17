@@ -67,13 +67,20 @@
     }
 
     #second {
-      width: 45%;
+      width: 20%;
       height: 4px;
-      background-color: #fff;
+      /* background-color: #fff; */
       position: absolute;
       transform-origin: right center;
-      left: 5%;
+      left: 30%;
       top: calc(50% - 2px);
+    }
+
+    #second #flower{
+      position: relative;
+      transform: rotate(-90deg);
+      right: 23px;
+      bottom: 20px;
     }
 
     #text {
@@ -104,24 +111,60 @@
       bottom: 10px;
     }
 
-    .display-none{
+    .display-none {
       display: none;
     }
 
-    #shy-guy{
+    #shy-guy {
       width: 35px;
       position: absolute;
-      left: 70%;
-      top: -1%;
+      left: 80%;
+      /* 70% */
+      top: -3%;
+      /* -1% */
       transform: translate(-50%, -50%);
     }
 
-    #eat{
+    #eat {
       width: 120px;
       position: absolute;
       left: 55%;
       top: -3%;
       transform: translate(-50%, -50%);
+    }
+
+    @keyframes shyguy {
+      from {
+        transform: translate(0, 0);
+      }
+
+      to {
+        transform: translate(-70px, 0px);
+      }
+    }
+
+    @keyframes display {
+      0% {
+        opacity: 0;
+        transform: scale(0);
+        -webkit-transform: scale(0);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+        -webkit-transform: scale(1);
+      }
+    }
+
+    .shyani {
+      animation: display 3s both;
+      animation: shyguy 5s ease-in 3s 1 normal both;
+    }
+
+    .eggani {
+      animation-name: display 5s;
+      display: inline-flex;
     }
   </style>
 </head>
@@ -168,7 +211,9 @@
     <div class="eggs">
       <img src="./img/pink.png" class="egg display-none">
     </div>
-    <div id="second"></div>
+    <div id="second">
+      <img src="./img/Ph03nyx-Super-Mario-Retro-Flower-Yoshi.ico" width="50" id="flower">
+    </div>
     <div id="center"></div>
     <img src="./img/shy-guy.png" id="shy-guy" class="display-none">
     <img src="./img/Mario-gif.gif" id="eat" class="display-none">
@@ -192,27 +237,38 @@
       const minute = date.getMinutes()
       const second = date.getSeconds()
 
+      const hours12 = () => {
+        return date.getHours() % 12 || 12;
+      }
+
       elHour.style.transform = `rotate(${hour * 30 + 90}deg)`
       elMinute.style.transform = `rotate(${minute * 6 + 90}deg)`
       elSecond.style.transform = `rotate(${second * 6 + 90}deg)`
 
-      if (minute >= 45){
+      if (minute >= 58) {
         elShyGuy.classList.remove('display-none')
-        setTimeout(()=> {
-          elShyGuy.classList.add('display-none')
-        }, 300000)
+        elShyGuy.classList.add('shyani')
       }
 
-      if (minute == 52 && second == 59) {
+      // if (minute == 0) {
+      //   elShyGuy.classList.add('display-none')
+      // }
+      
+      if (minute == 59 && second == 59) {
         elEat.classList.toggle('display-none')
-        setTimeout(()=> {
+        setTimeout(() => {
           elEat.classList.toggle('display-none')
         }, 1000)
       }
 
+      if (minute == 0 && second == 0) {
+        elEgg[hours12() - 1].classList.remove('display-none')
+        elEgg[hours12() - 1].classList.add('eggani')
+      }
+
       elTime.innerText = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`
     }
-    
+
     const egg = () => {
       const date = new Date()
       const hour = date.getHours()
@@ -220,11 +276,12 @@
 
       const hours12 = () => {
         return date.getHours() % 12 || 12;
-      }      
-      
+      }
+
       for (i = 0; i < hours12(); i++) {
         elEggs[i].style.transform = `rotate(${minute * 6 + 70 - (20 * i)}deg)`
         elEgg[i].classList.remove('display-none')
+
       }
     }
 
