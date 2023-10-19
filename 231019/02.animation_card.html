@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #imgs {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    #imgs>img {
+      margin-top: 100px;
+      float: left;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="imgs">
+    <img src="https://picsum.photos/200/200/?random=1">
+    <img src="https://picsum.photos/200/200/?random=2">
+    <img src="https://picsum.photos/200/200/?random=3">
+    <img src="https://picsum.photos/200/200/?random=4">
+    <img src="https://picsum.photos/200/200/?random=5">
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'
+    integrity='sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=='
+    crossorigin='anonymous'></script>
+  <script>
+    // .hover(滑鼠進入時, 滑鼠離開時)
+    // .hover(進入離開時)
+    // .mouseenter() .mouseout() 分開寫滑鼠進入/出去時
+    // .on('mouseenter') .on('mouseout')
+    $('#imgs>img').hover(function () {
+      $(this).stop().animate({ marginTop: 0 })
+      $(this).prev().stop().animate({ marginTop: 50 })
+      $(this).next().stop().animate({ marginTop: 50 })
+    }, function () {
+      $(this).stop().animate({ marginTop: 100 })
+      $(this).prev().stop().animate({ marginTop: 100 })
+      $(this).next().stop().animate({ marginTop: 100 })
+    })
+  </script>
+</body>
+
+</html>
