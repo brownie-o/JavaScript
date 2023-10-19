@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #img {
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+  <input type="button" value="變小" id="btn1">
+  <input type="button" value="往右" id="btn2">
+  <input type="button" value="往右下" id="btn3">
+  <input type="button" value="停止" id="btn4">
+  <input type="button" value="淡入" id="btn5">
+  <input type="button" value="淡出" id="btn6">
+  <input type="button" value="半透明" id="btn7">
+  <input type="button" value="透明開關" id="btn8">
+  <input type="button" value="滑入" id="btn9">
+  <input type="button" value="滑出" id="btn10">
+  <input type="button" value="滑入滑出" id="btn11">
+  <hr>
+  <img src="https://github.com/wdaweb.png" id="img">
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'
+    integrity='sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=='
+    crossorigin='anonymous'></script>
+  <script>
+    // .animate 只能改數字相關的CSS 要改顏色要安裝jQuery ui
+
+    $('#btn1').click(function () {
+      // .animate({CSS樣式: 值}, 動畫時間, 動畫播完的function(call back function))
+      // 動畫時間預設400ms, fast(200ms), slow(600ms)
+      // 'linear' 不填預設是swing (ease)
+      // 只有第一個({CSS樣式: 值})必填
+      $('#img').animate({
+        width: '100px',
+        height: '100px'
+        // 加上CSS 也會讓物件變inline-block
+      }, 'slow', function () {
+        console.log('變小了')
+        // 動畫跑完後才會跑call back function
+      })
+    })
+
+    $('#btn2').click(function () {
+      $('#img').animate({
+        left: '+=50px'
+        // 動畫時間跟call back function不一定要寫
+      }) 
+    })
+    // 動畫會等前面的動畫都播完才會往下播放
+
+    // 可以 animate({}).animate({})
+    $('#btn3').click(function(){
+      $('img').animate({
+        left: '+=50px'
+      }, 2000, 'linear', function(){
+        console.log('往右了')
+      }) .animate({
+        top: '+=50px'
+      }, 2000, 'linear', function(){
+        console.log('往下了')
+      })
+    })
+
+    $('#btn4').click(function(){
+      // .stop(是否停止之後的動畫, 是否跳到幕前動畫結束) 停止動畫
+      // 如果第二個值是true，第一個值就必須是true
+      // .stop() 都沒填 => 預設 = false, false
+      $('#img').stop(true, false)
+      // (true, true) 往右下: 還沒跑完往右的部分時就按下停止按鈕 會直接跳到往右最後會到的位置 並且不會往下
+      // (true, false) 原地停下
+      // (false) 直接播下一個
+    })
+
+    $('#btn5').click(function(){
+      // .fadeIn(時間, 'linear', 動畫播完的function)
+      $('#img').fadeIn()
+    })
+
+    $('#btn6').click(function(){
+      // .fadeIn(時間(1000 = 1s), 'linear', 動畫播完的function)
+      // 淡出後會display none 版面會跑掉
+      $('#img').fadeOut(10000, 'linear')
+    })
+
+    $('#btn7').click(function(){
+      // .fadeTo(時間, 不透明度, 'linear', 動畫播完的function)
+      // 時間和不透明度必填
+      $('#img').fadeTo(1000, 0.5)
+      // 0 = 完全透明 但圖片還在 版面不會跑掉
+      // $('#img').fadeTo(3000, 0)
+    })
+
+    $('#btn8').click(function(){
+      // .fadeToggle(時間, 'linear', 動畫播完的function)
+      // 透明度變0時會display none
+      $('#img').fadeToggle()
+    })
+
+    $('#btn9').click(function(){
+      // .slideDown(時間, 'linear', 動畫播完的function)
+      $('#img').slideDown()
+    })
+
+    $('#btn10').click(function(){
+      // .slideUp(時間, 'linear', 動畫播完的function)
+      // 播完會變display none
+      $('#img').slideUp()
+    })
+
+    $('#btn11').click(function(){
+      // .slideToggle(時間, 'linear', 動畫播完的function)
+      $('#img').slideToggle()
+    })
+  </script>
+</body>
+
+</html>
