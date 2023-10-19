@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <ul>
+    <li>1</li>
+    <li id="li">2</li>
+    <li>3</li>
+  </ul>
+  <p></p>
+  <p id="p"></p>
+  <p></p>
+
+  <input type="button" value="1" id="btn0" class="btn">
+  <input type="button" value="2" id="btn1" class="btn">
+  <input type="button" value="3" id="btn2" class="btn">
+  <input type="button" value="4" id="btn3" class="btn">
+
+  <p id="text"></p>
+
+  <div class="content">111</div>
+  <div class="content">222</div>
+  <div class="content">333</div>
+  <div class="content">444</div>
+  
+  <!-- F1 -> cdnjq > search for libery -> min.js -> insert into doc -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js' integrity='sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==' crossorigin='anonymous'></script>
+  <script>
+    // .index() = 這個元素在同層的第幾個，從0開始，找不到就是-1
+    // .index('選擇器') = 相對選擇器的位置
+    console.log($('#li').index())    // 1
+    console.log($('#p').index('p'))  // 1
+    console.log($('#p').index(''))   // 2 (連同層的ul也算進去)
+    console.log($('#p').index())     // 2
+    
+    $('.btn').click(function(){
+      $('.content').hide()
+      $('.content').eq($(this).index('.btn')).show()
+    })
+    
+    $('.btn').eq(0).click()
+
+
+    // const t0 = '111'
+    // const t1 = '222'
+    // const t2 = '333'
+    // const t3 = '444'
+    // const t = [t0, t1, t2, t3]
+    // console.log(t)
+    
+    // ok
+    // for (const el in $('input')){
+    //   $(`.btn${el}`).on('click', function(){
+    //     $('#text').text(`${t[el]}`)
+    //   })
+    // }
+
+    // ok
+    // $('.btn0').on('click', function(){
+    //     $('#text').text('111')
+    // })
+    // $('.btn1').on('click', function(){
+    //   $('#text').text('222')
+    // })
+    // $('.btn2').on('click', function(){
+    //   $('#text').text('333')
+    // })
+    // $('.btn3').on('click', function(){
+    //   $('#text').text('444')
+    // })
+
+  </script>
+</body>
+</html>
