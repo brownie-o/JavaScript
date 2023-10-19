@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #carousel {
+      width: 500px;
+      height: 500px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #imgs {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 2500px;
+    }
+
+    #imgs>img {
+      float: left;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="carousel">
+    <div id="imgs">
+      <img src="https://picsum.photos/500/500/?random=1">
+      <img src="https://picsum.photos/500/500/?random=2">
+      <img src="https://picsum.photos/500/500/?random=3">
+      <img src="https://picsum.photos/500/500/?random=4">
+      <img src="https://picsum.photos/500/500/?random=5">
+    </div>
+  </div>
+  <input type="button" value="&lt;" id="btn-left">
+  <input type="button" value="&gt;" id="btn-right">
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'
+  integrity='sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=='
+  crossorigin='anonymous'></script>
+  <script>
+    // 目前顯示的圖片索引
+    let now = 0
+    $('#btn-right').click(function () {
+      // now    (now + 1 < 5)   可不可以翻頁   下一張的left
+      // 0      1 < 5                O         -500
+      // 1      2 < 5                O         -1000
+      // 2      3 < 5                O         -1500
+      // 3      4 < 5                O         -2000
+      // 4      5 < 5                X
+
+      if(now + 1 < 5){
+        now++
+        $('#imgs')
+        .stop(true, true)
+        .animate({ left: now * -500 -25 }) // -25: 彈跳效果
+        .animate({ left: now * -500 })
+      }
+    })
+    $('#btn-left').click(function(){
+      if(now - 1 >= 0){
+        now--
+        $('#imgs')
+        .stop(true, true)
+        .animate({left: now * -500 +25})
+        .animate({left: now * -500})
+      }
+    })
+  </script>
+</body>
+
+</html>
