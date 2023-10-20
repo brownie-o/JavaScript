@@ -22,18 +22,8 @@
       height: 500px;
       position: relative;
       margin: auto;
-      top: calc((50% - 250px));
+      top: calc(50% - 250px);
       border: 3px white dotted;
-    }
-
-    #center {
-      width: 10px;
-      height: 10px;
-      position: relative;
-      background-color: #fff;
-      border-radius: 50%;
-      margin: auto;
-      top: calc(50% - 5px);
     }
 
     #hour {
@@ -46,11 +36,6 @@
       top: calc(50% - 4px);
     }
 
-    #hour #flower {
-      position: relative;
-      transform: rotate(-180deg);
-      bottom: 20px;
-    }
 
     #minute {
       width: 40%;
@@ -94,7 +79,7 @@
       display: inline-block;
       font-size: 2rem;
       position: absolute;
-      top: 43.5%;
+      top: 25%;
       left: 50%;
       transform: translate(-50%, -50%);
       background-color: rgba(255, 255, 255, 0.3);
@@ -124,10 +109,8 @@
     #shy-guy {
       width: 35px;
       position: absolute;
-      left: 80%;
-      /* 70% */
+      left: 65%;
       top: -3%;
-      /* -1% */
       transform: translate(-50%, -50%);
     }
 
@@ -139,47 +122,48 @@
       transform: translate(-50%, -50%);
     }
 
-    @keyframes shyguy {
-      from {
-        transform: translate(0, 0);
-      }
-
-      to {
-        transform: translate(-70px, 0px);
-      }
-    }
-
     @keyframes display {
       0% {
         opacity: 0;
-        transform: scale(0);
-        -webkit-transform: scale(0);
+        /* transform: scale(1);
+        -webkit-transform: scale(1); */
       }
 
       100% {
         opacity: 1;
-        transform: scale(1);
-        -webkit-transform: scale(1);
+        /* transform: scale(1);
+        -webkit-transform: scale(1); */
       }
     }
 
     .shyani {
-      animation: display 3s both;
-      animation: shyguy 5s ease-in 3s 1 normal both;
+      animation: display 2s forwards;
     }
 
     .eggani {
-      animation-name: display 5s;
-      display: inline-flex;
+      animation: display 2s forwards;
+      /* display: inline-flex; */
+    }
+
+
+    @keyframes spin { 
+        100% { 
+            transform:rotate(360deg); 
+        } 
+    }
+
+    #flower {
+      position: relative;
+      top: calc(50% - 25px);
+      left: calc(50% - 25px);
+      animation:spin 6s linear infinite;
     }
   </style>
 </head>
 
 <body>
   <div id="clock">
-    <div id="hour">
-      <img src="./img/Ph03nyx-Super-Mario-Retro-Flower-Yoshi.ico" width="50" id="flower">
-    </div>
+    <div id="hour"></div>
     <div id="minute">
       <img src="./img/download.png" width="50" id="yoshii">
     </div>
@@ -222,16 +206,17 @@
     <div id="second">
       <img src="./img/coin.png" width="30" id="coin">
     </div>
-    <!-- <div id="center"></div> -->
+
+    <img src="./img/Ph03nyx-Super-Mario-Retro-Flower-Yoshi.ico" width="50" id="flower">
     <img src="./img/shy-guy.png" id="shy-guy" class="display-none">
     <img src="./img/Mario-gif.gif" id="eat" class="display-none">
 
     <p id="text">00:00:00</p>
   </div>
 
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'
+  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'
     integrity='sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=='
-    crossorigin='anonymous'></script>
+    crossorigin='anonymous'></script> -->
   <script>
     const elHour = document.getElementById('hour')
     const elMinute = document.getElementById('minute')
@@ -261,11 +246,12 @@
         elShyGuy.classList.remove('display-none')
         elShyGuy.classList.add('shyani')
         // $('#shy-guy').removeClass('display-none')
-        // $('#shy-guy').animate({left: '-=70px'})
       }
 
-      if (minute == 0) {
-        elShyGuy.classList.add('display-none')
+      if (minute == 59 && second == 59) {
+        setTimeout(() => {
+          elShyGuy.classList.add('display-none')
+        }, 500)
       }
 
       if (minute == 59 && second == 59) {
@@ -302,7 +288,7 @@
     clock()
     setInterval(clock, 1000)
     egg()
-    setInterval(egg, 1000) 
+    setInterval(egg, 1000)
   </script>
 </body>
 
