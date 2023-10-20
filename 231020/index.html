@@ -137,6 +137,7 @@
               // 不允許按ESC關閉對話框
               allowEscapeKey: false,
             }).then(function (result) {
+              console.log(result) // {isConfirmed: true, isDenied: false, isDismissed: false, value: 'input的name'}
               // 對話框關閉時會跑.then
               // .then = promise 語法
               hs.score = score
