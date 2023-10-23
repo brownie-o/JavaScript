@@ -125,38 +125,48 @@
     @keyframes display {
       0% {
         opacity: 0;
-        /* transform: scale(1);
-        -webkit-transform: scale(1); */
       }
 
       100% {
         opacity: 1;
-        /* transform: scale(1);
-        -webkit-transform: scale(1); */
+      }
+    }
+
+    @keyframes move {
+      0% {
+        transform: translate(-50%, -50%);
+      }
+
+      50% {
+        transform: translate(-50%, -80%);
+      }
+
+      100% {
+        transform: translate(-50%, -50%);
       }
     }
 
     .shyani {
-      animation: display 2s forwards;
+      animation: display 2s forwards, move 5s 2s infinite forwards;
     }
 
     .eggani {
-      animation: display 2s forwards;
+      animation: display 1s forwards;
       /* display: inline-flex; */
     }
 
 
-    @keyframes spin { 
-        100% { 
-            transform:rotate(360deg); 
-        } 
+    @keyframes spin {
+      100% {
+        transform: rotate(-360deg);
+      }
     }
 
     #flower {
       position: relative;
       top: calc(50% - 25px);
       left: calc(50% - 25px);
-      animation:spin 6s linear infinite;
+      animation: spin 6s linear infinite;
     }
   </style>
 </head>
@@ -214,9 +224,6 @@
     <p id="text">00:00:00</p>
   </div>
 
-  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'
-    integrity='sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=='
-    crossorigin='anonymous'></script> -->
   <script>
     const elHour = document.getElementById('hour')
     const elMinute = document.getElementById('minute')
@@ -242,16 +249,15 @@
       elMinute.style.transform = `rotate(${minute * 6 + 90}deg)`
       elSecond.style.transform = `rotate(${second * 6 + 90}deg)`
 
-      if (minute >= 58) {
+      if (minute >= 59) {
         elShyGuy.classList.remove('display-none')
         elShyGuy.classList.add('shyani')
-        // $('#shy-guy').removeClass('display-none')
       }
 
       if (minute == 59 && second == 59) {
         setTimeout(() => {
           elShyGuy.classList.add('display-none')
-        }, 500)
+        }, 700)
       }
 
       if (minute == 59 && second == 59) {
@@ -276,12 +282,16 @@
 
       for (i = 0; i < hours12(); i++) {
         elEggs[i].style.transform = `rotate(${minute * 6 + 70 - (20 * i)}deg)`
+        if (hours12() === 1) {
+          for (j = 0; j < hours12(); j++) {
+            elEgg[j].classList.add('display-none')
+          }
+        };
         elEgg[i].classList.remove('display-none')
       }
 
       if (minute == 0 && second == 0) {
         elEgg[hours12() - 1].classList.add('eggani')
-        // $(`.egg[${hours12() - 1}]`).fadeIn()
       }
     }
 
