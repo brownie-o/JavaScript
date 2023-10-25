@@ -64,6 +64,7 @@
     // 檢查local storage有沒有最高分的資訊
     if (localStorage.hs) {
       // 取出最高分資訊
+      // JSON.parse()把JSON字串轉成js物件/值
       const data = JSON.parse(localStorage.hs)
       hs.name = data.name
       hs.score = data.score
@@ -150,8 +151,8 @@
               // localStorage.setItem(名稱, 文字)
               // localStorage.名稱 = 文字
               localStorage.hs = JSON.stringify(hs)
-              // JSON.stringify()把陣列或物件轉成文字
-              // JSON.parse()把文字轉成陣列
+              // JSON.stringify()把陣列或物件轉成JSON字串
+              // JSON.parse()把JSON字串轉成js物件/值
             })
           } else {
             Swal.fire({
