@@ -7,8 +7,8 @@
   <title>翻牌game</title>
   <style>
     .card {
-      width: 50px;
-      height: 90px;
+      width: 100px;
+      height: 180px;
       /* 讓裡面的正面 反面可以定位 */
       position: relative;
       float: left;
@@ -69,7 +69,7 @@
     // $(document).ready(function () {})
 
     // 產生16張卡片
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < 26; i++) {
       // 預設關牌 + card-close 的 class
       $('#game').append(`
       <div class="card card-close">
@@ -81,19 +81,24 @@
 
     // 決定每張數字
     $('.card').each(function (index) {
-      // 用八的餘數取 1 ~ 8的數字
-      console.log(index, index % 8 + 1)
-      const number = index % 8 + 1
-      $(this).find('.card-front').css('background-image', `url(./cards/${number}H.jpg)`)
+      // 用八的餘數取 1 ~ 13的數字
+      console.log(index, index % 13 + 1)
+      const number = index % 13 + 1
+      if (index <= 12) {
+        $(this).find('.card-front').css('background-image', `url(./cards/${number}H.jpg)`)
+      }
+      if (index > 12) {
+        $(this).find('.card-front').css('background-image', `url(./cards/${number}S.jpg)`)
+      }
       // data-* = 資料屬性, 把資料暫存在HTML標籤內。 *名稱自取 這邊就取number
       $(this).attr('data-number', number)
     })
 
     // 把牌打亂
-    for (let i = 0; i < 20; i++) {
-      const randomA = Math.round(Math.random() * 15) // 有16張牌 索引: 0~15
-      const randomB = Math.round(Math.random() * 15)
-      // 把第一個隨機到的卡片放到第二個隨機到的卡片後面， 跑20次
+    for (let i = 0; i < 40; i++) {
+      const randomA = Math.round(Math.random() * 25) // 有26張牌 索引: 0~25
+      const randomB = Math.round(Math.random() * 25)
+      // 把第一個隨機到的卡片放到第二個隨機到的卡片後面， 跑40次
       $('.card').eq(randomA).insertAfter($('.card').eq(randomB))
     }
 
