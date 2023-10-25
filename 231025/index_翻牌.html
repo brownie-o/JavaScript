@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>翻牌game</title>
   <style>
-    .card{
+    .card {
       width: 50px;
       height: 90px;
       /* 讓裡面的正面 反面可以定位 */
@@ -14,9 +15,11 @@
       margin: 10px;
       /* 設定子元素在3D空間內 */
       transform-style: preserve-3d;
+      /* 加上一秒鐘的轉場 */
+      transition: transform 1s;
     }
 
-    .card-front{
+    .card-front {
       width: 100%;
       height: 100%;
       background-image: url('./cards/1H.jpg');
@@ -29,7 +32,7 @@
       backface-visibility: hidden;
     }
 
-    .card-back{
+    .card-back {
       width: 100%;
       height: 100%;
       background-image: url('./cards/purple_back.jpg');
@@ -41,12 +44,96 @@
       transform: rotateY(180deg);
       backface-visibility: hidden;
     }
+
+    /* 蓋卡面狀態 */
+    .card-close {
+      transform: rotateY(180deg);
+    }
   </style>
 </head>
+
 <body>
-  <div class="card">
+  <!-- <div class="card">
     <div class="card-front"></div>
     <div class="card-back"></div>
+  </div> -->
+  <div id="game">
+
   </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'
+    integrity='sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=='
+    crossorigin='anonymous'></script>
+  <script>
+    // $(document).ready 當網頁元素都跑完了就會觸發的事件
+    // 簡寫: $(function(){})
+    // $(document).ready(function () {})
+
+    // 產生16張卡片
+    for (let i = 0; i < 16; i++) {
+      // 預設關牌 + card-close 的 class
+      $('#game').append(`
+      <div class="card card-close">
+        <div class="card-front"></div>
+        <div class="card-back"></div>
+      </div>
+      `)
+    }
+
+    // 決定每張數字
+    $('.card').each(function (index) {
+      // 用八的餘數取 1 ~ 8的數字
+      console.log(index, index % 8 + 1)
+      const number = index % 8 + 1
+      $(this).find('.card-front').css('background-image', `url(./cards/${number}H.jpg)`)
+      // data-* = 資料屬性, 把資料暫存在HTML標籤內。 *名稱自取 這邊就取number
+      $(this).attr('data-number', number)
+    })
+
+    // 把牌打亂
+    for (let i = 0; i < 20; i++) {
+      const randomA = Math.round(Math.random() * 15) // 有16張牌 索引: 0~15
+      const randomB = Math.round(Math.random() * 15)
+      // 把第一個隨機到的卡片放到第二個隨機到的卡片後面， 跑20次
+      $('.card').eq(randomA).insertAfter($('.card').eq(randomB))
+    }
+
+    // 翻牌
+    // 因為card是後來出現的 所以不能用$('.card')
+    $('#game').on('click', '.card', function () {
+      // 翻牌條件
+      if (
+        // .card 沒有 .card-close代表被翻開
+        // 如果已翻開數小於兩張才可以翻開
+        $('.card:not(.card-close)').length < 2 &&
+        // 且這張牌還沒翻開
+        $(this).hasClass('card-close') &&
+        // 這張牌還沒被配對
+        !$(this).hasClass('card-ok')
+      ) {
+        $(this).removeClass('card-close')
+      }
+
+      // 如果翻開兩張了
+      if ($('.card:not(.card-close)').length === 2) {
+        if (
+          $('.card:not(.card-close)').eq(0).attr('data-number') ===
+          $('.card:not(.card-close)').eq(1).attr('data-number')
+        ) {
+          $('.card:not(.card-close)').addClass('card-ok')
+          $('.card:not(.card-close)').fadeTo(1000, 0)
+        }
+
+        setTimeout(function () {
+          // 一秒後翻回來
+          $('.card:not(.card-close)').addClass('card-close')
+          // 過關判斷
+          if ($('.card-ok').length === $('.card').length) {
+            alert('過關')
+          }
+        }, 1000)
+      }
+    })
+  </script>
 </body>
+
 </html>
