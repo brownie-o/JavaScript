@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #game {
+      /* width: 1024px;
+      height: 768px; */
+      margin: auto;
+      padding: 0 20px 0 20px;
+    }
+
+    .card {
+      width: 100px;
+      height: 180px;
+      position: relative;
+      float: left;
+      margin: 10px;
+      transition: transform 1s;
+      transform-style: preserve-3d;
+    }
+
+    .card-front {
+      width: 100%;
+      height: 100%;
+      background-image: url('./pokemon/1s.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      position: absolute;
+      backface-visibility: hidden;
+    }
+
+    .card-back {
+      width: 100%;
+      height: 100%;
+      background-image: url('./pokemon/back.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      position: absolute;
+      transform: rotateY(180deg);
+      backface-visibility: hidden;
+    }
+
+    .flip-card {
+      transform: rotateY(180deg);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <div class="card">
+    <div class="card-front"></div>
+    <div class="card-back"></div>
+  </div> -->
+  <div id="game">
+
+  </div>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'
+    integrity='sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=='
+    crossorigin='anonymous'></script>
+  <script>
+    for (let i = 0; i < 39; i++) {
+      $('#game').append(`
+      <div class="card flip-card">
+        <div class="card-front"></div>
+        <div class="card-back"></div>
+      </div>
+      `)
+      const number = i % 20 + 1
+      if (i <= 18) {
+        $('.card-front').eq(i).css('background-image', `url('./pokemon/${number}s.png')`)
+      }
+      if (i == 19) {
+        $('.card-front').eq(i).css('background-image', `url('./pokemon/${number}s.png')`)
+      }
+      if (i >= 20) {
+        $('.card-front').eq(i).css('background-image', `url('./pokemon/${number}b.png')`)
+      }
+      $('.card').eq(i).attr('data-number', number)
+    }
+
+    for (let i = 0; i < 60; i++) {
+      const randomA = Math.round(Math.random() * 39)
+      const randomB = Math.round(Math.random() * 39)
+      $('.card').eq(randomA).insertAfter($('.card').eq(randomB))
+    }
+
+    $('#game').on('click', '.card', function () {
+      if (
+        $('.card:not(.flip-card)').length < 2 &&
+        !$(this).hasClass('paired') &&
+        $(this).hasClass('flip-card')
+      ) {
+        $(this).removeClass('flip-card')
+      }
+
+      if(
+        $('.card:not(.flip-card)').eq(0).attr('data-number') === 
+        $('.card:not(.flip-card)').eq(1).attr('data-number')){
+          $('.card:not(.flip-card)').fadeTo(1000, 0)
+      }
+
+      if ($('.card:not(.flip-card)').length === 2){
+        setTimeout(function(){
+          $('.card:not(.flip-card)').addClass('flip-card')
+        }, 1000)
+      }
+    })
+  </script>
+</body>
+
+</html>
