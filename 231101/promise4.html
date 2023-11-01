@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>同時開始的Promise</title>
+</head>
+
+<body>
+  <script>
+    const wait = (ms, ok) => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (ok) {
+            resolve(`過了 ${ms}秒`)
+          } else {
+            reject(`錯誤，過了 ${ms}秒`)
+          }
+        }, ms)
+      })
+    }
+
+    // Promise.all(Promise陣列)
+    // 一起開始，陣列內每個都resolve時，才會.then()
+    // 只要陣列內有一個reject，就會直接.catch()並收到那個錯誤
+    Promise.all([
+      // 大家一起開始，全都resolve時只經過三秒
+      wait(1000, true),
+      wait(2000, true),
+      wait(3000, true), 
+      // wait(4000, false) // 錯誤，過了 4000秒
+    ])
+      .then(result => {
+        console.log(result) 
+        // ['過了 1000秒', '過了 2000秒', '過了 3000秒']
+        // 錯誤，過了 4000秒
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+    // Promise.allSettled(Promise 陣列)
+    // 一起開始，陣列內每個都resolve或reject時，一起把狀態和結果放入.then()
+    // **不管成功失敗都會進入.then
+    Promise.allSettled([
+      wait(1000, true), 
+      wait(2000, false), 
+      wait(3000, true)
+    ]).then(results => {
+      // status: 'fulfilled' 或 'rejected'
+      // value: '過了 1000秒' (成功的結果)
+      // reason: '錯誤，過了 2000秒' (失敗的錯誤)
+      console.log(results)
+    })
+
+    // Promise.race(Promise陣列)
+    // 收到陣列內*第一個*有結果的Promise
+    // 如果是resolve就.then
+    // 如果是reject就.catch
+    Promise.race([
+      wait(1000, true), 
+      wait(2000, false), 
+      wait(3000, true)
+    ])
+      .then(result => {
+        console.log(result) // 過了 1000秒
+      })
+      .catch(error=> {
+        console.log(error)
+      })
+
+    // Promise.any(Promise陣列)
+    // 陣列內任意一個resolve的promise就會回傳第一個的.then結果
+    // .then() 收到的是第一個resolve的promise結果
+    // .catch() 當所有promise都reject時，會收到AggregateError: All promises were rejected
+    Promise.any([
+      wait(1000, false), 
+      wait(2000, true), 
+      wait(3000, false), 
+    ])
+      .then(result=>{
+        console.log(result) // 過了 2000秒
+      })
+      .catch(error=>{
+        console.log(error)
+      })
+  </script>
+</body>
+
+</html>
