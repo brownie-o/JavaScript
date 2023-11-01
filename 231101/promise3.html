@@ -21,7 +21,7 @@
       })
     }
 
-    // 一般寫法
+    // 一般寫法: promise & console.log一起執行
     // const aaa = wait(5000, true)
     // console.log(aaa) // Promise"pending"，因為五秒還沒到就console.log
     // wait(5000, true)
@@ -32,18 +32,33 @@
     //     console.log(error)
     //   })
 
-    // 好看async寫法
+
+
+    // async寫法: promise & console.log不同時執行
+    // async: 非同步，接續作業
     const main = async () => {
       try {
+        // await: 等待promise結束，resolve 或 reject
+        // 條件1: await後面只能接promise
+        // 條件2: await只能放在async functon裡面
+        // **async function也是一種promise
+
+        // 變數 = await Promise
+        // 變數會是Promise resolve的結果
+        // 如果Promise reject 會直接跳到catch
+
         const result1 = await wait(1000, true)
-        console.log(result1)
+        console.log(result1) // 過了 1000毫秒
         const result2 = await wait(1000, false)
-        console.log(result2)
+        console.log(result2) // 跳到catch
         const result3 = await wait(1000, true)
-        console.log(result3)
+        console.log(result3) // 不會執行
       } catch (error) {
-        console.log(error)
-      }
+        console.log('catch') // catch
+        console.log(error) // 錯誤，過了 1000毫秒
+      } //finally {
+        console.log('123')
+      //}
     }
     main()
   </script>
