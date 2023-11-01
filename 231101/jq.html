@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'
+    integrity='sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=='
+    crossorigin='anonymous'></script>
+  <script>
+    // 縮寫
+    // $.get('網址', 成功時執行的function, 回來的資料型態)
+    $.get('https://jsonplaceholder.typicode.com/posts', function (data) {
+      console.log(data[0].title)
+    }, 'json')
+
+    // 正式寫法
+    $.ajax({
+      url: 'https://jsonplaceholder.typicode.com/post', 
+      method: 'get',
+      // 回來的資料型態
+      dataType: 'json', 
+      // 成功時跑的
+      success: function(data){
+        console.log(data[0].title)
+      }, 
+      // 錯誤時跑的
+      error (xhr, textStatus, error){
+        // jq包裝後的xhr
+        console.log(xhr)
+        // 錯誤狀態，error、timeout、abort等
+        console.log(textStatus)
+        // 錯誤
+        console.log(error)
+      }, 
+      // 不管成功錯誤跑完時都會跑的
+      complete(){
+        console.log('完成')
+      }
+    })
+  </script>
+</body>
+
+</html>
