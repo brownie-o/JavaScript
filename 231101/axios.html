@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js'
+    integrity='sha512-WrdC3CE9vf1nBf58JHepuWT4x24uTacky9fuzw2g/3L9JkihgwZ6Cfv+JGTtNyosOhEmttMtEZ6H3qJWfI7gIQ=='
+    crossorigin='anonymous'></script>
+  <script>
+    axios.get('https://jsonplaceholder.typicode.com/posts')
+      .then(response => {
+        // data = 人家回給我們的資料
+        console.log(response)
+        console.log(response.data[0].title)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+    // 通常都包在async裡面
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
+        console.log(response)
+        console.log(response.data[0].title)
+      } catch (error) {
+        // 400 或 500都會跳到error
+        console.log('catch')
+        console.log(error)
+      }
+    }
+    fetchPosts()
+
+    // 解構 ch6
+    const fetchPosts2 = async () => {
+      try {
+        const { data } = await axios.get('https://jsonplaceholder.typicode.com/posts')
+        console.log(data[0].title)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  </script>
+</body>
+
+</html>
