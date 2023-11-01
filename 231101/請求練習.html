@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    h1 {
+      font-size: 20px;
+      text-align: center;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      text-align: center;
+    }
+
+    table td {
+      border: 1px solid #999999;
+    }
+  </style>
+</head>
+
+<body>
+  <table id="tbl">
+    <tr>
+      <td>標題</td>
+      <td>摘要</td>
+      <td>內容</td>
+      <td>作者</td>
+      <td>連結</td>
+    </tr>
+  </table>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js'
+    integrity='sha512-WrdC3CE9vf1nBf58JHepuWT4x24uTacky9fuzw2g/3L9JkihgwZ6Cfv+JGTtNyosOhEmttMtEZ6H3qJWfI7gIQ=='
+    crossorigin='anonymous'></script>
+  <script>
+    const table = document.getElementById('tbl')
+
+    const fetchTitle = async () => {
+      try {
+        const response = await axios.get('https://kktix.com/events.json')
+        const title = response.data['title']
+        const now = new Date()
+        const time = now.toLocaleString("zh-tw")
+        table.insertAdjacentHTML('beforebegin', `<h1>${title} (更新時間:${time})</h1>`)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchTitle()
+
+    const fetchPost = async () => {
+      try {
+        const response = await axios.get('https://kktix.com/events.json')
+        console.log(response)
+        for (i = 0; i < 100; i++) {
+          table.insertAdjacentHTML('beforeend',
+            `<tr>
+            <td>${response.data.entry[i].title}</td>
+            <td>${response.data.entry[i].summary}</td>
+            <td>${response.data.entry[i].content}</td>
+            <td><a href="${response.data.entry[i].author.uri}">${response.data.entry[i].author.name}</a></td>
+            <td><a href="${response.data.entry[i].title}">連結</a></td>
+          </tr>`)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchPost()
+  </script>
+</body>
+
+</html>
