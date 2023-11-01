@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const pass = true
+
+    const getMoney = new Promise((resolve, reject) => {
+      // resolve & reject 各只能帶一個參數
+      if (pass) {
+        resolve('恭喜')
+      } else {
+        // reject裡面一定要放錯誤物件(ex: Error())
+        reject(new Error('QQ'))
+      }
+    })
+
+    getMoney
+      // Promise resolve時執行.then()
+      // result 會是 resolve(內) 的東西
+      .then(result => {
+        console.log(result) // 恭喜
+      })
+      // Promise reject 時執行.catch()
+      // error 會是reject(內)的東西
+      .catch(error=>{
+        console.log(error)
+      })
+
+      // Promise 不管成功或失敗都會執行.finally()
+      .finally(()=>{
+        console.log('結束')
+      })
+  </script>
+</body>
+
+</html>
