@@ -10,7 +10,7 @@
       /* width: 1024px;
       height: 768px; */
       margin: auto;
-      padding: 0 20px 0 20px;
+      padding: 0 20px 0 65px;
     }
 
     .card {
@@ -51,22 +51,24 @@
     }
 
     #left-player{
-      margin-left: 30px;
+      margin-left: 75px;
       padding: 0 10px;
-      width: 180px;
-      height: 100px;
+      width: calc(50vw - 100px);
+      height: 180px;
       float: left;
       clear: both;
       background-color: rgba(0, 0, 0, 0.3);
+      box-sizing: border-box;
     }
 
     #right-player{
-      margin-right: 120px;
+      margin-right: 75px;
       padding:0 10px;
-      width: 180px;
-      height: 100px;
+      width: calc(50vw - 100px);
+      height: 180px;
       float: right;
       background-color: rgba(0, 0, 0, 0.3);
+      box-sizing: border-box;
     }
   </style>
 </head>
@@ -82,12 +84,12 @@
 
   <div id="left-player">
     <p>name: <input type="text" id="name-l" size="12"></p>
-    <p>score: <span id="score-l">0</span></p>
+    <div id="pokemon"></div>
   </div>
 
   <div id="right-player">
     <p>name: <input type="text" id="name-r" size="12"></p>
-    <p>score: <span id="score-r">0</span></p>
+    <div id="pokemon"></div>
   </div>
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'
