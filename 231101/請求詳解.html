@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <table id="table" border="1">
+    <caption>
+      <span id="title"></span>
+      <span id="updated"></span>
+    </caption>
+    <tr>
+      <td>標題</td>
+      <td>摘要</td>
+      <td>內容</td>
+      <td>作者</td>
+      <td>連結</td>
+    </tr>
+  </table>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js'
+    integrity='sha512-WrdC3CE9vf1nBf58JHepuWT4x24uTacky9fuzw2g/3L9JkihgwZ6Cfv+JGTtNyosOhEmttMtEZ6H3qJWfI7gIQ=='
+    crossorigin='anonymous'></script>
+  <script>
+    const table = document.getElementById('table')
+    const title = document.getElementById('title')
+    const updated = document.getElementById('updated')
+
+    const getEvents = async () => {
+      try {
+        const { data } = await axios.get('https://kktix.com/events.json')
+        title.innerText = data.title
+        updated.innerText = new Date(data.updated).toLocaleString()
+        for (const entry of data.entry) {
+          table.innerHTML += `
+          <tr>
+            <td>${entry.title}</td>
+            <td>${entry.summary}</td>
+            <td>${entry.content}</td>
+            <td>
+              <a href="${entry.author.uri}" target="_blank">${entry.author.name}</a>
+            </td>
+            <td>
+              <a href="${entry.url}" target="_blank">連結</a>
+            </td>
+          </tr>
+          `
+        }
+      } catch (error) {
+        alert('取得資料失敗')
+      }
+    }
+    getEvents()
+  </script>
+</body>
+
+</html>
