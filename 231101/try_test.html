@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // input = 傳入function的參數
+    const validate = input => {
+      try{
+        // 不接受空值
+        if (input === undefined || input === null){
+          // 拋出錯誤，讓程式直接跳到catch
+          // throw new Error('錯誤訊息')
+          throw new Error('沒有輸入內容')
+        }
+        // 只接受數字型態
+        else if(typeof input !== 'number'){
+          throw new Error('只接受數字')
+        }
+        // 只接受 >= 0
+        else if (input < 0){
+          throw new Error('數字必須大於等於0')
+        }
+        // 只接受 <= 10
+        else if (input > 10){
+          throw new Error('數字必須小於等於10')
+        }
+        return true
+      } catch (error){
+        // 錯誤的物件
+        console.log(error)
+        // 錯誤物件的名稱 
+        console.log(error.name)
+        // 錯誤物件的訊息
+        console.log(error.message)
+        return false
+      }
+    }
+
+    console.log(validate()) // Error: 沒有輸入內容
+    console.log(validate(0)) // true (10>=input>=0)
+    console.log(validate(10)) //true
+    console.log(validate('abc')) // Error: 只接受數字
+    console.log(validate(7)) // true
+  </script>
+</body>
+</html>
