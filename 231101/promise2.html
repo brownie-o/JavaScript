@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 用function包promise
+    // 依照傳入function的參數(pass)不同會有不同的結果
+    const getMoney = (pass) => {
+      return new Promise((resolve, reject) => {
+        if (pass) {
+          resolve('恭喜')
+        } else {
+          reject(new Error('QQ'))
+        }
+      })
+    }
+
+    const data = [true, true, true, false]
+
+    for (let i = 0; i < data.length; i++) {
+      getMoney(data[i])
+        .then(result => {
+          console.log(i, result) // 2 '恭喜' (第i個)
+        })
+        .catch(error => {
+          console.log(i, error) // 3 Error: QQ (第i個)
+        })
+    }
+  </script>
+</body>
+
+</html>

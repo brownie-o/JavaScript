@@ -31,13 +31,14 @@
       // Promise reject 時執行.catch()
       // error 會是reject(內)的東西，也可自行命名
       .catch(error=>{
-        console.log(error) // QQ
+        console.log(error) // Error: QQ
       })
 
       // Promise 不管成功或失敗都會執行.finally()
       .finally(()=>{
         console.log('結束')
       })
+      // 通常寫promise的時候.then() & .catch() 都也要寫。 .finally()不一定
   </script>
 </body>
 
