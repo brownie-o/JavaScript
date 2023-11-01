@@ -9,10 +9,11 @@
 
 <body>
   <script>
-    const pass = true
+    // const pass = true
+    const pass = false
 
     const getMoney = new Promise((resolve, reject) => {
-      // resolve & reject 各只能帶一個參數
+      // resolve & reject 各只能帶一個參數，也可自行命名
       if (pass) {
         resolve('恭喜')
       } else {
@@ -23,14 +24,14 @@
 
     getMoney
       // Promise resolve時執行.then()
-      // result 會是 resolve(內) 的東西
+      // result 會是 resolve(內) 的東西，也可自行命名
       .then(result => {
         console.log(result) // 恭喜
       })
       // Promise reject 時執行.catch()
-      // error 會是reject(內)的東西
+      // error 會是reject(內)的東西，也可自行命名
       .catch(error=>{
-        console.log(error)
+        console.log(error) // QQ
       })
 
       // Promise 不管成功或失敗都會執行.finally()
