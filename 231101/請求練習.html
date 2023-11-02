@@ -38,24 +38,15 @@
     crossorigin='anonymous'></script>
   <script>
     const table = document.getElementById('tbl')
-
-    const fetchTitle = async () => {
+    
+    const fetchPost = async () => {
       try {
         const response = await axios.get('https://kktix.com/events.json')
         const title = response.data['title']
         const now = new Date()
         const time = now.toLocaleString("zh-tw")
         table.insertAdjacentHTML('beforebegin', `<h1>${title} (更新時間:${time})</h1>`)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    fetchTitle()
-
-    const fetchPost = async () => {
-      try {
-        const response = await axios.get('https://kktix.com/events.json')
-        console.log(response)
+        // console.log(response)
         for (i = 0; i < 100; i++) {
           table.insertAdjacentHTML('beforeend',
             `<tr>
