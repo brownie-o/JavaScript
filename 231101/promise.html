@@ -18,6 +18,7 @@
         resolve('恭喜')
       } else {
         // reject裡面一定要放錯誤物件(ex: Error())
+        // Error() can be called with or without new. Both create a new Error instance.
         reject(new Error('QQ'))
       }
     })
