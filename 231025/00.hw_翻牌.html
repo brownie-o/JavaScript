@@ -70,6 +70,8 @@
       background-color: rgba(0, 0, 0, 0.3);
       box-sizing: border-box;
     }
+
+    
   </style>
 </head>
 
@@ -83,19 +85,19 @@
   </div>
 
   <div id="left-player">
-    <p>name: <input type="text" id="name-l" size="12"></p>
+    <p id="player1">name: -</p>
     <div id="pokemon"></div>
   </div>
 
   <div id="right-player">
-    <p>name: <input type="text" id="name-r" size="12"></p>
+    <p id="player2">name: -</p>
     <div id="pokemon"></div>
   </div>
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'
     integrity='sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=='
     crossorigin='anonymous'></script>
-  <script>
+  <script>    
     for (let i = 0; i < 39; i++) {
       $('#game').append(`
       <div class="card flip-card">
@@ -153,9 +155,13 @@
           }
         }, 1000)
       }
-
-
     })
+
+    const p1 = prompt(`玩家1的姓名:`) || 汪汪
+    const p2 = prompt(`玩家2的姓名:`) || 喵喵
+    $('#player1').html(`name: ${p1}`).css({color: 'white'})
+    $('#player2').html(`name: ${p2}`).css({color: 'white'})
+    // 為啥不能改顏色
   </script>
 </body>
 
