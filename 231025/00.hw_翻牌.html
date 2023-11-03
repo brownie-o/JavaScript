@@ -7,8 +7,6 @@
   <title>Document</title>
   <style>
     #game {
-      /* width: 1024px;
-      height: 768px; */
       margin: auto;
       padding: 0 20px 0 65px;
     }
@@ -51,24 +49,26 @@
     }
 
     #left-player{
-      margin-left: 75px;
+      margin: 25px 0 0 75px;
       padding: 0 10px;
-      width: calc(50vw - 100px);
+      width: calc(50vw - 120px);
       height: 180px;
       float: left;
       clear: both;
       background-color: rgba(0, 0, 0, 0.3);
       box-sizing: border-box;
+      border-radius: 20px;
     }
 
     #right-player{
-      margin-right: 75px;
+      margin: 25px 55px 0 0 ;
       padding:0 10px;
-      width: calc(50vw - 100px);
+      width: calc(50vw - 120px);
       height: 180px;
       float: right;
       background-color: rgba(0, 0, 0, 0.3);
       box-sizing: border-box;
+      border-radius: 20px;
     }
 
     
@@ -94,6 +94,7 @@
     <div id="pokemon"></div>
   </div>
 
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.9.0/sweetalert2.all.min.js' integrity='sha512-LTmGiRLYz7G5Sxr4MMXGaOfia3kGZKGAlXzrSCGc4GBGxymu1RGwhFFGwiOQUm+bJOGlV0AmHd1S7zeFlwzkFQ==' crossorigin='anonymous'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'
     integrity='sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=='
     crossorigin='anonymous'></script>
@@ -113,7 +114,7 @@
         $('.card-front').eq(i).css('background-image', `url('./pokemon/${number}s.png')`)
       }
       if (i >= 20) {
-        $('.card-front').eq(i).css('background-image', `url('./pokemon/${number}b.png')`)
+        $('.card-front').eq(i).css('background-image', `url('./pokemon/${number}s.png')`)
       }
       $('.card').eq(i).attr('data-number', number)
     }
@@ -157,11 +158,23 @@
       }
     })
 
-    const p1 = prompt(`玩家1的姓名:`) || 汪汪
-    const p2 = prompt(`玩家2的姓名:`) || 喵喵
-    $('#player1').html(`name: ${p1}`).css({color: 'white'})
-    $('#player2').html(`name: ${p2}`).css({color: 'white'})
-    // 為啥不能改顏色
+    // 玩家命名
+    Swal.fire({
+      title: 'Player 1',
+      input: 'text',
+      inputLabel: 'Please enter your name',
+      inputPlaceholder: '請輸入你的名字',
+    }).then(function(result){
+      $('#player1').html(`name: ${result.value || '汪汪'}`).css({color: 'white', 'font-size': '20px', margin: '10px'})
+      Swal.fire({
+        title: 'Player 2',
+        input: 'text',
+        inputLabel: 'Please enter your name',
+        inputPlaceholder: '請輸入你的名字',
+      }).then(function(result){
+        $('#player2').html(`name: ${result.value || '喵喵'}`).css({color: 'white', 'font-size': '20px', margin: '10px'})
+      })
+    })
   </script>
 </body>
 
