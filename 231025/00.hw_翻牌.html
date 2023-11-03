@@ -6,9 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
+    html{
+      cursor: url('./pokemon/cursor_left_hand.png') 45 5, auto;
+      /* cursor: url('./pokemon/cursor_right_hand.png') 15 5, auto; */
+    }
+
     #game {
+      width: 100%;
+      height: calc(100vh - 330px);
       margin: auto;
-      padding: 0 20px 0 65px;
+      padding: 0 20px 0 55px;
+      overflow: hidden;
+      box-sizing: border-box;
     }
 
     .card {
@@ -48,7 +57,7 @@
       transform: rotateY(180deg);
     }
 
-    #left-player{
+    #left-player {
       margin: 25px 0 0 75px;
       padding: 0 10px;
       width: calc(50vw - 120px);
@@ -58,20 +67,63 @@
       background-color: rgba(0, 0, 0, 0.3);
       box-sizing: border-box;
       border-radius: 20px;
+      position: relative;
+      color: white;
+      font-size: 20px;
     }
 
-    #right-player{
-      margin: 25px 55px 0 0 ;
-      padding:0 10px;
+    #right-player {
+      margin: 25px 55px 0 0;
+      padding: 0 10px;
       width: calc(50vw - 120px);
       height: 180px;
       float: right;
       background-color: rgba(0, 0, 0, 0.3);
       box-sizing: border-box;
       border-radius: 20px;
+      position: relative;
+      color: white;
+      font-size: 20px;
     }
 
-    
+    #player1,
+    #player2 {
+      padding: 15px;
+      line-height: 20px;
+      position: absolute;
+    }
+
+    #left-player img{
+      width: 200px;
+      top: 40px;
+      left: -70px;
+      position: absolute;
+    }
+
+    #right-player img{
+      width: 200px;
+      top: 40px;
+      float: right;
+      position: absolute;
+      right: -60px;
+    }
+
+    #pokemon{
+      width: 84%;
+      height: 125px;
+      position: absolute;
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    #left-player #pokemon{
+      left: 110px;
+      top: 22%;
+    }
+
+    #right-player #pokemon{
+      left: 20px;
+      top: 22%;
+    }
   </style>
 </head>
 
@@ -85,20 +137,25 @@
   </div>
 
   <div id="left-player">
-    <p id="player1">name: -</p>
+    <span id="player1">name: -</span>
     <div id="pokemon"></div>
+    <img src="./pokemon/left-player.png" alt="">
   </div>
 
   <div id="right-player">
-    <p id="player2">name: -</p>
+    <span id="player2">name: -</span>
     <div id="pokemon"></div>
+    <img src="./pokemon/right-player.png" alt="">
   </div>
 
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.9.0/sweetalert2.all.min.js' integrity='sha512-LTmGiRLYz7G5Sxr4MMXGaOfia3kGZKGAlXzrSCGc4GBGxymu1RGwhFFGwiOQUm+bJOGlV0AmHd1S7zeFlwzkFQ==' crossorigin='anonymous'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.9.0/sweetalert2.all.min.js'
+    integrity='sha512-LTmGiRLYz7G5Sxr4MMXGaOfia3kGZKGAlXzrSCGc4GBGxymu1RGwhFFGwiOQUm+bJOGlV0AmHd1S7zeFlwzkFQ=='
+    crossorigin='anonymous'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'
     integrity='sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=='
     crossorigin='anonymous'></script>
-  <script>    
+  <script>
+    // 產生卡片
     for (let i = 0; i < 39; i++) {
       $('#game').append(`
       <div class="card flip-card">
@@ -151,7 +208,7 @@
 
         setTimeout(function () {
           $('.card:not(.flip-card)').addClass('flip-card')
-          if ($('.card').length === $('.paired').length){
+          if ($('.card').length === $('.paired').length) {
             alert('過關')
           }
         }, 1000)
@@ -164,15 +221,15 @@
       input: 'text',
       inputLabel: 'Please enter your name',
       inputPlaceholder: '請輸入你的名字',
-    }).then(function(result){
-      $('#player1').html(`name: ${result.value || '汪汪'}`).css({color: 'white', 'font-size': '20px', margin: '10px'})
+    }).then(function (result) {
+      $('#player1').html(`name: ${result.value || '汪汪'}`)
       Swal.fire({
         title: 'Player 2',
         input: 'text',
         inputLabel: 'Please enter your name',
         inputPlaceholder: '請輸入你的名字',
-      }).then(function(result){
-        $('#player2').html(`name: ${result.value || '喵喵'}`).css({color: 'white', 'font-size': '20px', margin: '10px'})
+      }).then(function (result) {
+        $('#player2').html(`name: ${result.value || '喵喵'}`)
       })
     })
   </script>
