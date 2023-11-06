@@ -16,7 +16,6 @@
       height: calc(100vh - 330px);
       margin: auto;
       padding: 0 20px 0 55px;
-      overflow: hidden;
       box-sizing: border-box;
     }
 
@@ -95,14 +94,14 @@
       position: absolute;
     }
 
-    #left-player img {
+    #left-player #img {
       width: 200px;
       top: 40px;
       left: -70px;
       position: absolute;
     }
 
-    #right-player img {
+    #right-player #img {
       width: 200px;
       top: 40px;
       float: right;
@@ -113,19 +112,12 @@
     #pokemon {
       width: 84%;
       height: 125px;
-      position: absolute;
+      position: relative;
       background: rgba(255, 255, 255, 0.5);
     }
-
-    #pokemon img{
-      height: 62.5px;
-      width: 62px;
-      position: relative;
-      float: left;
-    }
-
+    
     #left-player #pokemon {
-      left: 110px;
+      left: 85px;
       top: 22%;
     }
 
@@ -133,6 +125,13 @@
       left: 20px;
       top: 22%;
     }
+
+    #pokemon img{
+      height: 62.5px;
+      position: relative;
+      float: left;
+    }
+
   </style>
 </head>
 
@@ -148,13 +147,13 @@
   <div id="left-player">
     <span id="player1">name: -</span>
     <div id="pokemon"></div>
-    <img src="./pokemon/left-player.png">
+    <img src="./pokemon/left-player.png" id="img">
   </div>
 
   <div id="right-player">
     <span id="player2">name: -</span>
     <div id="pokemon"></div>
-    <img src="./pokemon/right-player.png">
+    <img src="./pokemon/right-player.png" id="img">
   </div>
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.9.0/sweetalert2.all.min.js'
@@ -203,18 +202,23 @@
       $('#right-player').css({ 'box-shadow': '10px -10px 15px rgb(250, 253, 198)' })
     }
 
+    // switch(player){
+    //   case P1: P1();
+    //   break;
+    //   case
+    // }
+    // .toggle()??
+
     // 點擊事件
-    $('#game').on('click', '.card', function () {
+    $('#game').on('click', '.card', function (index) {
       const P1Score = 0
       const P2Score = 0
-
 
       if ($(this).attr('data-number') == 20) {
         $(this).addClass('paired')
         $(this).fadeTo(1000, 0)
         // score+=1000
         $('#pokemon').append(`<img src="./pokemon/20s.png">`)
-        // 位置跑掉
       }
 
       if (
@@ -226,51 +230,71 @@
       }
 
       if ($('.card:not(.flip-card)').length === 2) {
+
         if (
           $('.card:not(.flip-card)').eq(0).attr('data-number') ===
           $('.card:not(.flip-card)').eq(1).attr('data-number')
         ) {
           $('.card:not(.flip-card)').fadeTo(1000, 0)
           $('.card:not(.flip-card)').addClass('paired')
-          // score+=1000
+          // 只加現在翻開的那張圖片到pokemon區/只加一張圖片 - not working for now
+          // $('#pokemon').append(`<img src="./pokemon/${$('.card:not(.flip-card)').eq(0).attr('data-number')}b.png">`)
           $('#pokemon').append(`<img src="./pokemon/${$(this).attr('data-number')}b.png">`)
-          // 位置跑掉22
+          // score+=1000
         }
 
         setTimeout(function () {
           $('.card:not(.flip-card)').addClass('flip-card')
           if ($('.card').length === $('.paired').length) {
-            Swal.fire('過關', '恭喜', 'success')
+            
+            const add = setInterval(()=>{
+              for(let i = 0; i < $('#pokemon>img').length; i++){
+                $('#pokemon>img').eq(i).attr('src', './pokemon/Poke_Ball.webp')
+              }
+            }, 1000)
+            const ball = () => {
+              for(let i = 0; i < $('#pokemon>img').length; i++){
+                const a = () => {$('#pokemon>img').eq(i).attr('src', './pokemon/Poke_Ball.webp')}
+                setTimeout(add, 1000)
+              }
+              // $('#pokemon>img').each(function(index, img){
+              //   setTimeout(()=>{
+              //     $(img).attr('src', './pokemon/Poke_Ball.webp')
+              //   }, 1000)
+              // })
+            }
+            ball()
+            // Swal.fire('過關', '恭喜', 'success')
           }
         }, 600)
       }
     })
 
     // instruction
-    Swal.fire({
-      title: '寶可夢對對碰',
-      html: `<li>兩人對戰，配對成功的話可以再翻一次。</li>
-      <li>翻到隱藏角色"皮卡丘"直接算配對成功！</li>`,
-      icon: 'info'
-    }).then(function(){
-      // 玩家命名
-      Swal.fire({
-        title: 'Player 1',
-        input: 'text',
-        inputLabel: 'Please enter your name',
-        inputPlaceholder: '請輸入你的名字',
-      }).then(function (result) {
-        $('#player1').html(`name: ${result.value || '汪汪'}`)
-        Swal.fire({
-          title: 'Player 2',
-          input: 'text',
-          inputLabel: 'Please enter your name',
-          inputPlaceholder: '請輸入你的名字',
-        }).then(function (result) {
-          $('#player2').html(`name: ${result.value || '喵喵'}`)
-        })
-      })
-    })
+    // Swal.fire({
+    //   title: '寶可夢對對碰',
+    //   html: `<li>兩人對戰，配對成功的話可以再翻一次。</li>
+    //   <li>翻到隱藏角色"皮卡丘"直接算配對成功！</li>`,
+    //   icon: 'info'
+    // }).then(function(){
+    //   // 玩家命名
+    //   Swal.fire({
+    //     title: 'Player 1',
+    //     input: 'text',
+    //     inputLabel: 'Please enter your name',
+    //     inputPlaceholder: '請輸入你的名字',
+    //   }).then(function (result) {
+    //     $('#player1').html(`name: ${result.value || '汪汪'}`)
+    //     Swal.fire({
+    //       title: 'Player 2',
+    //       input: 'text',
+    //       inputLabel: 'Please enter your name',
+    //       inputPlaceholder: '請輸入你的名字',
+    //     }).then(function (result) {
+    //       $('#player2').html(`name: ${result.value || '喵喵'}`)
+    //     })
+    //   })
+    // })
   </script>
 </body>
 
