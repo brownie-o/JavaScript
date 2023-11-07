@@ -56,7 +56,7 @@
       transform: rotateY(180deg);
     }
 
-    #left-player {
+    #left {
       margin: 25px 0 0 75px;
       padding: 0 10px;
       width: calc(50vw - 120px);
@@ -72,7 +72,7 @@
       /* box-shadow: 10px -10px 15px rgb(250, 253, 198); */
     }
 
-    #right-player {
+    #right {
       margin: 25px 55px 0 0;
       padding: 0 10px;
       width: calc(50vw - 120px);
@@ -94,14 +94,14 @@
       position: absolute;
     }
 
-    #left-player #img {
+    #left #img {
       width: 200px;
       top: 40px;
       left: -70px;
       position: absolute;
     }
 
-    #right-player #img {
+    #right #img {
       width: 200px;
       top: 40px;
       float: right;
@@ -116,12 +116,12 @@
       background: rgba(255, 255, 255, 0.5);
     }
 
-    #left-player #pokemon {
+    #left #pokemon {
       left: 85px;
       top: 22%;
     }
 
-    #right-player #pokemon {
+    #right #pokemon {
       left: 20px;
       top: 22%;
     }
@@ -147,13 +147,13 @@
 
   </div>
 
-  <div id="left-player">
+  <div id="left">
     <span id="player1">name: -</span>
     <div id="pokemon"></div>
     <img src="./pokemon/left-player.png" id="img">
   </div>
 
-  <div id="right-player">
+  <div id="right">
     <span id="player2">name: -</span>
     <div id="pokemon"></div>
     <img src="./pokemon/right-player.png" id="img">
@@ -206,12 +206,12 @@
       $('#right-player').css({ 'box-shadow': '10px -10px 15px rgb(250, 253, 198)' })
     }
 
-    var player = 1
-    if (player == 1) {
+    var player = 'left'
+    if (player = 'left') {
       $('html').css({ 'cursor': `url('./pokemon/cursor_left_hand.png') 45 5, auto;` })
       $('#left-player').css({ 'box-shadow': '10px -10px 15px rgb(250, 253, 198)' })
     } else {
-      player = 2
+      player = 'right'
       $('html').css('cursor', `url('./pokemon/cursor_right_hand.png') 15 5, auto;`)
       $('#right-player').css({ 'box-shadow': '10px -10px 15px rgb(250, 253, 198)' })
     }
@@ -262,11 +262,18 @@
         }
 
         // 切換玩家
+        // need to define "win"
+        // https://codereview.stackexchange.com/questions/168941/function-to-alternate-players-turns-unless-a-player-has-won
+        function whoseMove(player, win) {
+          if (win) return player;
+          return player == "left" ? "right" : "left";
+        }
+
         if (
           $('.card:not(.flip-card)').eq(0).attr('data-number') !==
           $('.card:not(.flip-card)').eq(1).attr('data-number')
-        ) { player = 1
-
+        ) { 
+          player = 'left'
         }
 
         setTimeout(function () {
