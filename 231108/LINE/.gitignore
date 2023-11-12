@@ -1,0 +1,3 @@
+.env
+node_modules
+# 讓git忽略掉的檔案
