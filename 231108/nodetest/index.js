@@ -103,6 +103,7 @@ console.log(cc.arr1)       // [ 3, 2, 3, 4, 5 ]
 // 2. npm i linebot axios dotenv
 // dotenv: 讀取env檔案的套件
 
+// 安裝 .eslintrc.json
 // 如果被包在資料夾裡面就無法用 F1 => Eslint:Create
 // 自己打: npx eslint --init (初始化設定)
 //  check syntax, style
@@ -116,3 +117,15 @@ console.log(cc.arr1)       // [ 3, 2, 3, 4, 5 ]
 //  npm (套件管理員)
 // ctrl+c =取消 重來
 
+// package.json => 
+// "scripts": {
+//  "predev": "node a.js",
+//  "dev": "node index.js",
+//  "postdev": "node b.js"
+// }
+
+// 開啟機器人
+// npm run dev
+
+// 開啟3000的PORT, set to public
+// update Webhook url(line bot) to forwarded address
