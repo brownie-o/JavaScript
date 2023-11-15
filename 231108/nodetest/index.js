@@ -95,15 +95,24 @@ console.log(cc.arr1)       // [ 3, 2, 3, 4, 5 ]
 // -D only adds the package to your “dev dependencies,” which means they'll only be installed when developing the project, and not when building the finalized production version of the project.
 // npm un ____ ____ ____ (uninstall 套件)
 
-// 如果被包在資料夾裡面就無法用 F1 Create
+// install: 
+// 1. npm i -D eslint nodemon
+// eslint: 強制程式風格的套件
+// nodemon: 重整瀏覽器就可以看到變更的套件
+
+// 2. npm i linebot axios dotenv
+// dotenv: 讀取env檔案的套件
+
+// 如果被包在資料夾裡面就無法用 F1 => Eslint:Create
 // 自己打: npx eslint --init (初始化設定)
 //  check syntax, style
-//  import(esm
-//  Typescript No
+//  JS import(esm
+//  None of these
 //  node
-//  guide
+//  popular guide
 //  standard
 //  Json
 //  Yes
 //  npm (套件管理員)
 // ctrl+c =取消 重來
+
