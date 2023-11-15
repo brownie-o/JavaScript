@@ -6,7 +6,7 @@
     "contents": [
       {
         "type": "image",
-        "url": "https://p2.bahamut.com.tw/B/ACG/c/26/0000136226.JPG",
+        "url": "https://p2.bahamut.com.tw/B/ACG/c/64/0000136164.JPG",
         "size": "full",
         "aspectMode": "cover",
         "aspectRatio": "1:1",
@@ -43,7 +43,7 @@
                 "contents": [
                   {
                     "type": "text",
-                    "text": "進擊的巨人 The Final Season 完結篇 後篇",
+                    "text": "暴走哈姆醬",
                     "size": "xl",
                     "color": "#ffffff"
                   }
@@ -75,7 +75,7 @@
                   },
                   {
                     "type": "text",
-                    "text": "5.0",
+                    "text": "4.8",
                     "color": "#a9a9a9"
                   }
                 ],
@@ -91,7 +91,7 @@
                     "contents": [
                       {
                         "type": "text",
-                        "text": "22,490人評價",
+                        "text": "53人評價",
                         "color": "#ffffff",
                         "size": "md",
                         "flex": 0,

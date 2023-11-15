@@ -129,3 +129,6 @@ console.log(cc.arr1)       // [ 3, 2, 3, 4, 5 ]
 
 // 開啟3000的PORT, set to public
 // update Webhook url(line bot) to forwarded address
+
+// 排程套件 https://www.npmjs.com/package/node-schedule
+// npm i node-schedule

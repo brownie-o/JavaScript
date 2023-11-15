@@ -30,7 +30,14 @@ export default async (event) => {
     // 評分人數
     template.body.contents[2].contents[0].contents[2].contents[0].contents[0].text = $('.score-overall-people').text()
 
-    fs.writeFileSync('./dump/anime.json', JSON.stringify(template, null, 2))
+    if (process.env.DEBUG === 'true') {
+      fs.writeFileSync('./dump/anime.json', JSON.stringify(template, null, 2))
+    }
+
+    // fs=檔案系統
+    // fs.mkdirSync(./dump)
+    // 檢查檔案資料夾是否存在
+    // fs.existsSync(./dump)
 
     const result = await event.reply({
       type: 'flex',
