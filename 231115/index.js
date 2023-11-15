@@ -3,6 +3,8 @@ import 'dotenv/config'
 // 有from 執行並拉進來
 import linebot from 'linebot'
 import fe from './commands/fe.js'
+import be from './commands/be.js'
+import anime from './commands/anime.js'
 
 const bot = linebot({
   channelId: process.env.CHANNEL_ID,
@@ -17,6 +19,11 @@ bot.on('message', event => {
   if (event.message.type === 'text') {
     if (event.message.text === '前端') {
       fe(event)
+    } else if (event.message.text === '後端') {
+      be(event)
+      // .startsWith('') 訊息是以''開頭
+    } else if (event.message.text.startsWith('動畫')) {
+      anime(event)
     }
   }
 })
