@@ -6,11 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    html {
-      cursor: url('./pokemon/cursor_left_hand.png') 45 5, auto;
-      /* cursor: url('./pokemon/cursor_right_hand.png') 15 5, auto; */
-    }
-
     #game {
       width: 100%;
       height: calc(100vh - 330px);
@@ -85,6 +80,14 @@
       color: white;
       font-size: 20px;
       /* box-shadow: 10px -10px 15px rgb(250, 253, 198); */
+    }
+
+    .leftPlayer{
+      cursor: url('./pokemon/cursor_left_hand.png') 45 5, auto;
+    }
+
+    .rightPlayer{
+      cursor: url('./pokemon/cursor_right_hand.png') 15 5, auto;
     }
 
     #player1,
@@ -194,27 +197,32 @@
       $('.card').eq(randomA).insertAfter($('.card').eq(randomB))
     }
 
-    
+    // 設定玩家手手
+    let player = "right"
+    function playerHand(player) {
+      // $('html').css({ 'cursor': 'default' })
+      $('#left').css({ 'box-shadow': 'none' })
+      $('#right').css({ 'box-shadow': 'none' })
+      if (player === "left") {
+        $('html').removeClass('rightPlayer').addClass('leftPlayer')
+        $('#left').css({ 'box-shadow': '10px -10px 15px rgb(250, 253, 198)' })
+      }
+      if (player === "right") {
+        $('html').removeClass('leftPlayer').addClass('rightPlayer')
+        $('#right').css({ 'box-shadow': '10px -10px 15px rgb(250, 253, 198)' })
+      }
+    }
+    playerHand(player)
+
+
     // 點擊事件
     $('#game').on('click', '.card', function (index) {
       const P1Score = 0
       const P2Score = 0
 
-      // 設定玩家手手
-      if (player = 'left') {
-        $('html').css({ 'cursor': `url('./pokemon/cursor_left_hand.png') 45 5, auto;` })
-        $('#left-player').css({ 'box-shadow': '10px -10px 15px rgb(250, 253, 198)' })
-      } 
-      
-      if (player = 'right') {
-        $('html').css('cursor', `url('./pokemon/cursor_right_hand.png') 15 5, auto;`)
-        $('#right-player').css({ 'box-shadow': '10px -10px 15px rgb(250, 253, 198)' })
-      }
-
       if ($(this).attr('data-number') == 20) {
         $(this).addClass('paired')
         $(this).fadeTo(1000, 0)
-        // score+=1000
         $('#pokemon').append(`<img src="./pokemon/20s.png">`)
       }
 
@@ -227,7 +235,7 @@
       }
 
       if ($('.card:not(.flip-card)').length === 2) {
-        let player = "left"
+        // let player = "left"
         if (
           $('.card:not(.flip-card)').eq(0).attr('data-number') ===
           $('.card:not(.flip-card)').eq(1).attr('data-number')
@@ -236,31 +244,33 @@
           $('.card:not(.flip-card)').addClass('paired')
 
           const win = ($('.card:not(.flip-card)').eq(0).attr('data-number') ===
-          $('.card:not(.flip-card)').eq(1).attr('data-number'))
+            $('.card:not(.flip-card)').eq(1).attr('data-number'))
 
-          // if (!win){
-          //   player = whoseMove(player, win)
-          // }
-          // console.log(player)
+          if (win) {
+            setTimeout(()=> {
+              player = whoseMove(player, win)
+              playerHand(player)
+            }, 1000)
+          }
+          console.log(player)
 
-          // 只加現在翻開的那張圖片到pokemon區/只加一張圖片 - not working for now
-          // or停止點擊for 1s? -> pointer-events: none, 1s
-          $(`#${player.toString()}#pokemon`).append(`<img src="./pokemon/${$(this).attr('data-number')}b.png">`)
+          $(`#${player}#pokemon`).append(`<img src="./pokemon/${$(this).attr('data-number')}b.png">`)
           $('#game').addClass('disableClick')
           setTimeout(() => {
             $('#game').removeClass('disableClick')
           }, 1000)
           // score+=1000
 
-          // player = whoseMove(player, win)
         } else {
-          player = whoseMove(player, true)
-          console.log(player)
+          setTimeout(()=> {
+            player = whoseMove(player, false)
+            playerHand(player)
+            console.log(player)
+          }, 1000)
         }
 
         // 切換玩家的function
         function whoseMove(player, win) {
-          // kamikada
           return win ? player : (player === "left" ? "right" : "left")
         }
 
