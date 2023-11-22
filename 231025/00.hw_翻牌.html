@@ -194,39 +194,22 @@
       $('.card').eq(randomA).insertAfter($('.card').eq(randomB))
     }
 
-    // player
-    const P1 = function () {
-      $('html').css({ 'cursor': `url('./pokemon/cursor_left_hand.png') 45 5, auto;` })
-      $('#left-player').css({ 'box-shadow': '10px -10px 15px rgb(250, 253, 198)' })
-    }
-
-    const P2 = function () {
-      // !!不會變
-      $('html').css('cursor', `url('./pokemon/cursor_right_hand.png') 15 5, auto;`)
-      $('#right-player').css({ 'box-shadow': '10px -10px 15px rgb(250, 253, 198)' })
-    }
-
-    var player = 'left'
-    if (player = 'left') {
-      $('html').css({ 'cursor': `url('./pokemon/cursor_left_hand.png') 45 5, auto;` })
-      $('#left-player').css({ 'box-shadow': '10px -10px 15px rgb(250, 253, 198)' })
-    } else {
-      player = 'right'
-      $('html').css('cursor', `url('./pokemon/cursor_right_hand.png') 15 5, auto;`)
-      $('#right-player').css({ 'box-shadow': '10px -10px 15px rgb(250, 253, 198)' })
-    }
-
-    // switch(player){
-    //   case P1: P1();
-    //   break;
-    //   case
-    // }
-    // .toggle()??
-
+    
     // 點擊事件
     $('#game').on('click', '.card', function (index) {
       const P1Score = 0
       const P2Score = 0
+
+      // 設定玩家手手
+      if (player = 'left') {
+        $('html').css({ 'cursor': `url('./pokemon/cursor_left_hand.png') 45 5, auto;` })
+        $('#left-player').css({ 'box-shadow': '10px -10px 15px rgb(250, 253, 198)' })
+      } 
+      
+      if (player = 'right') {
+        $('html').css('cursor', `url('./pokemon/cursor_right_hand.png') 15 5, auto;`)
+        $('#right-player').css({ 'box-shadow': '10px -10px 15px rgb(250, 253, 198)' })
+      }
 
       if ($(this).attr('data-number') == 20) {
         $(this).addClass('paired')
@@ -244,36 +227,41 @@
       }
 
       if ($('.card:not(.flip-card)').length === 2) {
-
+        let player = "left"
         if (
           $('.card:not(.flip-card)').eq(0).attr('data-number') ===
           $('.card:not(.flip-card)').eq(1).attr('data-number')
         ) {
           $('.card:not(.flip-card)').fadeTo(1000, 0)
           $('.card:not(.flip-card)').addClass('paired')
+
+          const win = ($('.card:not(.flip-card)').eq(0).attr('data-number') ===
+          $('.card:not(.flip-card)').eq(1).attr('data-number'))
+
+          // if (!win){
+          //   player = whoseMove(player, win)
+          // }
+          // console.log(player)
+
           // 只加現在翻開的那張圖片到pokemon區/只加一張圖片 - not working for now
           // or停止點擊for 1s? -> pointer-events: none, 1s
-          $(`#${player}#pokemon`).append(`<img src="./pokemon/${$(this).attr('data-number')}b.png">`)
+          $(`#${player.toString()}#pokemon`).append(`<img src="./pokemon/${$(this).attr('data-number')}b.png">`)
           $('#game').addClass('disableClick')
           setTimeout(() => {
             $('#game').removeClass('disableClick')
           }, 1000)
           // score+=1000
+
+          // player = whoseMove(player, win)
+        } else {
+          player = whoseMove(player, true)
+          console.log(player)
         }
 
-        // 切換玩家
-        // need to define "win"
-        // https://codereview.stackexchange.com/questions/168941/function-to-alternate-players-turns-unless-a-player-has-won
+        // 切換玩家的function
         function whoseMove(player, win) {
-          if (win) return player;
-          return player == "left" ? "right" : "left";
-        }
-
-        if (
-          $('.card:not(.flip-card)').eq(0).attr('data-number') !==
-          $('.card:not(.flip-card)').eq(1).attr('data-number')
-        ) { 
-          player = 'left'
+          // kamikada
+          return win ? player : (player === "left" ? "right" : "left")
         }
 
         setTimeout(function () {
