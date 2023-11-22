@@ -116,6 +116,7 @@ console.log(cc.arr1)       // [ 3, 2, 3, 4, 5 ]
 //  Yes
 //  npm (套件管理員)
 // ctrl+c =取消 重來
+// 重新安裝node modules -> npm i
 
 // package.json => 
 // "scripts": {
