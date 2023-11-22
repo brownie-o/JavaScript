@@ -98,7 +98,7 @@ console.log(cc.arr1)       // [ 3, 2, 3, 4, 5 ]
 // install: 
 // 1. npm i -D eslint nodemon
 // eslint: 強制程式風格的套件
-// nodemon: 重整瀏覽器就可以看到變更的套件
+// nodemon: 偵測到變更就會重整的套件
 
 // 2. npm i linebot axios dotenv
 // dotenv: 讀取env檔案的套件
