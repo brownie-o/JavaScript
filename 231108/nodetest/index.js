@@ -89,6 +89,7 @@ cc.arr1[0] = 3
 console.log(cc.arr1)       // [ 3, 2, 3, 4, 5 ]
 
 // TERMINAL npm
+// npm init --yes
 // npm i ____ = npm install _(套件名)_ 
 // npm i -D nodemon eslint
 // npm i -D ____
