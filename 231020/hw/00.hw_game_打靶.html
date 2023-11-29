@@ -5,12 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>碰碰</title>
   <style>
+    #area{
+      width: 97vw;
+      height: 97vh;
+      background-image: url(./img/bg.png);
+      background-position: center 2%;
+      background-repeat: no-repeat;
+      background-size: contain;
+      cursor: url(./img/crosshair_red.png) 25 25, auto;
+      text-align: center;
+    }
 
+    #grass{
+      position: absolute;
+      width: 100%;
+    }
   </style>
 </head>
 <body>
   <div id="area">
-    <img src="./img/bg.png">
+    <img src="./img/grass.png" id="grass">
   </div>
 </body>
 </html>
