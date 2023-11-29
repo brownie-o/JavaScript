@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- 文字輸入欄位用 v-model代表使用者輸入的值 -->
+    <input type="text" v-model="form.text">
+    <!-- 上面打什麼下面就顯示什麼 -->
+    <p>{{ form.text }}</p>
+
+    <!-- v-model預設資料型態是文字，加上 .number 會讓綁定的值收到的資料型態變成數字 -->
+    <input type="text" v-model.number="form.num">
+    <!-- v-model的type如果是數字就不用再加.number -->
+    <input type="number" v-model="form.num">
+    <br>
+
+    <!-- 
+      radio & checkbox以v-model分組 (不用name)
+      v-model: 使用者選擇的值
+      value: 欄位本身的值
+      value 沒有使用v-bind的話 (value)，資料型態都是文字
+      (: = v-bind: 綁定後" "內顯示的是js)
+    -->
+    <input type="radio" v-model="form.radio" value="1">
+    <input type="radio" v-model="form.radio" value="2">
+    <input type="radio" v-model="form.radio" value="3">
+    <br>
+    <input type="radio" v-model="form.radio2" :value="1">
+    <input type="radio" v-model="form.radio2" :value="2">
+    <input type="radio" v-model="form.radio2" :value="3">
+    <ul>
+      <li v-for="option in radioOptions">
+        <!-- label for= input 的 ID => 選字的時候會選到選項 -->
+        <label :for="'radio-'+option.value">{{ option.label }}</label>
+        <input type="radio" v-model="form.radio3" :value="option.value" :id="'radio-'+option.value">
+      </li>
+    </ul>
+    <ul>
+      <li v-for="option in checkOptions">
+        <label :for="'check-'+option.value">{{ option.label }}</label>
+        <input type="checkbox" v-model="form.check" :value="option.value" :id="'check-'+option.value">
+      </li>
+    </ul>
+    <select v-model="form.select">
+      <option v-for="option in selectOptions" :value="option.value">{{ option.label }}</option>
+    </select>
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.9/vue.global.min.js'
+    integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
+    crossorigin='anonymous'></script>
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          form: {
+            // 放所有表單物件
+            text: '',
+            num: 0,
+            radio: undefined,
+            radio2: undefined,
+            // 加上選項的value 可以預設選擇，undefined=都沒選
+            radio3: 'Taro',
+            check: [],
+            select: ''
+          },
+          radioOptions: [
+            { label: '清原', value: 'Taro' },
+            { label: '可不可', value: 'KBK' }
+          ],
+          checkOptions: [
+            { label: '蘋果', value: 'Apple' },
+            { label: '香蕉', value: 'Banana' }
+          ],
+          selectOptions: [
+            { label: 'Vue', value: 'v' },
+            { label: 'Angular', value: 'a' },
+            { label: 'React', value: 'r' }
+          ]
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+
+</html>
