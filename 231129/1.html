@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- vue 起手式 id app 的div -->
+  <div id="app">
+    <!-- vue的語法只能在這裡使用 -->
+    <!-- {{ }} : vue 的模板語法 -->
+
+    <!-- 顯示文字 -->
+    <h1>{{ text }}</h1>
+    <h1 v-text="text">標籤內寫的都會被v-text蓋掉 不會顯示</h1>
+
+    <!-- 顯示html -->
+    <div v-html="html">也會被蓋掉</div>
+    <!-- {{ }} 和 v-text 會印出html文字 -->
+    <div>{{ html }}</div>
+    <div v-text="html"></div>
+
+    <!-- 可以直接在標籤內寫判斷式，符合條件才會出現在DOM -->
+    <p v-if="num === 10">數字是10</p>
+    <p v-else-if="num > 10">數字大於10</p>
+    <p v-else>數字小於10</p>
+    <!-- 判斷式，不符合時會 display:none -->
+    <p v-show="num === 10">數字是10</p>
+
+    <ul>
+      <!-- v-for="值 in 陣列" -->
+      <!-- 有幾個值就會跑幾次迴圈/出現幾個li -->
+      <li v-for="value in lunch">{{ value }}</li>
+    </ul>
+    <ul>
+      <!-- v-for="(值, 索引) in 陣列" -->
+      <!-- {{ }} 內語法可以做簡單算數, ex: + - * / 或是三元運算子 -->
+      <li v-for="(value, index) in lunch">{{ index + 1 }}: {{ value }}</li>
+    </ul>
+    <ul>
+      <!-- v-for 和 v-if 不能放在同個標籤 -->
+      <!-- 可以使用假標籤 template 拆開 -->
+      <template v-for="value in lunch">
+        <li v-if="value !== '太師傅'">{{ value }}</li>
+      </template>
+    </ul>
+    <ul>
+      <!-- v-for 和 v-if 不能放在一起 -->
+      <!-- 可以使用假標籤 template 拆開 -->
+      <template v-if="num > 10">
+        <li v-for="value in lunch">{{ value }}</li>
+      </template>
+    </ul>
+  </div>
+  <!-- 3.3.9ver. global.min.js -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.9/vue.global.min.js'
+    integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
+    crossorigin='anonymous'></script>
+    <!-- vue 起手式2 -->
+  <script>
+    Vue.createApp({
+      // 放vue的設定
+      // 資料
+      data () {
+        return {
+          text: 'abc',
+          html: '<img src="https://picsum.photos/300/200/?random=10">',
+          num: 10,
+          lunch: ['太師傅', '花蓮扁食', '九零年代']
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+
+</html>
