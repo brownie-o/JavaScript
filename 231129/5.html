@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <input type="button" value="num" @click="num++">
+    <br>
+    姓: <input type="text" v-model="lastName">
+    <br>
+    名: <input type="text" v-model="firstName">
+    <br>
+    全名: {{ fullName }} <br> {{ fullNameMethod() }}
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.9/vue.global.min.js'
+    integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
+    crossorigin='anonymous'></script>
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          firstName: '',
+          lastName: '',
+          num: 0
+        }
+      },
+      methods: {
+        // 只要頁面上有變動就會執行/更新
+        fullNameMethod() {
+          console.log('methods更新')
+          return this.lastName + this.firstName
+        }
+      },
+      // computed: 計算屬性，動態的資料，當用到的資料變動時會執行function算出新的值。
+      //          (經過function計算之後 return出來的動態資料，一定要有function & return)
+      // 只有相應的資料(firstname & lastname)更新時才會更新
+      computed: {
+        fullName() {
+          console.log('computed更新')
+          return this.lastName + this.firstName
+        }
+      },
+      // 當資料變更時 執行function
+      watch: {
+        // 直接用資料名當作function的名字
+        firstName(newValue, oldValue){
+          console.log(`firstName: ${oldValue} --> ${newValue}`)
+        },
+        lastName(newValue, oldValue){
+          console.log(`firstName: ${oldValue} --> ${newValue}`)
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+
+</html>
