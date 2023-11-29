@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- v-on:click = @click -->
+    <input type="button" value="notify" v-on:click="notify">
+    <input type="button" value="notify" @click="notify">
+    <input type="button" value="notify2('456')" @click="notify2('456')">
+    <!-- $event = 固定寫法， 帶入點擊事件 -->
+    <input type="button" value="notify3($event, '789')" @click="notify3($event, '789')">
+
+    <!-- 點擊時執行function來呼叫下面的function 較不常用 -->
+    <input type="button" value="event => notify(event)" @click="event => notify(event)">
+    <input type="button" value="() => notify2('456')" @click="() => notify2('456')">
+    <input type="button" value="event => notify3(event, '789')" @click="event => notify3(event, '789')">
+
+    <!-- .once，只能觸發一次 -->
+    <input type="button" value="notify once" @click.once="notify">
+    <!-- 滑鼠類事件可以用 .left/ .right/ .middle 指定按鍵 -->
+    <input type="button" value="notify right once" @click.right.once="notify">
+    <input type="button" value="notify middle" @click.middle="notify">
+    <br>
+
+    <!-- @keydown: 按下鍵盤時觸發的事件 -> 呼叫add function -->
+    <!-- .enter = enter鍵 -->
+    <input type="text" v-model="input" @keydown.enter="add">
+    <ul>
+      <!-- 顯示array內的value -->
+      <li v-for="value in array">{{ value }}</li>
+    </ul>
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.9/vue.global.min.js'
+    integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
+    crossorigin='anonymous'></script>
+  <script>
+    Vue.createApp({
+      data() {
+        // data放資料
+        return{
+          array: [], 
+          input: ''
+        }
+      },
+      methods: {
+        // methods 專放function，和data同層
+        notify(event) {
+          // function直接寫名字(具名function?)可以帶出事件的物件
+          // event = 點擊事件
+          console.log(event)
+          alert('123')
+        },
+        notify2(text) {
+          alert(text)
+        }, 
+        notify3(event, text){
+          console.log(event)
+          alert(text)
+        }, 
+        add(){
+          // 用this指到這個元件的data, methods等
+          // 把input內的文字推到array裡面
+          this.array.push(this.input)
+          console.log(this.array)
+          // 清空input欄位內的文字
+          this.input=''
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+
+</html>
