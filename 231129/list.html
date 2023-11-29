@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- .prevent 擋住跳躍 執行addItem function -->
+    <form @submit.prevent="addItem">
+      <!-- 由字數算出綁定輸入欄位的border => 算數=computed -->
+      <input type="text" v-model="input" :style="{border: inputBorder}">
+      <input type="submit" value="新增">
+    </form>
+    <hr>
+    <!-- 過濾 -->
+    <input type="text" v-model="search">
+    <ul>
+      <li v-for="(item, i) in filteredItems">
+        <!-- 1. 打勾時 把完成狀態倒過來，綁定true or false -->
+        <!-- <input type="checkbox" @input="'item.done = !item.done" :checked="item.done"> -->
+        <!-- 2. checkbox有打勾就是true 沒打勾就是false，直接用v-model綁定 -->
+        <input type="checkbox" v-model="item.done">
+
+        <!-- 如果有打勾完成了 -> 加上del刪除線 -->
+        <del v-if="item.done">{{ item.text }}</del>
+        <span v-else>{{ item.text }}</span>
+        <!-- 刪除的部分回傳物件的id -->
+        <input type="button" value="x" @click="delItem(item.id)">
+      </li>
+    </ul>
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.9/vue.global.min.js'
+    integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
+    crossorigin='anonymous'></script>
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          input: '',
+          items: [],
+          search: '',
+          // 用Id判斷過濾後的位置，在過濾時刪除東西就不會刪錯
+          id: 1
+        }
+      },
+      methods: {
+        addItem() {
+          // 輸入字數太少 直接return，不執行
+          if (this.input.length <= 2) return
+
+          this.items.push({
+            done: false,
+            text: this.input,
+            id: this.id++
+          })
+
+          // 把輸入欄位清空
+          this.input = ''
+        },
+        delItem(id) {
+          // 用id 找此物件在原本陣列的索引
+          const i = this.items.findIndex(item => {
+            // 跟每個array物件的id比對 找到對的id
+            return item.id === id
+          })
+          // splice(從第i個, 刪除1個東西)
+          this.items.splice(i, 1)
+        }
+      },
+      computed: {
+        inputBorder() {
+          if (this.input.length === 0) {
+            return ''
+          } else if (this.input.length > 2) {
+            return '5px solid green'
+          }
+          else {
+            return '5px solid red'
+          }
+        },
+        // 經過function運算後產生的陣列 = computed
+        filteredItems() {
+          // item = 陣列裡的東西
+          // 第一個return 是return 給function的
+          return this.items.filter(item => {
+            // 第二個return 是return 給filter的
+            return item.text.includes(this.search)
+          })
+        }
+      },
+      // 監聽陣列
+      watch: {
+        // 以資料名稱為key
+        items: {
+          // handler 當偵測變更時執行的function
+          handler(newValue, oldValue) {
+            // 當設定deep true時，newvalue和oldvalue都是新的值
+            console.log(newValue, oldValue)
+            // 東西變更時 寫進local storage裡
+            // localStorage.vueTodo = JSON.stringify(this.items)
+            localStorage.vueTodo = JSON.stringify(newValue)
+          },
+          // 陣列貨物鍵使用深層監聽
+          deep: true
+        }
+      },
+      mounted() {
+        // 取出 local storage的todo list or 空白陣列 '[]'
+        // .parse 轉陣列
+        const items = JSON.parse(localStorage.vueTodo || '[]')
+        // 把陣列換成解析完的東西
+        this.items = items
+        // 如果local stroage 沒有東西 => items.length==0
+        if (this.items.length > 0){
+          // 更新id 讓id繼續往後長
+          this.id=this.items[this.items.length - 1].id + 1
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+
+</html>
