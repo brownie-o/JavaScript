@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .text-red{
+      color: red;
+    }
+
+    .text-center{
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- 綁定標籤屬性 v:bind/ : -->
+    <img v-bind:src="img" height="100">
+    <img :src='img' height="100">
+    <a :href="link.url">{{ link.text }}</a>
+
+    <!-- ***綁定style要綁定物件 -->
+    <p :style="textStyle">ABCDEFG</p>
+    <!-- 也可單獨綁定兩個東西 在標籤內組合成物件 -->
+    <p 
+      :style="
+        { 
+          color: textColor, 
+          background: textBg, 
+          textAlign: 'center', 
+          fontStyle: num > 10 ? 'italic' : 'normal'
+        }"
+    >ABCDEFG</p>
+    <!-- 綁定class可以綁陣列或物件，陣列每個都會套用，物件只有true會套用 -->
+    <!-- 綁定class 的array -->
+    <p :class="textClassArray">ABCDEFG</p>
+    <!-- 綁定class 的object -->
+    <p :class="textClassObj">ABCDEFG</p>
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.9/vue.global.min.js'
+  integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
+  crossorigin='anonymous'></script>
+  <script>
+    Vue.createApp({
+      data(){
+        return{
+          num: 10,
+          img: 'https://github.com/vuejs.png',
+          link: {
+            url: 'https://google.com',
+            text: 'Google'
+          }, 
+          textStyle: {
+            color: 'red',
+            textAlign: 'center'
+          },
+          textColor: 'red',
+          textBg: 'gray',
+          textClassArray: ['text-red', 'text-center'],
+          textClassObj: {
+            // 值是true的才會套用 false的就不會
+            'text-red': true,
+            'text-center': true,
+          }
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>
