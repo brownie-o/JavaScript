@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <h1 id="title" ref="title">{{ title }}</h1>
+    <p ref="abc">asdfasdfsdf123</p>
+    <!-- 綁定值=num -->
+    <input type="button" :value="num" @click="plus" ref="btn">
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.9/vue.global.min.js'
+  integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
+  crossorigin='anonymous'></script>
+  <script>
+    Vue.createApp({
+      data(){
+        return{
+          title: 'AAA',
+          num: 0
+        }
+      }, 
+      methods:{
+        async plus(){
+          this.num++
+          // 由於Vue資料更新後不會立即渲染DOM, 所以還是舊的值
+          console.log(this.$refs.btn.value) // 取到的還是舊的值
+          // .$nextTick() : 固定寫法，等待下一次Vue重新渲染完畢
+          await this.$nextTick()
+          console.log(this.$refs.btn.value)
+        }
+      },
+      // Mounted 當 Vue 編譯完HTML並放進DOM後執行
+      // 如果要存取HTML元素一定要在Mounted後
+      mounted () {
+        console.log(document.getElementById('title').innerText)
+        // this.$refs.標籤上的ref
+        console.log(this.$refs.title.innerText)
+        console.log(this.$refs.abc.innerText)
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>
