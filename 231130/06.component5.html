@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <Btn></Btn>
+    <Btn>ABCD</Btn>
+    <Btn>
+      <img src="./img/Selly.jpg" width="50">
+    </Btn>
+    <Card>
+      <!-- 沒有template標籤，就會放到預設插槽 -->
+      <h1>內容</h1>
+      <!-- 將template內的內容放到名為title的插槽 -->
+      <template v-slot:title>標題</template>
+      <!-- v-slot:footer = #footer -->
+      <!-- 將template內的內容放到名為footer的插槽 -->
+      <template #footer>底部</template>
+    </Card>
+    <hr>
+    <Product>
+      <!-- 
+        使用預設插槽，並取出插槽提供的資料，命名為data
+        data = { title: 商品, price: 100 }
+      -->
+      <template v-slot="data">
+        <h1>{{ data.title }}</h1>
+        <p>{{ data.price }}</p>
+      </template>
+      <!-- 使用名為footer的插槽，將插槽提供名為info的資料取出 -->
+      <template #footer="{ info }">
+        <!-- 點按鈕執行元件內的info function -->
+        <input type="button" value="按鈕" @click="info">
+      </template>
+    </Product>
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.9/vue.global.min.js'
+  integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
+  crossorigin='anonymous'></script>
+  <script type="text/x-template" id="btn">
+    <button>
+      按鈕
+      <br>
+      <!-- 
+        插槽，沒有名字所以是預設插槽
+        插槽內的東西會是預設顯示內容
+      -->
+      <slot>123</slot>
+    </button>
+  </script>
+  <script type="text/x-template" id="card">
+    <div class="card">
+      <div class="card-title">
+        <!-- 將插槽命名為title -->
+        <slot name="title"></slot>
+      </div>
+      <div class="card-body">
+        <!-- 沒有名字的預設插槽只能有一個 -->
+        <slot></slot>
+      </div>
+      <div class="card-footer">
+        <!-- 將插槽命名為footer -->
+        <slot name="footer"></slot>
+      </div>
+    </div>
+  </script>
+  <script type="text/x-template" id="product">
+    <div class="product">
+      商品
+      <!-- 插槽提供名為title的資料，值是元件內的ref -->
+      <!-- 插槽提供名為price的資料，值是元件內的price -->
+      <slot :title="title" :price="price"></slot>
+      <!-- 插槽命名為footer，提供名為info的資料，值是元件內的function -->
+      <slot name="footer" :info="info"></slot>
+    </div>
+  </script>
+  <script>
+    const { ref } = Vue
+    Vue.createApp({
+
+    })
+      .component('Btn', {
+        template: '#btn'
+      })
+      .component('Card', {
+        template: '#card'
+      })
+      .component('Product', {
+        template: '#product', 
+        setup(){
+          const title = ref('商品')
+          const price = ref(100)
+          const info = () => {
+            console.log(title.value)
+          }
+          return { title, price, info }
+        }
+      })
+      .mount('#app')
+  </script>
+</body>
+</html>
