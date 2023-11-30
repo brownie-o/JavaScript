@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- 直接把元件名稱當標籤名，可以重複使用 -->
+    <Counter></Counter>
+    <Counter></Counter>
+    <Counter></Counter>
+    <Counter></Counter>
+    <Counter></Counter>
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.9/vue.global.min.js'
+  integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
+  crossorigin='anonymous'></script>
+  <!-- 
+    2. 選擇器: 
+    固定寫法: text/x-template + id，
+    只能寫在文件裡 不能用導入的方式 
+  -->
+  <script type="text/x-template" id="counter">
+    <input type="button" :value="num" @click="num++">
+  </script>
+  <script>
+    // 解構
+    const { ref } = Vue
+    Vue.createApp({
+    })
+      // .component(元件名稱, {
+      //   template: HTML 文字或是 #id
+      // }) 
+      // *元件第一個字建議用大寫
+      .component('Counter', {
+        // 1. 可以塞HTML文字
+        // template: `<input type="btn" :value="num" @click="num++">`
+
+        // 2. 設選擇器
+        template: '#counter', 
+        setup () {
+          const num = ref(0)
+          return{
+            num
+          }
+        }
+        // data(){
+        //   return{
+        //     num: 0
+        //   }
+        // }
+      })
+      .mount('#app')
+  </script>
+</body>
+</html>
