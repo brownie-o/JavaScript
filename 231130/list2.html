@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- .prevent 擋傳送到action=""的動作 這邊沒有action就是擋重新整理的動作 -->
+    <form @submit.prevent="addItem">
+      <!-- v-model.trim = 收到的值會移除前後空白 -->
+      <!-- v-model.lazy = 打完後才更新值 -->
+      <input type="text" v-model.trim="input" :style="{ border: inputBorder }">
+      <input type="submit" value="新增">
+    </form>
+    <hr>
+    <input type="button" value="全部標記已完成" @click="markItem(true)">
+    <input type="button" value="全部標記未完成" @click="markItem(false)">
+    <br>
+    <input type="button" value="顯示全部" @click="filter = '全部'">
+    <input type="button" value="顯示已完成" @click="filter = '已完成'">
+    <input type="button" value="顯示未完成" @click="filter = '未完成'">
+    <br>
+    <input type="button" value="清除全部" @click="clearItem('全部')">
+    <input type="button" value="清除已完成" @click="clearItem('已完成')">
+    <input type="button" value="清除未完成" @click="clearItem('未完成')">
+    <hr>
+    目前顯示: {{ filter }}，共 {{ filteredItems.length }} 個
+    <ul>
+      <!-- :key 配合 v-for 使用，綁定唯一值(可用id)，讓vue能區分過濾後陣列內的每個東西和過濾前的關係-->
+      <!-- 使用:key=綁定 讓過濾前後能讓vue用id來找到各項目 -->
+      <li v-for="(item, i) in filteredItems" :key="item.id">
+        <input type="checkbox" v-model="item.done">
+        <!-- 用v-show 讓欄位原本就在頁面上 -->
+        <span v-show="item.edit">
+          <!-- ref=抓頁面上的html元素 -->
+          <input 
+            type="text" 
+            v-model="item.model" 
+            ref="inputs" 
+            @keydown.enter="saveItem(item.id)"
+            @keydown.esc="cancelItem(item.id)"
+          >
+        </span>
+        <!-- i = v-for跑到的索引 -->
+        <span v-show="!item.edit" @dblclick="editItem(item.id, i)">
+          <del v-if="item.done">{{ item.text }}</del>
+          <span v-else>{{ item.text }}</span>
+        </span>
+        <input type="button" value="x" @click="delItem(item.id)">
+      </li>
+    </ul>
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.9/vue.global.min.js'
+    integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
+    crossorigin='anonymous'></script>
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          input: '',
+          items: [],
+          id: 1,
+          filter: '全部'
+        }
+      },
+      methods: {
+        addItem() {
+          if (this.input.length <= 2) return
+
+          this.items.push({
+            // ??? i++ & ++i 的差異
+            id: this.id++,
+            text: this.input,
+            done: false,
+            // 判斷選項是否為編輯中 
+            edit: false,
+            // for編輯器使用
+            model: this.input
+          })
+
+          this.input = ''
+        },
+        findItemsIdxById(id) {
+          // return this.items.finxIndex(item => {
+          //   return item.id === id
+          // })
+          return this.items.findIndex(item => item.id === id)
+        },
+        async editItem(id, i) {
+          // 用methods 呼叫 methods
+          // 找原本的索引(idx)
+          const idx = this.findItemsIdxById(id)
+          this.items[idx].edit = true
+          // 開啟編輯後，等待下一次渲染，出現輸入欄位後才能focus
+          await this.$nextTick()
+          // ref='inputs' 的外面有v-for, 所以是陣列
+          this.$refs.inputs[i].focus()
+        },
+        saveItem(id) {
+          const idx = this.findItemsIdxById(id)
+          // 把顯示的文字改成輸入欄位的值
+          this.items[idx].text = this.items[idx].model
+          this.items[idx].edit = false
+        },
+        cancelItem(id) {
+          const idx = this.findItemsIdxById(id)
+          // 把輸入欄位的值重設為顯示文字
+          this.items[idx].model = this.items[idx].text
+          this.items[idx].edit = false
+        },
+        markItem(value) {
+          // .map() = 把陣列每個東西執行這個function, 把每個東西變成function return 的值
+          this.items.map(item => {
+            item.done = value
+            return item
+          })
+        },
+        clearItem(value) {
+          // 把陣列的值變成過濾後的值(因為filter是建立新的陣列)
+          this.items = this.items.filter(item => {
+            if (value === '全部') return false
+            // 清除已完成 = 未完成留下 = 判斷完成狀態是否為false
+            else if (value === '已完成') return item.done === false
+            // 清除未完成 = 已完成留下 = 判斷完成狀態是否為true
+            else return item.done === true
+          })
+        },
+        delItem(id) {
+          const idx = this.findItemsIdxById(id)
+          this.items.splice(idx, 1)
+        }
+      },
+      computed: {
+        inputBorder() {
+          // 如果if 裡面只有一行可以省略大括號
+          if (this.input.length === 0) return '5px solid black'
+          else if (this.input.length < 2) return '5px solid red'
+          else return '5px solid blue'
+        },
+        // 在相應的資料變更時才會執行這個function
+        filteredItems() {
+          return this.items.filter(item => {
+            // 全部都true 全都留下來 (filter的true = 留下來)
+            if (this.filter === '全部') return true
+            // else if (this.filter === '已完成') return item.done === true
+            else if (this.filter === '已完成') return item.done
+            // else return item.done === false
+            else return !item.done
+          })
+        }
+      },
+      watch: {
+        items: {
+          handler() {
+            localStorage.vueNewTodo = JSON.stringify(this.items)
+          },
+          deep: true
+        }
+      }, 
+      mounted () {
+        const items = JSON.parse(localStorage.vueNewTodo || '[]')
+        this.items = items
+        if (this.items.length > 0) {
+          this.id = this.items[this.items.length - 1].id + 1
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+
+</html>
