@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    img{
+      height: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!-- 
+      用標籤屬性將值傳入元件
+      price="100000" -> 資料型態是文字
+      :price="100000" -> 資料型態是數字
+      
+      布林值只要寫名字，有加就是true，沒有加就是false
+    -->
+    <Card title="商品" img="./img/Selly.jpg" :price="100000" sell></Card>
+    <Card
+      v-for="card in cards"
+      :title="card.title"
+      :img="card.img"
+      :price="card.price"
+      :sell="card.sell"
+    ></Card>
+    <!-- v-bind : 當資料物件的key與元件的props名稱一樣時，可以用v-bind一次綁定 -->
+    <Card
+      v-for="card in cards"
+      v-bind="card"
+    ></Card>
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.9/vue.global.min.js'
+    integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
+    crossorigin='anonymous'></script>
+  <script type="text/x-template" id="card">
+    <div class="card">
+      <img :src="img" alt="">
+      <h1>{{ title }}</h1>
+      <p>{{ price }}</p>
+      <p v-if="!sell">Sold</p>
+      <input type="button" value="看資料" @click="info">
+    </div>
+  </script>
+  <script>
+    const { reactive, toRefs, toRef } = Vue
+    Vue.createApp({
+      setup() {
+        const cards = reactive([
+          {
+            img: './img/Selly.jpg',
+            title: 'Selly',
+            sell: true, 
+            price: 100000
+          },
+          {
+            img: './img/Zeder.jpg',
+            title: 'Zeder',
+            sell: false, 
+            price: 100000
+          },
+        ])
+        return {
+          cards
+        }
+      }
+    })
+      .component('Card', {
+        template: '#card',
+        // 定義元件接收的資料
+        // 1. 指定接收的資料名稱
+        // props: ['img', 'title']
+        props: {
+          // props 收到的是唯獨的data
+          // 2. 指定名稱與資料型態
+          sell: Boolean,
+          price: Number,
+
+          // 3. 指定名稱、資料型態且一定要有資料型態
+          img: {
+            type: String,
+            required: true,
+          },
+          // 4. 指定名稱、資料型態、自訂資料驗證、當沒有時使用的預設值
+          title: {
+            type: String,
+            // title的預設值
+            default() {
+              return '標題'
+            },
+            // 驗證器: title長度要大於1
+            validator(value) {
+              return value.length > 1
+            }
+          }
+        }, 
+        setup(props) {
+          // 直接解構會失去響應性,外面變更了，console log卻還是舊的值
+          const { title } = props
+          // 解構需要toRef 與 toRefs 輔助才會有響應性
+          // title: title2 => 解構重新命名 (不能同名title)
+          const { title: title2 } = toRefs(props)
+          const title3 = toRef(props, 'title')
+
+          const info = () => {
+            // props.資料名 - 響應性
+            console.log(props.title)
+            // 直接解構會失去響應性,外面變更了，console log卻還是舊的值
+            console.log(title)
+            // 以toRefs或toRef解構，維持響應性
+            console.log(title2.value)
+            console.log(title3.value)
+          }
+          return { info }
+        }
+      })
+      .mount('#app')
+  </script>
+</body>
+
+</html>
