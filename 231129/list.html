@@ -38,6 +38,7 @@
     crossorigin='anonymous'></script>
   <script>
     Vue.createApp({
+      // vue is driven by data
       data() {
         return {
           input: '',
@@ -63,11 +64,12 @@
         },
         delItem(id) {
           // 用id 找此物件在原本陣列的索引
+          // .findIndex(callback => {}) : array method, used to find the index of the first element in an array that satisfies a provided testing function, contains a callback function. If no element is found, it returns -1. 
           const i = this.items.findIndex(item => {
             // 跟每個array物件的id比對 找到對的id
             return item.id === id
           })
-          // splice(從第i個, 刪除1個東西)
+          // .splice(從第i個, 刪除1個東西)
           this.items.splice(i, 1)
         }
       },
@@ -84,10 +86,11 @@
         },
         // 經過function運算後產生的陣列 = computed
         filteredItems() {
-          // item = 陣列裡的東西
+          // .filter(callback => {}) : create a new array with all elements that pass a provided test implemented by the provided function.
           // 第一個return 是return 給function的
           return this.items.filter(item => {
             // 第二個return 是return 給filter的
+            // item = 陣列裡的東西
             return item.text.includes(this.search)
           })
         }
