@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <Plus :number="num" @apple="onPlusApple"></Plus>
+    <!-- 如果元件名稱是大駝峰， 需要手動改格式，這個問題只有瀏覽器會有 -->
+    <plus-new v-model:number="num"></plus-new>
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.9/vue.global.min.js'
+    integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
+    crossorigin='anonymous'></script>
+  <script type="text/x-template" id="plus">
+    <input type="button" :value="number" @click="change">
+  </script>
+  <script type="text/x-template" id="plus-new">
+    <input type="button" :value="n" @click="change">
+  </script>
+  <script>
+    const { ref, computed } = Vue
+    Vue.createApp({
+      setup() {
+        const num = ref(100)
+        // 處理Plus元件發生的apple事件
+        // event 指事件帶出的資料
+        const onPlusApple = (event) => {
+          // 在這邊把值改掉
+          num.value = event
+        }
+        return { num, onPlusApple }
+      }
+    })
+      .component('Plus', {
+        template: '#plus',
+        // props: ['number'] 定義元件收到的資料型態是數字
+        props: ['number'],
+        setup(props, { emit }) {
+          const change = () => {
+            // 無法直接修改props，因為傳入的資料在元件中都是唯獨(資料的同步通常是單向的)
+            // props.number += 100
+            // emit : 觸發的事件
+            // 需要告訴外面要改資料，觸發一個自訂事件(apple)，傳出一個資料
+            emit('apple', props.number + 100)
+          }
+          return { change }
+        },
+        // methods: {
+        //   change () {
+        //     this.$emit('apple', this.number + 100)
+        //   }
+        // }
+      })
+      // 用v-model完成綁定
+      .component('PlusNew', {
+        template: '#plus-new', 
+        props: ['number'], 
+        setup (props, { emit }){
+          // 特殊computed(): 資料來源 & 取值 & 改值要做什麼
+          const n = computed({
+            // 資料怎麼來的
+            get (){
+              return props.number
+            },
+            // 修改值的時候要怎麼改
+            set(value){
+              // 更新props number的值，把值往外丟
+              // 固定格式，一定要配合 v-model使用
+              emit('update:number', 500)
+            }
+          })
+          const change = () => {
+            // computed 使用時要加.value
+            n.value = 500
+          }
+          return { n, change }
+        }, 
+        // computed: {
+        //   n: {
+        //     get(){
+        //       this.number
+        //     },
+        //     set(value){
+        //       this.$emit('update:number', 500)
+        //     }
+        //   }
+        // },
+        // methods: {
+        //   change () {
+        //     this.n = 500
+        //   }
+        // }
+      })
+      .mount('#app')
+  </script>
+</body>
+
+</html>
