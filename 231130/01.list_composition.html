@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <form @submit.prevent="addItem">
+      <input type="text" v-model="input" :style="{border: inputBorder}">
+      <input type="submit" value="新增">
+    </form>
+    <hr>
+
+    <input type="text" v-model="search">
+    <ul>
+      <li v-for="(item, i) in filteredItems">
+
+        <input type="checkbox" v-model="item.done">
+
+        <del v-if="item.done">{{ item.text }}</del>
+        <span v-else>{{ item.text }}</span>
+        <input type="button" value="x" @click="delItem(item.id)">
+      </li>
+    </ul>
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.9/vue.global.min.js'
+    integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
+    crossorigin='anonymous'></script>
+  <script>
+    const { creatApp, ref, reactive, computed, watch, onMounted } = Vue
+    // mounted => onMounted
+
+    creatApp({
+      setup() {
+        // ref, reactve => 有響應式
+        // ref: 所有資料型態都可以用，js要使用時加 .value, 不會深層監聽陣列和物件
+        // reactive: 只有物件陣列可以用，不用加 .value, 可以深層監聽
+        const input = ref('')
+        const items = reactive([])
+        const search = ref('')
+        // 直接宣告 => 沒有響應式 
+        // id在HTML沒有用到，所以不需要響應式，用一般變數就好
+        let id = 1
+
+        const addItem = () => {
+          if (input.value.length <= 2) return
+          items.push({
+            done: false,
+            text: input.value,
+            id: id++
+          })
+
+          input.value = ''
+        }
+
+        const delItem = (id) => {
+          const i = items.finxIndex(item => {
+            return item.id === id
+          })
+          items.splice(i, 1)
+        }
+
+        const inputBorder = computed(() => {
+          if (input.value.length === 0) return '3px solid black'
+          else if (input.value.length > 2) return '3px solid blue'
+          else return '3px solid red'
+        })
+
+        const filteredItems = computed(() => {
+          return items.filter(item => {
+            return item.text.includes(search.value)
+          })
+        })
+
+        // watch(obj, () => {}) watch(偵測目標, 處理function)
+        watch(items, () => {
+          localStorage.vueTodo = JSON.stringify(items)
+        })
+
+        onMounted(() => {
+          const data = JSON.parse(localStorage.vueTodo || '[]')
+          // 不能這樣寫，因為items上面是用const來宣告
+          // items = data
+          // 1. 可以用 .splice(目標索引, 刪除項目, 插入項目一, 插入項目二....)
+          // items.splice(0, items.length, ...data)
+          // 2. Object.assign(A, B) 物件合併，將B合併進A
+          Object.assign(items, data)
+          if (items.length > 0) {
+            id = items[items.length - 1].id + 1
+          }
+        })
+
+        // 把HTML會用到的return 出去
+        return {
+          input,
+          items,
+          search,
+          addItem,
+          delItem,
+          inputBorder,
+          filteredItems
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
