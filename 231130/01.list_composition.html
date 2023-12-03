@@ -31,10 +31,11 @@
     integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
     crossorigin='anonymous'></script>
   <script>
-    const { creatApp, ref, reactive, computed, watch, onMounted } = Vue
     // mounted => onMounted
+    // 要先解構有用到的vue功能
+    const { createApp, ref, reactive, computed, watch, onMounted } = Vue
 
-    creatApp({
+    createApp({
       setup() {
         // ref, reactve => 有響應式
         // ref: 所有資料型態都可以用，js要使用時加 .value, 不會深層監聽陣列和物件
@@ -51,6 +52,7 @@
           items.push({
             done: false,
             text: input.value,
+            // 現在，id 的值是 6，而 id(前) 的值是 5
             id: id++
           })
 
@@ -76,6 +78,7 @@
           })
         })
 
+        // 監聽陣列，存到loacl storage
         // watch(obj, () => {}) watch(偵測目標, 處理function)
         watch(items, () => {
           localStorage.vueTodo = JSON.stringify(items)
@@ -83,8 +86,7 @@
 
         onMounted(() => {
           const data = JSON.parse(localStorage.vueTodo || '[]')
-          // 不能這樣寫，因為items上面是用const來宣告
-          // items = data
+          // 不能寫 "items = data"，因為items上面是用const來宣告
           // 1. 可以用 .splice(目標索引, 刪除項目, 插入項目一, 插入項目二....)
           // items.splice(0, items.length, ...data)
           // 2. Object.assign(A, B) 物件合併，將B合併進A
@@ -105,7 +107,7 @@
           filteredItems
         }
       }
-    })
+    }).mount('#app')
   </script>
 </body>
 
