@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <form @submit.prevent="addItem">
+      <input type="text" v-model="input" :style="{ border: borderStyle }">
+      <input type="submit" value="送出">
+    </form>
+    <hr>
+    <input type="text" v-model="search" @focusout="filter = '搜尋'">
+    <br>
+    <br>
+    <input type="button" value="全部標記為完成" @click="markItem(true)">
+    <input type="button" value="全部標記為未完成" @click="markItem(false)">
+    <br>
+    <input type="button" value="顯示全部" @click="filter = '全部'">
+    <input type="button" value="顯示已完成" @click="filter = '已完成'">
+    <input type="button" value="顯示未完成" @click="filter = '未完成'">
+    <br>
+    <input type="button" value="清除全部" @click="clearItem('全部')">
+    <input type="button" value="清除已完成" @click="clearItem('已完成')">
+    <input type="button" value="清除未完成" @click="clearItem('未完成')">
+    <hr>
+    目前顯示: {{ filter }}，共 {{ filteredItems.length }} 個
+    <ul>
+      <li v-for="(item, i) in filteredItems" :key="item.id">
+        <input type="checkbox" v-model="item.done">
+        <del v-if="item.done">{{ item.text }}</del>
+        <span v-else>{{ item.text }}</span>
+
+        <input type="button" value="x" @click="delItem(item.id)">
+      </li>
+    </ul>
+    <hr>
+    點兩下編輯文字，按Enter儲存；按Esc取消編輯。
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.9/vue.global.min.js'
+    integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
+    crossorigin='anonymous'></script>
+  <script>
+    const { createApp, ref, reactive, computed, watch, onMounted } = Vue
+    createApp({
+      setup() {
+        // ref() 各型態皆可用 要加.value
+        // reactice 僅陣列、物件可用 不用加.value
+        const input = ref('')
+        const search = ref('')
+        const items = reactive([])
+        const filter = ref('全部')
+        let id = 1
+
+        const addItem = () => {
+          if (input.value.length <= 2) return
+
+          items.push({
+            done: false,
+            text: input.value,
+            id: id++, 
+            edit: false, 
+            model: input.value
+          })
+
+          input.value = ''
+        }
+
+        const findItmsIdxById = (id) => {
+          return items.findIndex(item => item.id === id)
+        }
+
+        const delItem = (id) => {
+          const idx = findItmsIdxById(id)
+          items.splice(idx, 1)
+        }
+
+        const markItem = (value) => {
+          items.map(item => {
+            item.done = value 
+            // 為什麼要return item??
+            return item
+          })
+        }
+
+        const borderStyle = computed(() => {
+          if (input.value.length === 0) return '3px solid black'
+          else if (input.value.length <= 2) return '3px solid red'
+          else return '3px solid blue'
+        })
+
+        const filteredItems = computed(() => {
+          return items.filter(item => {
+            if (filter.value === '選擇') {
+              // 無法運作，不管搜尋什麼都只會出現未完成的item 
+              return item.model.include(search.value)
+            } else if (filter.value === '全部' || search.value.length === 0) {
+              filter.value = '全部'
+              return true
+            } else if (filter.value === '已完成') {
+              return item.done === true
+            } else {
+              return item.done === false
+            }
+          })
+        })
+
+        watch(items, () => {
+          localStorage.vueHwTodo = JSON.stringify(items)
+        })
+
+        onMounted(() => {
+          const data = JSON.parse(localStorage.vueHwTodo || '[]')
+          Object.assign(items, data)
+          if (items.length > 0) {
+            id = items[items.length - 1].id + 1
+          }
+        })
+
+        return {
+          input,
+          search,
+          items,
+          filter,
+          addItem,
+          delItem,
+          markItem,
+          borderStyle,
+          filteredItems
+        }
+      }
+
+    }).mount('#app')
+  </script>
+</body>
+
+</html>
