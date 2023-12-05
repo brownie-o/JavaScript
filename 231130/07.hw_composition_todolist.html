@@ -32,9 +32,15 @@
     <ul>
       <li v-for="(item, i) in filteredItems" :key="item.id">
         <input type="checkbox" v-model="item.done">
-        <del v-if="item.done">{{ item.text }}</del>
-        <span v-else>{{ item.text }}</span>
-
+        <span v-show="item.edit">
+          <!-- ref="inputs" inputs是什麼??? -->
+          <!-- ref: obtain a direct reference to a specific DOM element or child component -->
+          <input type="text" v-model="item.model" ref="inputs" @keydown.enter="saveItem(item.id)" @keydown.esc="cancelItem(item.id)">
+        </span>
+        <span v-show="!item.eidt" @dblclick="editItem(item.id, i)">
+          <del v-if="item.done">{{ item.text }}</del>
+          <span v-else>{{ item.text }}</span>
+        </span>
         <input type="button" value="x" @click="delItem(item.id)">
       </li>
     </ul>
@@ -74,6 +80,26 @@
           return items.findIndex(item => item.id === id)
         }
 
+        // 無法作用
+        const editItem = async (id, i) => {
+          const idx = findItmsIdxById(id)
+          items[id].edit = true
+          await $nextTick()
+          $refs.inputs[i].focus()
+        }
+
+        const saveItem = (id) => {
+          const idx = findItmsIdxById(id)
+          items[idx].text = items[idx].model
+          items[idx].edit = false
+        }
+
+        const cancelItem = (id) => {
+          const idx = findItmsIdxById(id)
+          items[idx].model = items[idx].text
+          items[idx].edit = false
+        }
+
         const delItem = (id) => {
           const idx = findItmsIdxById(id)
           items.splice(idx, 1)
@@ -97,8 +123,8 @@
           return items.filter(item => {
             if (filter.value === '選擇') {
               // 無法運作，不管搜尋什麼都只會出現未完成的item 
-              return item.model.include(search.value)
-            } else if (filter.value === '全部' || search.value.length === 0) {
+              return item.model.includes(search.value)
+            } else if (filter.value === '全部' || search.value.length === 0) { 
               filter.value = '全部'
               return true
             } else if (filter.value === '已完成') {
