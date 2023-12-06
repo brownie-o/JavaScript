@@ -35,7 +35,8 @@
         <span v-show="item.edit">
           <!-- ref="inputs" inputs是什麼??? -->
           <!-- ref: obtain a direct reference to a specific DOM element or child component -->
-          <input type="text" v-model="item.model" ref="inputs" @keydown.enter="saveItem(item.id)" @keydown.esc="cancelItem(item.id)">
+          <input type="text" v-model="item.model" ref="inputs" @keydown.enter="saveItem(item.id)"
+            @keydown.esc="cancelItem(item.id)">
         </span>
         <span v-show="!item.eidt" @dblclick="editItem(item.id, i)">
           <del v-if="item.done">{{ item.text }}</del>
@@ -51,7 +52,7 @@
     integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
     crossorigin='anonymous'></script>
   <script>
-    const { createApp, ref, reactive, computed, watch, onMounted } = Vue
+    const { createApp, ref, reactive, computed, watch, onMounted, nextTick } = Vue
     createApp({
       setup() {
         // ref() 各型態皆可用 要加.value
@@ -61,6 +62,7 @@
         const items = reactive([])
         const filter = ref('全部')
         let id = 1
+        const inputs = ref([])
 
         const addItem = () => {
           if (input.value.length <= 2) return
@@ -68,8 +70,8 @@
           items.push({
             done: false,
             text: input.value,
-            id: id++, 
-            edit: false, 
+            id: id++,
+            edit: false,
             model: input.value
           })
 
@@ -83,9 +85,10 @@
         // 無法作用
         const editItem = async (id, i) => {
           const idx = findItmsIdxById(id)
-          items[id].edit = true
-          await $nextTick()
-          $refs.inputs[i].focus()
+          items[idx].edit = true
+          await nextTick()
+          console.log(i)
+          inputs.value[idx].focus()
         }
 
         const saveItem = (id) => {
@@ -107,9 +110,17 @@
 
         const markItem = (value) => {
           items.map(item => {
-            item.done = value 
+            item.done = value
             // 為什麼要return item??
             return item
+          })
+        }
+
+        const clearItem = (value) => {
+          items = items.filter(item => {
+            if (value === '全部') return false
+            else if (value === '已完成') return item.done === false
+            else return item.done === true
           })
         }
 
@@ -121,10 +132,10 @@
 
         const filteredItems = computed(() => {
           return items.filter(item => {
-            if (filter.value === '選擇') {
+            if (filter.value === '搜尋') {
               // 無法運作，不管搜尋什麼都只會出現未完成的item 
-              return item.model.includes(search.value)
-            } else if (filter.value === '全部' || search.value.length === 0) { 
+              return item.text.includes(search.value)
+            } else if (filter.value === '全部' || search.value.length === 0) {
               filter.value = '全部'
               return true
             } else if (filter.value === '已完成') {
@@ -153,10 +164,13 @@
           items,
           filter,
           addItem,
+          editItem,
           delItem,
           markItem,
+          clearItem,
           borderStyle,
-          filteredItems
+          filteredItems,
+          inputs
         }
       }
 
