@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <p>總共 {{ totalGoods }} 個讚</p>
+    <!-- @good good事件 = good: true => good: false -->
+    <Card v-for="card in cards" v-bind="card" @good="card.good = !card.good"></Card>
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.9/vue.global.min.js'
+    integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
+    crossorigin='anonymous'></script>
+  <script type="text/x-template" id="card">
+    <div class="card">
+      <img :src="img" alt="">
+      <p>{{ text }}</p>
+      <input type="button" :value="good ? '收回讚' : '讚'" @click="onBtnClick">
+    </div>
+  </script>
+  <script>
+    const { reactive, computed } = Vue
+
+    Vue.createApp({
+      setup() {
+        const cards = reactive([
+          { img: 'https://picsum.photos/100/100/?random=1', text: 'AAA', good: false },
+          { img: 'https://picsum.photos/100/100/?random=2', text: 'BBB', good: false },
+          { img: 'https://picsum.photos/100/100/?random=3', text: 'CCC', good: false },
+          { img: 'https://picsum.photos/100/100/?random=4', text: 'DDD', good: false },
+          { img: 'https://picsum.photos/100/100/?random=5', text: 'EEE', good: false }
+        ])
+
+        const totalGoods = computed(() => {
+          return cards.filter(card => {
+            return card.good
+          }).length
+        })
+
+        return {
+          cards, 
+          totalGoods
+        }
+      }
+    })
+      .component('Card', {
+        template: '#card',
+        // card 的內容名稱要跟props一樣 才可以直接用v-bind綁訂&傳送資料
+        props: ['img', 'text', 'good'],
+        // { emit } = 把 emit 從context 解構出來
+        // setup(props, { emit })
+        setup(props, context) {
+          console.log(context)
+          const onBtnClick = () => {
+            // 觸發good事件
+            context.emit('good')
+          }
+          // 有setup就要return
+          return{
+            onBtnClick
+          }
+        }
+      })
+      .mount('#app')
+  </script>
+</body>
+
+</html>
