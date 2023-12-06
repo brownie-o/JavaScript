@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .number {
+      display: inline-block;
+      width: 100px;
+      margin: 10px;
+    }
+
+    .number path,
+    .number circle {
+      fill: #fcdadd;
+    }
+
+    .number path.on,
+    .number circle.on {
+      fill: #E60012;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!-- <Number data="0"></Number>
+    <Number data="1"></Number>
+    <Number data="2"></Number>
+    <Number data="3"></Number>
+    <Number data="4"></Number>
+    <Number data="5"></Number>
+    <Number data="6"></Number>
+    <Number data="7"></Number>
+    <Number data="8"></Number>
+    <Number data="9"></Number>
+    <Number data=":"></Number> -->
+
+    <!-- :data ===> props: ['data'] -->
+    <Number v-for="apple in display" :data="apple"></Number>
+    <br>
+    <input type="button" value="開始" :disabled="counting" @click="start">
+    <input type="button" value="停止" :disabled="!counting" @click="stop">
+    <input type="button" value="重設" @click="reset">
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.9/vue.global.min.js'
+    integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
+    crossorigin='anonymous'></script>
+  <script type="text/x-template" id="number">
+    <div class="number">
+      <!-- 把SVG的寬高刪掉 就會套用到外層style給的寬高 -->
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        viewBox="0 0 310.067 506.711" enable-background="new 0 0 310.067 506.711"
+        xml:space="preserve">
+        <!-- 套用到on的class 就會是紅色 -->
+        <!-- <g> 在svg 是群組的意思 -->
+        <g v-if="data !== ':'">
+          <path :class="{ on: '02356789'.includes(data) }" d="M288.591,8.725c0,4.819-3.906,8.725-8.725,8.725H15.436c-4.818,0-8.725-3.906-8.725-8.725l0,0
+            C6.711,3.906,10.617,0,15.436,0h264.431C284.685,0,288.591,3.906,288.591,8.725L288.591,8.725z"/>
+          <path :class="{ on:'045689'.includes(data) }" d="M16.778,226.51c0,4.633-3.756,8.389-8.389,8.389l0,0c-4.633,0-8.389-3.756-8.389-8.389V46.644
+            c0-4.633,3.756-8.389,8.389-8.389l0,0c4.633,0,8.389,3.756,8.389,8.389V226.51z"/>
+          <path :class="{ on:'2345689'.includes(data) }" d="M279.194,244.631c0,5.375-4.357,9.731-9.731,9.731H43.288c-5.375,0-9.731-4.357-9.731-9.731l0,0
+            c0-5.375,4.357-9.731,9.731-9.731h226.175C274.837,234.899,279.194,239.256,279.194,244.631L279.194,244.631z"/>
+          <path :class="{ on: '01234789'.includes(data) }" d="M310.067,214.094c0,5.931-4.808,10.738-10.738,10.738l0,0c-5.931,0-10.738-4.808-10.738-10.738
+            V48.993c0-5.931,4.808-10.738,10.738-10.738l0,0c5.931,0,10.738,4.808,10.738,10.738V214.094z"/>
+          <path :class="{ on:'0268'.includes(data) }" d="M22.819,470.47c0,6.301-5.108,11.409-11.41,11.409l0,0C5.108,481.879,0,476.771,0,470.47V283.892
+            c0-6.301,5.108-11.409,11.409-11.409l0,0c6.301,0,11.41,5.108,11.41,11.409V470.47z"/>
+          <path :class="{ on:'0235689'.includes(data) }" d="M279.194,497.986c0,4.818-3.906,8.725-8.725,8.725H45.637c-4.818,0-8.725-3.906-8.725-8.725l0,0
+            c0-4.818,3.906-8.725,8.725-8.725H270.47C275.288,489.262,279.194,493.168,279.194,497.986L279.194,497.986z"/>
+          <path :class="{ on:'013456789'.includes(data) }" d="M307.382,467.785c0,5.189-4.206,9.396-9.396,9.396l0,0c-5.189,0-9.396-4.206-9.396-9.396V275.713
+            c0-5.188,4.206-9.395,9.396-9.395l0,0c5.189,0,9.396,4.207,9.396,9.395V467.785z"/>
+        </g>
+        <g v-else>
+          <circle class="on" cx="151.677" cy="122.637" r="16.611"/>
+          <circle class="on" cx="151.677" cy="386.087" r="16.611"/>
+        </g>
+      </svg>
+    </div>
+  </script>
+  <script>
+    const { ref, computed } = Vue
+    Vue.createApp({
+      setup() {
+        const counter = ref(0)
+        let timer = 0
+        const counting = ref(false)
+
+        const start = () => {
+          timer = setInterval(() => {
+            counter.value++
+          }, 10)
+          counting.value = true
+        }
+
+        const stop = () => {
+          clearInterval(timer)
+          counting.value = false
+        }
+
+        const reset = () => {
+          stop()
+          counter.value = 0
+        }
+
+        const display = computed(()=> {
+          // Math.floor = 無條件捨去
+          // .toString() = 轉成文字
+          // .padStart(補到幾個字, 用什麼補)
+          // display => 文字串 '0' ':' '0' '0' => 可當作陣列
+          return Math.floor(counter.value / 100).toString() + ':' + (counter.value % 100).toString().padStart(2, '0')
+        }) 
+
+        return {
+          counter,
+          start,
+          stop,  
+          reset, 
+          display, 
+          counting
+        }
+      }
+    })
+      .component('Number', {
+        template: '#number',
+        props: ['data']
+      })
+      .mount('#app')
+  </script>
+</body>
+
+</html>
