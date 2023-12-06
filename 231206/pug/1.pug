@@ -1,0 +1,29 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Document
+    //- style. 加.才會是css
+    style.
+      h1{
+        color:red
+      }
+  body 
+    // 會編譯到HTML的註解
+    // 終端機指令: pug 1.pug -w -P
+    // -w 偵測檔案自動變更 會隨時render更新html檔案
+    // -P 自動排版
+    //- 不會編譯到HTML
+    h1 AAA
+    a(href="https://google.com") Google
+    h2#title.text-center.text-red 
+    .row.justify-center 
+      .col-12
+        //- | = 純文字 
+        | aaa
+        br
+        | bbb
+    script.
+      const title = document.getElementsById('title')
+

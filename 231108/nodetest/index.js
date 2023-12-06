@@ -95,6 +95,7 @@ console.log(cc.arr1)       // [ 3, 2, 3, 4, 5 ]
 // npm i -D ____
 // -D only adds the package to your “dev dependencies,” which means they'll only be installed when developing the project, and not when building the finalized production version of the project.
 // npm un ____ ____ ____ (uninstall 套件)
+// npm i -g ______ (-g = 全域安裝)
 
 // install: 
 // 1. npm i -D eslint nodemon

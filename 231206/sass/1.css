@@ -1,0 +1,9 @@
+.container {
+  background: red;
+}
+.container .title {
+  color: blue;
+  text-align: right;
+}
+
+/*# sourceMappingURL=1.css.map */
