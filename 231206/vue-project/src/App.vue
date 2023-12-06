@@ -1,37 +1,10 @@
-<template>
-  <h1>{{text}}</h1>
+<template lang="pug">
+TopImage
+#left
+  LeftMenu
+#right
 </template>
-
-<!-- 1. option
-<script>
-export default {
-  data () {
-    return {
-      text: 'abc'
-    }
-  }
-}
-</script>
--->
-
-<!-- 2. composition
-<script>
-import { ref } from 'vue'
-export default {
-  setup() {
-    const text = ref('abc')
-    return {
-      text
-    }
-  }
-}
-</script>
--->
-
-<!-- 3. -->
 <script setup>
-import { ref } from 'vue'
-const text = ref('abc')
+import TopImage from '@/components/TopImage.vue'
+import LeftMenu from '@/components/LeftMenu.vue'
 </script>
-
-<style></style>
