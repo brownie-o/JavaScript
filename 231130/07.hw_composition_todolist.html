@@ -33,7 +33,7 @@
       <li v-for="(item, i) in filteredItems" :key="item.id">
         <input type="checkbox" v-model="item.done">
         <span v-show="item.edit">
-          <!-- ref="inputs" inputs是什麼??? -->
+          <!-- ref="inputs" inputs是什麼??? => 自訂的名稱 對應到下面的 -->
           <!-- ref: obtain a direct reference to a specific DOM element or child component -->
           <input type="text" v-model="item.model" ref="inputs" @keydown.enter="saveItem(item.id)"
             @keydown.esc="cancelItem(item.id)">
@@ -62,6 +62,7 @@
         const items = reactive([])
         const filter = ref('全部')
         let id = 1
+        // setup 的元素 ref 寫法，宣告同名資料
         const inputs = ref([])
 
         const addItem = () => {
@@ -82,10 +83,11 @@
           return items.findIndex(item => item.id === id)
         }
 
-        // 無法作用
+        // 可以focus
         const editItem = async (id, i) => {
           const idx = findItmsIdxById(id)
           items[idx].edit = true
+          // setup的 nextTick() 寫法
           await nextTick()
           console.log(i)
           inputs.value[idx].focus()
@@ -167,6 +169,7 @@
           editItem,
           delItem,
           markItem,
+          saveItem,
           clearItem,
           borderStyle,
           filteredItems,
