@@ -35,8 +35,7 @@
         <span v-show="item.edit">
           <!-- ref="inputs" inputs是什麼??? => 自訂的名稱 對應到下面的 -->
           <!-- ref: obtain a direct reference to a specific DOM element or child component -->
-          <input type="text" v-model="item.model" ref="inputs" @keydown.enter="saveItem(item.id)"
-            @keydown.esc="cancelItem(item.id)">
+          <input type="text" v-model="item.model" ref="inputs" @keydown.enter="saveItem(item.id)" @keydown.esc="cancelItem(item.id)" @focusout="cancelItem(item.id)">
         </span>
         <span v-show="!item.eidt" @dblclick="editItem(item.id, i)">
           <del v-if="item.done">{{ item.text }}</del>
@@ -52,6 +51,7 @@
     integrity='sha512-01DXK8J/RTf+INWJaGSa1a8ePsny+wTV63r5e+qcW4Gx7cgYKeX7uNvJminP4WvBthCi03aWdTmGLcZk/DTKKQ=='
     crossorigin='anonymous'></script>
   <script>
+    // setup寫法 要把 nextTick解構
     const { createApp, ref, reactive, computed, watch, onMounted, nextTick } = Vue
     createApp({
       setup() {
@@ -62,7 +62,8 @@
         const items = reactive([])
         const filter = ref('全部')
         let id = 1
-        // setup 的元素 ref 寫法，宣告同名資料
+        // setup 的元素 ref 寫法，宣告同名資料，要在下面宣告
+        // 如果 ref 被包在 v-for 裡預設值就是陣列，不在v-for裡預設是null
         const inputs = ref([])
 
         const addItem = () => {
@@ -114,16 +115,23 @@
           items.map(item => {
             item.done = value
             // 為什麼要return item??
+            // 把改好的item return 出去?
             return item
           })
         }
 
         const clearItem = (value) => {
-          items = items.filter(item => {
+          const list = items.filter(item => {
             if (value === '全部') return false
             else if (value === '已完成') return item.done === false
             else return item.done === true
           })
+          // 參考 01.list_composition的onMounted part
+          // 不能寫 "items = data"，因為items上面是用const來宣告
+          // 1. 可以用 .splice(目標索引, 刪除項目, 插入項目一, 插入項目二....)
+          // items.splice(0, items.length, ...data)
+          // 2. Object.assign(A, B) 物件合併，將B合併進A
+          items.splice(0, items.length, ...list)
         }
 
         const borderStyle = computed(() => {
@@ -135,7 +143,6 @@
         const filteredItems = computed(() => {
           return items.filter(item => {
             if (filter.value === '搜尋') {
-              // 無法運作，不管搜尋什麼都只會出現未完成的item 
               return item.text.includes(search.value)
             } else if (filter.value === '全部' || search.value.length === 0) {
               filter.value = '全部'
@@ -171,6 +178,7 @@
           markItem,
           saveItem,
           clearItem,
+          cancelItem,
           borderStyle,
           filteredItems,
           inputs
