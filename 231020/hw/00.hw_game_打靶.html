@@ -1,30 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>碰碰</title>
+  <link rel="stylesheet" href="./css/bootstrap.css">
   <style>
-    #area{
-      width: 97vw;
-      height: 97vh;
-      background-image: url(./img/bg.png);
-      background-position: center 2%;
-      background-repeat: no-repeat;
-      background-size: contain;
-      cursor: url(./img/crosshair_red.png) 25 25, auto;
-      text-align: center;
+    body {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: row;
     }
 
-    #grass{
-      position: absolute;
-      width: 100%;
+    #area {
+      width: 1200px;
+      height: 749;
+      cursor: url(./img/crosshair_red.png) 25 25, auto;
+      text-align: center;
+      position: relative;
+      background-image: url('./img/bg.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      pointer-events: none;
+      justify-self: center;
+    }
+
+    #grass {
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    #score {
+      width: 200px;
+      height: 749px;
+      float: left;
     }
   </style>
 </head>
+
 <body>
-  <div id="area">
-    <img src="./img/grass.png" id="grass">
+  <div class="text-center" id="score">
+    <button type="button" class="btn btn-success">Start</button>
   </div>
+  <div id="area">
+    <img src="./img/grass_full.png" id="grass" class="w-100 h-100">
+  </div>
+  </div>
+  <script src="./js/bootstrap.bundle.js"></script>
 </body>
+
 </html>
