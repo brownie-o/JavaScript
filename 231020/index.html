@@ -95,7 +95,7 @@
         $('#text-time').text(time)
         // 出現小魚
         const random = Math.ceil(Math.random() * 10)
-        // 如果隨機數字大於5且魚的數量小於5 就再產生一條魚
+        // 如果隨機數字大於10且魚的數量小於10 就再產生一條魚
         if (random > 1 && $('.fish').length < 10) {
           // 產生魚的位置隨機
           const top = Math.round(Math.random() * 100) + '%'

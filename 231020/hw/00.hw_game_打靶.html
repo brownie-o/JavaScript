@@ -8,25 +8,24 @@
   <link rel="stylesheet" href="./css/bootstrap.css">
   <style>
     body {
+      width: 100vw;
       height: 100vh;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-direction: row;
+      background: #333;
+      color: antiquewhite;
+      font-size: 1.3rem;
     }
 
     #area {
       width: 1200px;
-      height: 749;
+      height: 749px;
       cursor: url(./img/crosshair_red.png) 25 25, auto;
       text-align: center;
-      position: relative;
       background-image: url('./img/bg.png');
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
-      pointer-events: none;
-      justify-self: center;
+      align-self: center;
     }
 
     #grass {
@@ -35,22 +34,65 @@
     }
 
     #score {
-      width: 200px;
+      width: calc((100vw - 1200px) /2);
       height: 749px;
-      float: left;
+      position: relative;
+      align-self: center;
+      padding: 1%;
     }
   </style>
 </head>
 
 <body>
   <div class="text-center" id="score">
-    <button type="button" class="btn btn-success">Start</button>
+    <div class="col">
+      <button type="button" class="btn btn-success" id="start-btn">Start</button>
+    </div>
+    <br>
+    <div class="col">
+      <p>Score: <span id="score">0</span></p>
+      <p>Time: <span id="time">0</span></p>
+      <p>Best Player: <span id="bsPlayer">-</span>, <span id="bsScore">0</span></p>
+    </div>
   </div>
   <div id="area">
     <img src="./img/grass_full.png" id="grass" class="w-100 h-100">
   </div>
-  </div>
   <script src="./js/bootstrap.bundle.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'
+    integrity='sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=='
+    crossorigin='anonymous'></script>
+
+  <script>
+    let score = 0
+    let time = 0
+    let timer = 0
+    let best = {
+      bsPlayer: '-',
+      bsScore: 0
+    }
+
+    $('#start-btn').click(function () {
+      $(this).attr('disabled', true)
+      score = 0
+      time = 50
+      $('#score').text(score)
+      $('#time').text(time)
+      const _this = this
+
+      timer = setInterval(function () {
+        time--
+        $('#time').text(time)
+        const random = Math.celi(Math.random() * 10)
+        if(random > 1 && $(can1).length < 5){
+          const left = Math.round(Math.random() * 100) + '%'
+          const can1 = $(`<img src='./img/can1.png' class='can1' style='top: 0', 'left: ${left}'>`)
+          $('#area').append(can1)
+          // function 罐子的移動
+        }
+      }, 1000)
+    })
+  </script>
 </body>
 
 </html>
