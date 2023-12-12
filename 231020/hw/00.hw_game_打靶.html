@@ -57,8 +57,12 @@
   </div>
   <div id="area">
     <img src="./img/grass_full.png" id="grass" class="w-100 h-100">
+    <div id="playArea" class="w-100 h-100"></div>
   </div>
   <script src="./js/bootstrap.bundle.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.32/sweetalert2.all.min.js'
+    integrity='sha512-zB7yJLSASiSevQmWCrQaq+z/f5zRIa884hwWgmK1oI3MfolIzKcpDtyfBsrGqUi/hMCObVwr/+SZTByOqh0zkQ=='
+    crossorigin='anonymous'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'
     integrity='sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=='
     crossorigin='anonymous'></script>
@@ -84,11 +88,32 @@
         time--
         $('#time').text(time)
         const random = Math.celi(Math.random() * 10)
-        if(random > 1 && $(can1).length < 5){
+        if (random > 1 && $('.can1').length < 5) {
           const left = Math.round(Math.random() * 100) + '%'
           const can1 = $(`<img src='./img/can1.png' class='can1' style='top: 0', 'left: ${left}'>`)
-          $('#area').append(can1)
+          $('#playArea').append(can1)
           // function 罐子的移動
+        }
+        if (time === 0){
+          clearInterval(timer)
+          $(_this).attr('disabled', false)
+          $('#playArea').empty()
+
+          if (score >= best.bsScore){
+            Swal.fire({
+              title: '時間到!',
+              icon: 'success',
+              text: `${$score} 分，你是最高分!`,
+              input: 'text',
+              inputPlaceholder: '請輸入姓名',
+              validationMessage: '請輸入你的名字',
+            }).then(function (result){
+              best.bsScore = score
+              best.bsPlayer = result.value || 'your dad'
+              $('#bsScore').text(best.bsScore)
+              $('#bsPlayer').text(best.bsPlayer)
+            })
+          }
         }
       }, 1000)
     })
