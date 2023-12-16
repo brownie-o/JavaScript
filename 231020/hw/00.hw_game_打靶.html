@@ -69,13 +69,15 @@
     </div>
     <br>
     <div class="col">
-      <p>Score: <span id="score">0</span></p>
+      <p>Score: <span id="score">0</span>p</p>
       <p>Time: <span id="time">0</span></p>
-      <p>Best Player: <span id="bsPlayer">-</span> - <span id="bsScore">0</span></p>
+      <p>Best Player: <br> <span id="bsPlayer">-</span> - <span id="bsScore">0</span>p</p>
     </div>
   </div>
   <div id="area">
-    <div id="playArea" class="w-100 h-100"></div>
+    <div id="playArea" class="w-100 h-100">
+      <!-- can1 -->
+    </div>
     <img src="./img/grass_full.png" id="grass" class="w-100">
   </div>
   <script src="./js/bootstrap.bundle.js"></script>
@@ -97,8 +99,9 @@
 
     if (localStorage.best) {
       const data = JSON.parse(localStorage.best)
+      console.log(data)
       best.bsPlayer = data.bsPlayer
-      best.score = data.bsScore
+      best.bsScore = data.bsScore
       $('#bsPlayer').text(best.bsPlayer)
       $('#bsScore').text(best.bsScore)
     }
@@ -107,7 +110,7 @@
       $(this).attr('disabled', true)
       score = 0
       $('#score').text(  )
-      time = 50
+      time = 20
       $('#time').text(time)
       const _this = this
 
@@ -117,7 +120,8 @@
         const random = Math.ceil(Math.random() * 10)
         if (random > 1 && $('.can1').length < 5) {
           const left = Math.round(Math.random() * 100) + '%'
-          const can1 = $(`<img src='./img/can1.png' class='can1' style='top: 0', 'left: ${left}'>`)
+          console.log(left)
+          const can1 = $(`<img src='./img/can1.png' class='can1' style='top: 0', 'left: ${left}'>, 'position: relative'`)
           $('#playArea').append(can1)
           moveCan1(can1)
         }
@@ -139,14 +143,14 @@
               best.bsPlayer = result.value || 'your father'
               $('#bsScore').text(best.bsScore)
               $('#bsPlayer').text(best.bsPlayer)
-
+              console.log(best)
               localStorage.best = JSON.stringify(best)
             })
           } else {
             Swal.fire({
               title: '時間到!',
               icon: 'info',
-              text: `請加油，你只得到${score} 分...`
+              text: `請加油，你只得到 ${score} 分`
             })
           }
         }
@@ -156,17 +160,18 @@
     function moveCan1(can1) {
       // const top = Math.round(Math.random()*100) + '%'
       // const left = Math.round(Math.random()*100) + '%'
-      const top = '749px'
+      const top = 50
+      // const bottom = 0
       const left = parseFloat(can1.css('left'))
       const plus = Math.random() > 0.5
       let newLeft = 0
       if (plus){
-        newLeft = left + Math.round(Math.random() * 10) + '%'
+        newLeft = left + (Math.round(Math.random() * 10) + '%')
       } else {
-        newLeft = left - Math.round(Math.random() * 10) + '%'
+        newLeft = left - (Math.round(Math.random() * 10) + '%')
       }
       can1.animate({ top, newLeft }, 5000, function () {
-        console.log('newLeft')
+        console.log(newLeft)
       })
     }
 
