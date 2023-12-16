@@ -26,25 +26,44 @@
       background-position: center;
       background-size: cover;
       align-self: center;
+      position: relative;
     }
 
     #grass {
       object-fit: cover;
       pointer-events: none;
+      z-index: 1;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
-    #score {
+    #scoreArea {
       width: calc((100vw - 1200px) /2);
       height: 749px;
       position: relative;
       align-self: center;
       padding: 1%;
     }
+
+    #playArea {
+      z-index: 2;
+    }
+    
+    .can1{
+      width: 5%;
+      /* 還要讓他隨機rotate */
+    }
+
+    .confetti{
+      pointer-events: none;
+      width: 7%;
+    }
   </style>
 </head>
 
 <body>
-  <div class="text-center" id="score">
+  <div class="text-center" id="scoreArea">
     <div class="col">
       <button type="button" class="btn btn-success" id="start-btn">Start</button>
     </div>
@@ -52,12 +71,12 @@
     <div class="col">
       <p>Score: <span id="score">0</span></p>
       <p>Time: <span id="time">0</span></p>
-      <p>Best Player: <span id="bsPlayer">-</span>, <span id="bsScore">0</span></p>
+      <p>Best Player: <span id="bsPlayer">-</span> - <span id="bsScore">0</span></p>
     </div>
   </div>
   <div id="area">
-    <img src="./img/grass_full.png" id="grass" class="w-100 h-100">
     <div id="playArea" class="w-100 h-100"></div>
+    <img src="./img/grass_full.png" id="grass" class="w-100">
   </div>
   <script src="./js/bootstrap.bundle.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.32/sweetalert2.all.min.js'
@@ -76,46 +95,90 @@
       bsScore: 0
     }
 
+    if (localStorage.best) {
+      const data = JSON.parse(localStorage.best)
+      best.bsPlayer = data.bsPlayer
+      best.score = data.bsScore
+      $('#bsPlayer').text(best.bsPlayer)
+      $('#bsScore').text(best.bsScore)
+    }
+
     $('#start-btn').click(function () {
       $(this).attr('disabled', true)
       score = 0
+      $('#score').text(  )
       time = 50
-      $('#score').text(score)
       $('#time').text(time)
       const _this = this
 
       timer = setInterval(function () {
         time--
         $('#time').text(time)
-        const random = Math.celi(Math.random() * 10)
+        const random = Math.ceil(Math.random() * 10)
         if (random > 1 && $('.can1').length < 5) {
           const left = Math.round(Math.random() * 100) + '%'
           const can1 = $(`<img src='./img/can1.png' class='can1' style='top: 0', 'left: ${left}'>`)
           $('#playArea').append(can1)
-          // function 罐子的移動
+          moveCan1(can1)
         }
-        if (time === 0){
+        if (time === 0) {
           clearInterval(timer)
           $(_this).attr('disabled', false)
           $('#playArea').empty()
 
-          if (score >= best.bsScore){
+          if (score >= best.bsScore) {
             Swal.fire({
               title: '時間到!',
               icon: 'success',
-              text: `${$score} 分，你是最高分!`,
+              text: `${score} 分，你是最高分!`,
               input: 'text',
               inputPlaceholder: '請輸入姓名',
               validationMessage: '請輸入你的名字',
-            }).then(function (result){
+            }).then(function (result) {
               best.bsScore = score
-              best.bsPlayer = result.value || 'your dad'
+              best.bsPlayer = result.value || 'your father'
               $('#bsScore').text(best.bsScore)
               $('#bsPlayer').text(best.bsPlayer)
+
+              localStorage.best = JSON.stringify(best)
+            })
+          } else {
+            Swal.fire({
+              title: '時間到!',
+              icon: 'info',
+              text: `請加油，你只得到${score} 分...`
             })
           }
         }
       }, 1000)
+    })
+
+    function moveCan1(can1) {
+      // const top = Math.round(Math.random()*100) + '%'
+      // const left = Math.round(Math.random()*100) + '%'
+      const top = '749px'
+      const left = parseFloat(can1.css('left'))
+      const plus = Math.random() > 0.5
+      let newLeft = 0
+      if (plus){
+        newLeft = left + Math.round(Math.random() * 10) + '%'
+      } else {
+        newLeft = left - Math.round(Math.random() * 10) + '%'
+      }
+      can1.animate({ top, newLeft }, 5000, function () {
+        console.log('newLeft')
+      })
+    }
+
+    $('#playArea').on('click', '.can1', function(){
+      $(this).stop()
+      $(this).attr('src', './img/confetti.gif')
+      $(this).removeClass('can1').addClass('confetti')
+      setTimeout(()=> {
+        $('.confetti').hide()
+      }, 800)
+      score++
+      $('#score').text(score)
     })
   </script>
 </body>
