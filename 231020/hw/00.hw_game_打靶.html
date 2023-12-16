@@ -47,6 +47,8 @@
     }
 
     #playArea {
+      width: 1200px;
+      height: 749px;
       z-index: 2;
     }
     
@@ -58,6 +60,11 @@
     .confetti{
       pointer-events: none;
       width: 7%;
+    }
+
+    .can1{
+      top: 0;
+      position: relative;
     }
   </style>
 </head>
@@ -75,7 +82,7 @@
     </div>
   </div>
   <div id="area">
-    <div id="playArea" class="w-100 h-100">
+    <div id="playArea">
       <!-- can1 -->
     </div>
     <img src="./img/grass_full.png" id="grass" class="w-100">
@@ -121,7 +128,7 @@
         if (random > 1 && $('.can1').length < 5) {
           const left = Math.round(Math.random() * 100) + '%'
           console.log(left)
-          const can1 = $(`<img src='./img/can1.png' class='can1' style='top: 0', 'left: ${left}'>, 'position: relative'`)
+          const can1 = $(`<img src='./img/can1.png' class='can1' style='left: ${left}'>`)
           $('#playArea').append(can1)
           moveCan1(can1)
         }
@@ -160,7 +167,7 @@
     function moveCan1(can1) {
       // const top = Math.round(Math.random()*100) + '%'
       // const left = Math.round(Math.random()*100) + '%'
-      const top = 50
+      const top = 645
       // const bottom = 0
       const left = parseFloat(can1.css('left'))
       const plus = Math.random() > 0.5
