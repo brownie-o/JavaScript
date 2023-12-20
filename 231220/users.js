@@ -17,7 +17,7 @@ const schema = new Schema({
     // 欄位資料不可重複 (不能設定錯誤訊息)
     unique: true,
     // Regex
-    match: [/^[A-Za-z1-9]+$/, 'account 只能是英數字'],
+    match: [/^[A-Za-z0-9]+$/, 'account 只能是英數字'],
     // 自動去除前後空白
     trim: true
   },
