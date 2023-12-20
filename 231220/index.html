@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <form @submit.prevent="create">
+      <input type="text" v-model="form.account">
+      <input type="email" v-model="form.email">
+      <input type="submit" value="新增">
+    </form>
+    <table border="1">
+      <tr v-for="(user, i) in users" :key="user._id">
+        <td>{{ user.account }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <input type="button" value="x" @click="del(i)">
+        </td>
+      </tr>
+    </table>
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.13/vue.global.min.js'
+    integrity='sha512-3uydLDwuIAN29hgNdpLr1JG62FexPLeC52NahjCt1H7lHG/EYprZl3ibkwe668/KIQuqBmLPFVZaTxlUmN5Q3Q=='
+    crossorigin='anonymous'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js'
+    integrity='sha512-b94Z6431JyXY14iSXwgzeZurHHRNkLt9d6bAHt7BZT38eqV+GyngIi/tVye4jBKPYQ2lBdRs0glww4fmpuLRwA=='
+    crossorigin='anonymous'></script>
+  <script>
+    const { reactive, createApp, onMounted } = Vue
+
+    createApp({
+      setup() {
+        // 陣列資料要呼叫API 取所有user的資料
+        const users = reactive([])
+        const form = reactive({
+          account: '',
+          email: ''
+        })
+
+        // 新增user
+        const create = async () => {
+          try {
+            // .post( 網址 , body的請求方式 )
+            const { data } = await axios.post('http://localhost:4000', form)
+            // 新增後 push到 users內
+            users.push(data.result)
+          } catch (error) {
+            // axios: 200以外的回應狀態碼都會回到error內
+            console.log(error)
+          }
+        }
+
+        // _id = mongodb的 id
+        const del = async (i) => {
+          try {
+            // .delete(網址(:4000再加上mongodb的id，就找到要刪除的那個user))
+            await axios.delete('http://localhost:4000/' + users[i]._id)
+            users.splice(i, 1)
+          } catch (error) {
+            console.log(error)
+          }
+        }
+
+        onMounted(async () => {
+          try {
+            // 把後端的資料用axios串起來
+            const { data } = await axios.get('http://localhost:4000')
+            // users.push(1, 2, 3, 4)
+            users.push(...data.result)
+          } catch (error) {
+            console.log(error)
+          }
+        })
+
+        return {
+          users,
+          form, 
+          create, 
+          del
+        }
+      }
+    }).mount('#app')
+  </script>
+
+</body>
+
+</html>
