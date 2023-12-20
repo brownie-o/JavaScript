@@ -198,12 +198,32 @@
       console.log('newLeft', newLeft)
 
       can.animate({ top, left: `${newLeft}%` }, 3000, function () {
-        console.log(`${left/10}%`)
+        console.log(`${newLeft}%`)
       })
     }
 
     function moveCan2(can) {
-      can.animate({ top: 0,  })
+      const left = parseFloat(can.css('left'))
+      const random = Math.round(Math.random() * 100) 
+      console.log('random2', random)
+
+      let newLeft = (left/10) + (Math.random() > 0.5 ? random : -random)
+      if (newLeft > 100) {
+        newLeft = (left/10) - random
+      }
+      if (newLeft < 1) { 
+        newLeft = random - (left/10)
+      }
+      console.log('newLeft2', `${newLeft}%`)
+
+      can.animate({ top, left: `${newLeft}%` }, 3000, function () {
+        can.animate({ top: -30, left: `${newLeft}%` }, 3000, 
+        function(){
+          can.animate({ top: 645, left: `(1200 - ${newLeft})%` }, 3000, function(){
+            console.log('left2', `${newLeft}%` )
+          })
+        })
+      })
     }
 
     $('#playArea').on('click', '.can1', function () {
