@@ -12,6 +12,8 @@ mongoose.connect(process.env.DB_URL)
 // 建立express的網頁伺服器
 const app = express1()
 
+app.use(cors())
+
 // 將傳入express伺服器請求的body (只有post, put, patch會有body) 解析為json格式 (會套用在所有請求上)
 app.use(express1.json())
 // 處理轉json的錯誤，有錯才會進到這裡
@@ -95,6 +97,7 @@ app.get('/:id', async (req, res) => {
   // 取出網址的id
   // params = 參數 => 網址後面的字(這邊是id)
   console.log(req.params.id)
+  console.log('query', req.query)
   try {
     if (!validator.isMongoId(req.params.id)) throw new Error('ID_INVALID')
     // 三種查詢法
