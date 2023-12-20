@@ -33,8 +33,8 @@
       pointer-events: none;
       z-index: 2;
       position: absolute;
-      top: 0;
       left: 0;
+      bottom: 0
     }
 
     #scoreArea {
@@ -53,9 +53,9 @@
       /* overflow: hidden; */
     }
 
-    .can1, 
-    .can2, 
-    .can3  {
+    .can1,
+    .can2,
+    .can3 {
       width: 5%;
       top: 0;
       position: absolute;
@@ -67,16 +67,15 @@
       width: 5%;
       pointer-events: none;
       position: relative
-      /* width: 7%; */
+        /* width: 7%; */
     }
 
-    #reload{
+    #reload {
       background-image: url(./img/MdiRefresh.svg);
       background-repeat: no-repeat;
       width: 2rem;
       height: 2rem;
     }
-
   </style>
 </head>
 
@@ -139,7 +138,6 @@
         const random = Math.ceil(Math.random() * 10)
         if (random > 1 && $('.can1').length < 1) {
           const left = Math.round(Math.random() * 100) + '%'
-          console.log(left)
           const can = $(`<img src='./img/can1.png' class='can1' style='left: ${left}'>`)
           $('#playArea').append(can)
           moveCan1(can)
@@ -157,80 +155,99 @@
               input: 'text',
               inputPlaceholder: '請輸入姓名',
               validationMessage: '請輸入你的名字',
+              allowOutsideClick: false,
+              showCloseButton: true,
             }).then(function (result) {
               best.bsScore = score
               best.bsPlayer = result.value || '名字都懶得寫的豬'
               $('#bsScore').text(best.bsScore)
               $('#bsPlayer').text(best.bsPlayer)
-              console.log(best)
               localStorage.best = JSON.stringify(best)
             })
           } else {
             Swal.fire({
               title: '時間到!',
               icon: 'info',
-              text: `請加油，你只得到 ${score} 分`
+              text: `請加油，你只得到 ${score} 分`,
+              allowOutsideClick: false,
+              showCloseButton: true,
             })
           }
         }
       }, 1000)
     })
 
-    $('#reload').click(()=> {
+    $('#reload').click(() => {
       location.reload()
     })
 
     function moveCan1(can) {
       const top = 645
       const left = parseFloat(can.css('left'))
-      console.log(left)
 
-      const random = Math.round(Math.random() * 100) 
-      console.log('random', random)
+      const random = Math.round(Math.random() * 100)
 
-      let newLeft = (left/10) + (Math.random() > 0.5 ? random : -random)
+      let newLeft = (left / 10) + (Math.random() > 0.5 ? random : -random)
       if (newLeft > 100) {
-        newLeft = (left/10) - random
+        newLeft = (left / 10) - random
       }
-      if (newLeft < 1) { 
-        newLeft = random - (left/10)
+      if (newLeft < 1) {
+        newLeft = random - (left / 10)
       }
-      console.log('newLeft', newLeft)
 
-      can.animate({ top, left: `${newLeft}%` }, 3000, function () {
-        console.log(`${newLeft}%`)
+      can.animate({ top, left: `${newLeft}%` }, 4000, function () {
+        console.log('moveCan1', `${newLeft}%`)
       })
     }
 
     function moveCan2(can) {
       const left = parseFloat(can.css('left'))
-      const random = Math.round(Math.random() * 100) 
-      console.log('random2', random)
+      const random = Math.round(Math.random() * 100)
 
-      let newLeft = (left/10) + (Math.random() > 0.5 ? random : -random)
+      let newLeft = (left / 10) + (Math.random() > 0.5 ? random : -random)
       if (newLeft > 100) {
-        newLeft = (left/10) - random
+        newLeft = (left / 10) - random
       }
-      if (newLeft < 1) { 
-        newLeft = random - (left/10)
+      if (newLeft < 1) {
+        newLeft = random - (left / 10)
       }
       console.log('newLeft2', `${newLeft}%`)
 
-      can.animate({ top, left: `${newLeft}%` }, 3000, function () {
-        can.animate({ top: -30, left: `${newLeft}%` }, 3000, 
-        function(){
-          can.animate({ top: 645, left: `(1200 - ${newLeft})%` }, 3000, function(){
-            console.log('left2', `${newLeft}%` )
+      can.animate({ top: -100, left: `${newLeft}%` }, 1500,
+        function () {
+          can.animate({ top: 645, left: 100 - `${newLeft}` + '%' }, 3000, function () {
+            console.log('left2', 100 - `${newLeft}` + '%')
           })
         })
-      })
+    }
+
+    function moveCan3(can){
+      const left = parseFloat(can.css('left'))
+      const random = Math.round(Math.random() * 100)
+
+      let newLeft = (left / 10) + (Math.random() > 0.5 ? random : -random)
+      if (newLeft > 100) {
+        newLeft = (left / 10) - random
+      }
+      if (newLeft < 1) {
+        newLeft = random - (left / 10)
+      }
+      console.log('newLeft3', `${newLeft}%`)
+
+      can.animate({ top: -100, left: `${newLeft}%` }, 1000,
+        function () {
+          can.animate({ top: 645, left: 100 - `${newLeft}` + '%' }, 2000, function () {
+            console.log('left3', 100 - `${newLeft}` + '%')
+          })
+        })
     }
 
     $('#playArea').on('click', '.can1', function () {
       $(this).stop()
       $(this).attr('src', './img/can2.png')
       $(this).addClass('can2').removeClass('can1')
-      moveCan2(can)
+      // 取點擊到的那個東西 => this
+      moveCan2($(this))
       score++
       $('#score').text(score)
     })
@@ -239,8 +256,8 @@
       $(this).stop()
       $(this).attr('src', './img/can3.png')
       $(this).addClass('can3').removeClass('can2')
-      moveCan3(can)
-      score+=2
+      moveCan3($(this))
+      score += 2
       $('#score').text(score)
     })
 
@@ -251,7 +268,7 @@
       setTimeout(() => {
         $('.confetti').css('display', 'none')
       }, 800)
-      score+=5
+      score += 4
       $('#score').text(score)
     })
   </script>
