@@ -2,7 +2,9 @@ import 'dotenv/config' // 自動讀取.env檔
 import express1 from 'express'
 import mongoose from 'mongoose'
 import users from './users.js'
-import { StatusCodes } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes' // 增加http status code可讀性
+import validator from 'validator'
+import cors from 'cors' // 可以跨域請求
 
 // 連線資料庫
 mongoose.connect(process.env.DB_URL)
@@ -30,6 +32,7 @@ app.use((_, req, res, next) => {
 app.post('/', async (req, res) => {
   console.log(req.body)
   try {
+    // const user = await users.create(req.body)
     const user = await users.create({
       account: req.body.account,
       email: req.body.email
@@ -83,6 +86,135 @@ app.get('/', async (req, res) => {
       success: false,
       message: '未知錯誤'
     })
+  }
+})
+
+// 查詢
+// /:id 會把網址/後面的東西變成叫做id的變數
+app.get('/:id', async (req, res) => {
+  // 取出網址的id
+  // params = 參數 => 網址後面的字(這邊是id)
+  console.log(req.params.id)
+  try {
+    if (!validator.isMongoId(req.params.id)) throw new Error('ID_INVALID')
+    // 三種查詢法
+    // const user = await users.find({ _id: req.params.id }) // 查所有的，回傳結果是陣列
+    // const user = await users.findOne({ _id: req.params.id }) // 找一個
+    const user = await users.findById(req.params.id) // 找符合ID的
+
+    // 發生錯誤往下跳到catch
+    if (!user) throw new Error('NOT_FOUND')
+
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: '',
+      result: user
+    })
+  } catch (error) {
+    console.log(error)
+    if (error.name === 'CastError' || error.message === 'ID_INVALID') {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        message: '格式錯誤'
+      })
+    } else if (error.message === 'NOT_FOUND') {
+      res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: '查無資料'
+      })
+    } else {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        success: false,
+        message: '未知錯誤'
+      })
+    }
+  }
+})
+
+app.patch('/:id', async (req, res) => {
+  // 邊查詢邊更新
+  try {
+    // 操作前先把不合規定的id擋下來
+    if (!validator.isMongoId(req.params.id)) throw new Error('ID_INVALID')
+
+    // .findByIdAndUpdate()
+    // { new: true/false } 回傳更新前or 更新後的資料，預設是false(更新前的資料)
+    // new: true => 回傳更新後的資料
+    // runValidators: true => 執行 schema定義的驗證
+    const user = await users.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+
+    // 操作前把不合規定的user name擋下來
+    if (!user) throw new Error('NOT_FOUND')
+
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: '',
+      result: user
+    })
+  } catch (error) {
+    console.log(error)
+    if (error.name === 'CastError' || error.message === 'ID_INVALID') {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        message: '格式錯誤'
+      })
+    } else if (error.name === 'MongoServerError' && error.code === 11000) {
+      res.status(StatusCodes.CONFLICT).json({
+        success: false,
+        message: '帳號或信箱重複'
+      })
+    } else if (error.name === 'ValidationError') {
+      const key = Object.keys(error.errors)[0]
+      const message = error.errors[key].message
+
+      res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        message
+      })
+    } else if (error.message === 'NOT_FOUND') {
+      res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: '查無資料'
+      })
+    } else {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        success: false,
+        message: '未知錯誤'
+      })
+    }
+  }
+})
+
+app.delete('/:id', async (req, res) => {
+  try {
+    if (!validator.isMongoId(req.params.id)) throw new Error('ID_INVALID')
+
+    const user = await users.findByIdAndDelete(req.params.id)
+
+    if (!user) throw new Error('NOT_FOUND')
+
+    // 被刪掉的資料
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: ''
+    })
+  } catch (error) {
+    if (error.name === 'CastError' || error.message === 'ID_INVALID') {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        message: '格式錯誤'
+      })
+    } else if (error.message === 'NOT_FOUND') {
+      res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: '查無資料'
+      })
+    } else {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        success: false,
+        message: '未知錯誤'
+      })
+    }
   }
 })
 
