@@ -57,7 +57,7 @@
     .can2,
     .can3 {
       width: 5%;
-      top: 0;
+      top: -50px;
       position: absolute;
       transform-origin: center;
       user-select: none;
@@ -221,6 +221,9 @@
       can.animate({ top: -100, left: `${newLeft}%` }, 1500,
         function () {
           can.animate({ top: 645, left: 100 - `${newLeft}` + '%' }, 3000, function () {
+            if (top > 600) {
+              $('.can2').css({'display': 'none'}).removeClass('can2')
+            }
             console.log('left2', 100 - `${newLeft}` + '%')
           })
         })
@@ -242,6 +245,9 @@
       can.animate({ top: -100, left: `${newLeft}%` }, 1000,
         function () {
           can.animate({ top: 645, left: 100 - `${newLeft}` + '%' }, 2000, function () {
+            if (top > 600) {
+              $('.can3').css({'display': 'none'}).removeClass('can3')
+            }
             console.log('left3', 100 - `${newLeft}` + '%')
           })
         })
