@@ -89,6 +89,8 @@ cc.arr1[0] = 3
 console.log(cc.arr1)       // [ 3, 2, 3, 4, 5 ]
 
 // TERMINAL npm
+// npm = node package manager
+
 // npm init --yes
 // npm i ____ = npm install _(套件名)_ 
 // npm i -D nodemon eslint
@@ -96,6 +98,7 @@ console.log(cc.arr1)       // [ 3, 2, 3, 4, 5 ]
 // -D only adds the package to your “dev dependencies,” which means they'll only be installed when developing the project, and not when building the finalized production version of the project.
 // npm un ____ ____ ____ (uninstall 套件)
 // npm i -g ______ (-g = 全域安裝)
+// npm i (重新安裝node_modules)
 
 // install: 
 // 1. npm i -D eslint nodemon
@@ -103,11 +106,13 @@ console.log(cc.arr1)       // [ 3, 2, 3, 4, 5 ]
 // nodemon: 偵測到變更就會重整的套件
 
 // 2. npm i linebot axios dotenv
-// dotenv: 讀取env檔案的套件
+// dotenv: 讀取env檔案(環境設定檔)的套件
 
 // 安裝 .eslintrc.json
 // 如果被包在資料夾裡面就無法用 F1 => Eslint:Create
-// 自己打: npx eslint --init (初始化設定)
+// 自己打: npx eslint --init (初始化設定) 或 npm init @eslint/config 或 node_modules\.bin\eslint --init
+// npx = 下載套件並執行，執行完後刪除，執行node.js套件的指令
+
 //  check syntax, style
 //  JS import(esm
 //  None of these
