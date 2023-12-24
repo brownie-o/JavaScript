@@ -40,8 +40,78 @@ bot.on('message', event => {
       anime(event)
     } else if (event.message.text === '匯率') {
       event.reply(usdtwd.exrate.toString())
+    } else if (event.message.text === '123') {
+      event.reply({
+        type: 'text',
+        text: '123',
+        // 快速回覆
+        quickReply: {
+          // 快速回覆的按鈕
+          items: [
+            {
+              type: 'action',
+              action: {
+                // 按鈕是哪樣的按鈕
+                // message: 使用者點了之後就會傳訊息給bot
+                type: 'message',
+                // 傳送的文字訊息
+                text: 'message text',
+                // 按鈕顯示的文字
+                label: 'message label'
+              }
+            },
+            {
+              type: 'action',
+              action: {
+                // 開啟使用者的相機
+                type: 'camera',
+                label: '相機'
+              }
+            },
+            {
+              type: 'action',
+              action: {
+                // 開啟使用者的相機膠捲
+                type: 'cameraRoll',
+                label: '相簿'
+              }
+            }, 
+            {
+              type: 'action',
+              action: {
+                // 傳送使用者的位置
+                type: 'location',
+                label: '位置'
+              }
+            }, 
+            {
+              type: 'action',
+              action: {
+                type: 'uri',
+                uri: 'https://wdaweb.github.io',
+                label: '網址'
+              }
+            },
+            {
+              type: 'action',
+              action:{
+                // 機器人不會回傳訊息
+                type: 'postback',
+                label: 'postback',
+                // text: 'postback 文字',
+                // postback 事件接收到的資料
+                data: '112233'
+              }
+            }
+          ]
+        }
+      })
     }
   }
+})
+
+bot.on('postback', event => {
+  console.log(event.postback.data)
 })
 
 // '/' -> 路徑
