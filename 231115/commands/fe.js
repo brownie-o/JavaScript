@@ -1,5 +1,6 @@
 import axios from 'axios'
 // 引用cheerio套件 要用import * as...寫法
+// 讓JQ的語法 在nodejs的環境下解析html
 import * as cheerio from 'cheerio'
 
 // 處理收到'前端'時機器人的回覆
