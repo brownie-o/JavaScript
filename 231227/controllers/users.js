@@ -13,7 +13,6 @@ export const create = async (req, res) => {
     })
   } catch (error) {
     console.log(error)
-    console.log(error)
     // 資料重複的錯誤
     if (error.name === 'MongoServerError' && error.code === 11000) {
       res.status(StatusCodes.CONFLICT).json({
