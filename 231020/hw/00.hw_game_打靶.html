@@ -46,9 +46,9 @@
     }
 
     #playArea {
-      width: 1140px;
+      width: 1200px;
       height: 749px;
-      position: relative;
+      position: fixed;
       z-index: 1;
       overflow: hidden;
     }
@@ -57,7 +57,7 @@
     .can2,
     .can3 {
       width: 5%;
-      top: -50px;
+      top: -100px;
       position: absolute;
       transform-origin: center;
       user-select: none;
@@ -66,10 +66,9 @@
     }
 
     .confetti {
-      width: 5%;
+      width: 7%;
       pointer-events: none;
       position: relative
-        /* width: 7%; */
     }
 
     #reload {
@@ -139,7 +138,7 @@
         $('#time').text(time)
         const random = Math.ceil(Math.random() * 10)
         if (random > 1 && $('.can1').length < 1) {
-          const left = Math.round(Math.random() * 100) + '%'
+          const left = Math.round(Math.random() * 95) + '%'
           const can = $(`<img src='./img/can1.png' class='can1' style='left: ${left}'>`)
           $('#playArea').append(can)
           moveCan1(can)
@@ -151,6 +150,8 @@
 
           if (score >= best.bsScore) {
             Swal.fire({
+              // 讓area不會aria-hidden
+              heightAuto: false,
               title: '時間到!',
               icon: 'success',
               text: `${score} 分，你是最高分!`,
@@ -161,13 +162,14 @@
               showCloseButton: true,
             }).then(function (result) {
               best.bsScore = score
-              best.bsPlayer = result.value || '名字都懶得寫的豬'
+              best.bsPlayer = result.value || 'no name'
               $('#bsScore').text(best.bsScore)
               $('#bsPlayer').text(best.bsPlayer)
               localStorage.best = JSON.stringify(best)
             })
           } else {
             Swal.fire({
+              heightAuto: false,
               title: '時間到!',
               icon: 'info',
               text: `請加油，你只得到 ${score} 分`,
@@ -197,11 +199,10 @@
         newLeft = random - (left / 10)
       }
 
-      can.animate({ top, left: `${newLeft}%` }, 4000, function () {
+      can.animate({ top, left: `${newLeft}%` }, 3000, function () {
         if (top > 600) {
-          $('.can1').css({'display': 'none'}).removeClass('can1')
+          $('.can1').css({ 'display': 'none' }).removeClass('can1')
         }
-        // console.log('moveCan1', `${newLeft}%`)
       })
     }
 
@@ -218,18 +219,18 @@
       }
       console.log('newLeft2', `${newLeft}%`)
 
-      can.animate({ top: -100, left: `${newLeft}%` }, 1500,
+      can.animate({ top: -100, left: `${newLeft}%` }, 1000,
         function () {
-          can.animate({ top: 645, left: 100 - `${newLeft}` + '%' }, 3000, function () {
+          can.animate({ top: 645, left: 100 - `${newLeft}` + '%' }, 2500, function () {
             if (top > 600) {
-              $('.can2').css({'display': 'none'}).removeClass('can2')
+              $('.can2').css({ 'display': 'none' }).removeClass('can2')
             }
             console.log('left2', 100 - `${newLeft}` + '%')
           })
         })
     }
 
-    function moveCan3(can){
+    function moveCan3(can) {
       const left = parseFloat(can.css('left'))
       const random = Math.round(Math.random() * 100)
 
@@ -242,11 +243,11 @@
       }
       console.log('newLeft3', `${newLeft}%`)
 
-      can.animate({ top: -100, left: `${newLeft}%` }, 1000,
+      can.animate({ top: -100, left: `${newLeft}%` }, 800,
         function () {
-          can.animate({ top: 645, left: 100 - `${newLeft}` + '%' }, 2000, function () {
+          can.animate({ top: 645, left: 100 - `${newLeft}` + '%' }, 2500, function () {
             if (top > 600) {
-              $('.can3').css({'display': 'none'}).removeClass('can3')
+              $('.can3').css({ 'display': 'none' }).removeClass('can3')
             }
             console.log('left3', 100 - `${newLeft}` + '%')
           })
@@ -274,7 +275,7 @@
 
     $('#playArea').on('click', '.can3', function () {
       $(this).stop()
-      $(this).attr('src', './img/confetti.gif')
+      $(this).attr('src', './img/4xjg.gif')
       $(this).addClass('confetti').removeClass('can3')
       setTimeout(() => {
         $('.confetti').css('display', 'none')
