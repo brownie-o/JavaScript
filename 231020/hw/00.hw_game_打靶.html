@@ -79,6 +79,15 @@
       background-repeat: no-repeat;
       width: 2rem;
       height: 2rem;
+      margin: 10px 0 10px 0;
+    }
+
+    #instruction {
+      background-image: url(./img/MdiAlertCircleOutline.svg);
+      background-repeat: no-repeat;
+      width: 2rem;
+      height: 2rem;
+      margin: 10px 0 10px 0;
     }
 
     .bonus,
@@ -102,7 +111,8 @@
       <p>Score: <span id="score">0</span>p</p>
       <p>Time: <span id="time">0</span></p>
       <p>Best Player: <br> <span id="bsPlayer">-</span>: <span id="bsScore">0</span>p</p>
-      <button type="button" class="btn btn-primary" id="reload"></button>
+      <button type="button" class="btn btn-primary" id="reload"></button><br>
+      <button type="button" class="btn btn-warning" id="instruction"></button>
     </div>
   </div>
   <div id="area">
@@ -338,6 +348,22 @@
       score += 5
       time += 5
       $('#score').text(score)
+    })
+
+    $('#instruction').click(function () {
+      Swal.fire({
+        title: '玩法說明:',
+        html: `請努力射擊空罐頭！<br>
+        若是成功射擊同個空罐一下，會加一分，<br>
+        第二下則加兩分，<br>
+        第三下會加五分外加秒數五秒鐘。<br>
+        但若是讓空罐掉入草叢，則會扣一秒鐘。<br>
+        <br>
+        準備好了嗎？`,
+        icon: 'info',
+        confirmButtonText: 'Ready!',
+        heightAuto: false,
+      });
     })
   </script>
 </body>
