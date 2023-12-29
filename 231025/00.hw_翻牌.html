@@ -4,13 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>寶可夢對對碰</title>
+  <link rel="icon" href="./pokemon/Poke_Ball.webp" type="image/x-icon">
   <style>
     body {
       background-image: url(./pokemon/bg01.png);
       background-repeat: no-repeat;
       background-position: 50% 50%;
       background-size: cover;
+      /* background-attachment: fixed */
     }
 
     #game {
@@ -69,7 +71,8 @@
       box-sizing: border-box;
       border-radius: 20px;
       position: relative;
-      color: white;
+      color: rgb(217, 217, 233);
+      text-shadow: 3px 3px 5px black;
       font-size: 20px;
       /* box-shadow: 10px -10px 15px rgb(250, 253, 198); */
     }
@@ -84,7 +87,8 @@
       box-sizing: border-box;
       border-radius: 20px;
       position: relative;
-      color: white;
+      color: rgb(217, 217, 233);
+      text-shadow: 3px 3px 5px black;
       font-size: 20px;
       /* box-shadow: 10px -10px 15px rgb(250, 253, 198); */
     }
@@ -144,6 +148,11 @@
 
     .disableClick {
       pointer-events: none;
+    }
+
+    .sweet-alert-container {
+      margin: 0;
+      padding: 0;
     }
   </style>
 </head>
@@ -206,17 +215,20 @@
 
     // 設定玩家手手
     let player = "right"
+    let winner
+    let loser
+    let score
     function playerHand(player) {
       // $('html').css({ 'cursor': 'default' })
       $('#left').css({ 'box-shadow': 'none' })
       $('#right').css({ 'box-shadow': 'none' })
       if (player === "left") {
         $('html').removeClass('rightPlayer').addClass('leftPlayer')
-        $('#left').css({ 'box-shadow': '10px -10px 15px rgba(20, 10, 150, 0.7)' })
+        $('#left').css({ 'box-shadow': '0px 9px 30px 0px rgba(255,149,5,0.9)' })
       }
       if (player === "right") {
         $('html').removeClass('leftPlayer').addClass('rightPlayer')
-        $('#right').css({ 'box-shadow': '10px -10px 15px rgba(20, 10, 150, 0.7)' })
+        $('#right').css({ 'box-shadow': '0px 9px 30px 0px rgba(255,149,5,0.9)' })
       }
     }
     playerHand(player)
@@ -224,13 +236,17 @@
 
     // 點擊事件
     $('#game').on('click', '.card', function (index) {
-      const P1Score = 0
-      const P2Score = 0
 
       if ($(this).attr('data-number') == 20) {
         $(this).addClass('paired')
         $(this).fadeTo(1000, 0)
         $(`#${player} #pokemon`).append(`<img src="./pokemon/20s.png">`)
+        Swal.fire({
+          imageUrl: `./pokemon/20s.png`,
+          background: `#fff url(./pokemon/bg20.png)`,
+          imageAlt: "pokemon",
+          showConfirmButton: false,
+        });
       }
 
       if (
@@ -259,7 +275,13 @@
               playerHand(player)
             }, 1000)
           }
-          console.log(player)
+
+          Swal.fire({
+            imageUrl: `./pokemon/${$(this).attr('data-number')}b.png`,
+            background: `#fff url(./pokemon/bg${$(this).attr('data-number')}.png)`,
+            imageAlt: "pokemon",
+            showConfirmButton: false
+          });
 
           $(`#${player} #pokemon`).append(`<img src="./pokemon/${$(this).attr('data-number')}b.png">`)
           $('#game').addClass('disableClick')
@@ -282,59 +304,116 @@
 
         setTimeout(function () {
           $('.card:not(.flip-card)').addClass('flip-card')
-          if ($('.card').length === $('.paired').length) {
-
-            const add = setInterval(() => {
-              for (let i = 0; i < $('#pokemon>img').length; i++) {
-                $('#pokemon>img').eq(i).attr('src', './pokemon/Poke_Ball.webp')
-              }
-            }, 1000)
-            // 需要修正: 讓球一顆一顆變 然後要在上面寫+100
-            const ball = () => {
-              for (let i = 0; i < $('#pokemon>img').length; i++) {
-                const a = () => { $('#pokemon>img').eq(i).attr('src', './pokemon/Poke_Ball.webp') }
-                setTimeout(add, 1000)
-              }
-              // $('#pokemon>img').each(function(index, img){
-              //   setTimeout(()=>{
-              //     $(img).attr('src', './pokemon/Poke_Ball.webp')
-              //   }, 1000)
-              // })
-            }
-            ball()
-            // Swal.fire('過關', '恭喜', 'success')
-          }
         }, 600)
+        // 結束遊戲
+        if ($('.card').length === $('.paired').length) {
+          $('#left').css({ 'box-shadow': 'none' })
+          $('#right').css({ 'box-shadow': 'none' })
+
+          let i = 0;
+          let j = 0
+
+          const leftBall = setInterval(() => {
+            $('#left #pokemon img').eq(i).attr('src', './pokemon/Poke_Ball.webp');
+            i++;
+
+            if (i === $('#left #pokemon img').length) {
+              clearInterval(leftBall);
+            }
+          }, 600);
+
+          const rightBall = setInterval(() => {
+            $('#right #pokemon img').eq(j).attr('src', './pokemon/Poke_Ball.webp');
+            j++;
+
+            if (j === $('#right #pokemon img').length) {
+              clearInterval(rightBall);
+            }
+          }, 600);
+
+          setTimeout(function () {
+            if ($('#right #pokemon img').length > $('#left #pokemon img').length) {
+              const P1Score = ($('#left #pokemon img').length) * 100
+              const P2Score = ($('#right #pokemon img').length) * 100
+              $('#right').css({ 'box-shadow': 'rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px' })
+
+              const winner = $('#player2').text().split(" ")[1]
+              const loser = $('#player1').text().split(" ")[1]
+              const score = P2Score
+              Fin(winner, score, loser)
+            } else if ($('#right #pokemon img').length === $('#left #pokemon img').length) {
+              const score = ($('#left #pokemon img').length) * 100
+              draw(score)
+            } else {
+              $('#left').css({ 'box-shadow': 'rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px' })
+
+              const winner = $('#player1').text().split(" ")[1]
+              const loser = $('#player2').text().split(" ")[1]
+              const score = P1Score
+              Fin(winner, score, loser)
+            }
+          }, 6000)
+        }
       }
     })
 
+    const Fin = (winner, score, loser) => {
+      Swal.fire({
+        heightAuto: false,
+        title: '恭喜過關',
+        icon: 'success',
+        html: `恭喜${winner} 獲得 ${score} 分<br>
+                ${loser} 請加油!`,
+        input: 'text',
+        allowOutsideClick: false,
+        showCloseButton: true,
+      })
+    }
 
+    const draw = (score) => {
+      Swal.fire({
+        heightAuto: false,
+        title: '恭喜過關',
+        icon: 'success',
+        html: `恭喜兩位 獲得 ${score} 分<br>
+        平手!`,
+        input: 'text',
+        allowOutsideClick: false,
+        showCloseButton: true,
+      })
+    }
 
     // instruction
-    // Swal.fire({
-    //   title: '寶可夢對對碰',
-    //   html: `<li>兩人對戰，配對成功的話可以再翻一次。</li>
-    //   <li>翻到隱藏角色"皮卡丘"直接算配對成功！</li>`,
-    //   icon: 'info'
-    // }).then(function(){
-    //   // 玩家命名
-    //   Swal.fire({
-    //     title: 'Player 1',
-    //     input: 'text',
-    //     inputLabel: 'Please enter your name',
-    //     inputPlaceholder: '請輸入你的名字',
-    //   }).then(function (result) {
-    //     $('#player1').html(`name: ${result.value || '汪汪'}`)
-    //     Swal.fire({
-    //       title: 'Player 2',
-    //       input: 'text',
-    //       inputLabel: 'Please enter your name',
-    //       inputPlaceholder: '請輸入你的名字',
-    //     }).then(function (result) {
-    //       $('#player2').html(`name: ${result.value || '喵喵'}`)
-    //     })
-    //   })
-    // })
+
+    Swal.fire({
+      title: '寶可夢對對碰',
+      html: `<li>兩人對戰，配對成功的話可以再翻一次。</li>
+      <li>輪到對方的時候要把滑鼠讓出來噢!</li>
+      <li>翻到隱藏角色"皮卡丘"直接算配對成功！</li>`,
+      icon: 'info',
+      heightAuto: false,
+    }).then(function () {
+      // 玩家命名
+      Swal.fire({
+        title: '狗狗玩家',
+        input: 'text',
+        inputLabel: '你叫什麼名字',
+        inputPlaceholder: '請輸入你的名字',
+        heightAuto: false,
+      }).then(function (result) {
+        $('#player1').html(`name: ${result.value || '汪汪'}`)
+        Swal.fire({
+          title: '貓貓玩家',
+          input: 'text',
+          inputLabel: '你叫什麼名字',
+          inputPlaceholder: '請輸入你的名字',
+          heightAuto: false,
+        }).then(function (result) {
+          $('#player2').html(`name: ${result.value || '喵喵'}`)
+        })
+      })
+    })
+
   </script>
 </body>
 
