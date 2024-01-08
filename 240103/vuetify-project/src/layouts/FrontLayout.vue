@@ -58,7 +58,7 @@ const navItems = computed(() => {
     { to: '/login', text: '登入', icon: 'mdi-login', show: !user.isLogin },
     { to: '/cart', text: '購物車', icon: 'mdi-cart', show: user.isLogin }, // 登入後才看得到
     { to: '/orders', text: '訂單', icon: 'mdi-list-box', show: user.isLogin },
-    { to: '/admin', text: '管理員', icon: 'mdi-cog', show: user.isLogin && user.isAdmin }
+    { to: '/admin', text: '管理', icon: 'mdi-cog', show: user.isLogin && user.isAdmin } // 有登入且是管理員才看得到
   ]
 })
 

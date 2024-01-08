@@ -1,3 +1,3 @@
 <template lang="pug">
-h1 HomeView
+h1 AdminHomeView
 </template>
