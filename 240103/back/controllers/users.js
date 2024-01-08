@@ -45,16 +45,80 @@ export const login = async (req, res) => {
         account: req.user.account,
         email: req.user.email,
         role: req.user.role,
-        // [...].reduce((total, current) => {}, 初始值)
-        // 取cart 中有幾個商品的數量就好
-        cart: req.user.cart.reduce((total, current) => {
-          return total + current.quantity
-        }, 0)
+        // .cartQuantity = virtaul欄位 > in models/users.js
+        cart: req.user.cartQuantity
       }
     })
   } catch (error) {
     console.log(error)
 
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: '未知錯誤'
+    })
+  }
+}
+
+// 登出 - 刪掉符合這次登入資訊的token
+export const logout = async (req, res) => {
+  try {
+    // 把符合的token過濾掉
+    req.tokens = req.user.tokens.filter(token => token !== req.token)
+    await req.user.save()
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: ''
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: '未知錯誤'
+    })
+  }
+}
+
+// 舊換新
+export const extend = async (req, res) => {
+  try {
+    // 找到登入的token是第幾個
+    const idx = req.user.tokens.findIndex(token => token === req.token)
+    // 簽新的token
+    const token = jwt.sign({ _id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '7 days' })
+    // 替換token
+    req.user.tokens[idx] = token
+    // save
+    await req.user.save()
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: '',
+      result: token
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: '未知錯誤'
+    })
+  }
+}
+
+// 用token取使用者的個人資訊
+export const getProfile = (req, res) => {
+  try {
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: '',
+      result: {
+        account: req.user.account,
+        email: req.user.email,
+        role: req.user.role,
+        // .cartQuantity = virtaul欄位 > in models/users.js
+        cart: req.user.cartQuantity
+      }
+    })
+  } catch (error) {
+    console.log(error)
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
       message: '未知錯誤'

@@ -64,6 +64,16 @@ const schema = new Schema({
   versionKey: false
 })
 
+// 建立虛擬欄位
+schema.virtual('cartQuantity')
+  .get(function () {
+    // [...].reduce((total, current) => {}, 初始值)
+    // 取cart 中有幾個商品的數量就好
+    return this.cart.reduce((total, current) => {
+      return total + current.quantity
+    }, 0)
+  })
+
 schema.pre('save', function (next) {
   const user = this
   if (user.isModified('password')) {

@@ -29,9 +29,11 @@ import validator from 'validator'
 import { useForm, useField } from 'vee-validate'
 // yup: 資料格式的驗證
 import * as yup from 'yup'
-import { api } from '@/plugins/axios' // 不用+.js 套件有特別設定會去找特定副檔名的東西
 import { useRouter } from 'vue-router' // Router: 做跳頁; Route: 取這頁的route
 import { useSnackbar } from 'vuetify-use-dialog'
+import { useApi } from '@/composables/axios' // 不用+.js 套件有特別設定會去找特定副檔名的東西
+
+const { api } = useApi()
 
 const router = useRouter()
 const createSnackbar = useSnackbar()

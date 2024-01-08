@@ -32,3 +32,44 @@ passport.use('login', new passportLocal.Strategy({
     }
   }
 }))
+
+// 用passport 執行驗證策略 再執行callback => 到middlewares的auth.js
+passport.use('jwt', new passportJWT.Strategy({
+  jwtFromRequest: passportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.JWT_SECRET,
+  passReqToCallback: true,
+  // 略過過期的檢查(允許過期) - 提供舊的時可以提供舊換新
+  ignoreExpiration: true
+}, async (req, payload, done) => {
+  try {
+    // JWT的exp = 從1970到現在過了幾秒 (所以要*1000)
+    // JS的 .getTime = 從1970到現在過了幾毫秒
+    const expired = payload.exp * 1000 < new Date().getTime()
+    /*
+      http: //localhost:4000/users/test?aaa=111&bbb=2
+      req.originalUrl = /users/test?aaa=111&bbb=2
+      req.baseUrl = /users
+      req.path = /test
+      req.query = { aaa: 111, bbb: 222 }
+    */
+    const url = req.baseUrl + req.path
+    // 如果JWT過期且不是後面兩個url的
+    if (expired && url !== '/users/extend' && url !== '/users/logout') {
+      throw new Error('EXPIRED')
+    }
+
+    // const token = req.headers.authroization.split(' ')
+    const token = passportJWT.ExtractJwt.fromAuthHeaderAsBearerToken()(req)
+    const user = await users.findOne({ _id: payload._id, token })
+    if (!user) {
+      throw new Error('JWT')
+    }
+    return done(null, { user, token }, null)
+  } catch (error) {
+    if (error.message === 'EXPIRED' || error.message === 'JWT') {
+      return done(null, null, { message: 'JWT 無效' })
+    } else {
+      return done(null, null, { message: '未知錯誤' })
+    }
+  }
+}))
