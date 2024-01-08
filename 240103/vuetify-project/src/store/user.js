@@ -58,6 +58,7 @@ export const useUserStore = defineStore('user', () => {
     cart,
     role,
     login,
+    logout,
     isLogin,
     isAdmin,
     getProfile

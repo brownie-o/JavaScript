@@ -7,6 +7,10 @@ VNavigationDrawer(v-model="drawer" temporary location="left" v-if="isMobile")
         template(#prepend)
           VIcon(:icon="item.icon")
         VListItemTitle {{ item.text }}
+    VListItem(v-if="user.isLogin" @click="logout")
+      template(#prepend)
+        VIcon(icon="mdi-logout")
+      VListItemTitle 登出
 //- 導覽列
 VAppBar(color = 'primary')
   VContainer.d-flex.align-center
@@ -20,6 +24,7 @@ VAppBar(color = 'primary')
     template(v-else)
       template(v-for="item in navItems" :key="item.to")
         VBtn(:to="item.to" :prepend-icon="item.icon" v-if="item.show") {{ item.text }}
+      VBtn(prepend-icon="mdi-logout" v-if="user.isLogin" @click="logout") 登出
 //- 頁面內容
 VMain
   RouterView
@@ -29,6 +34,13 @@ VMain
 import { useDisplay } from 'vuetify';
 import { ref, computed } from 'vue';
 import { useUserStore } from '@/store/user';
+import { useApi } from '@/composables/axios';
+import { useSnackbar } from 'vuetify-use-dialog';
+import { useRouter } from 'vue-router';
+
+const { apiAuth } = useApi()
+const router = useRouter()
+const createSnackbar = useSnackbar()
 
 const user = useUserStore()
 
@@ -49,5 +61,35 @@ const navItems = computed(() => {
     { to: '/admin', text: '管理員', icon: 'mdi-cog', show: user.isLogin && user.isAdmin }
   ]
 })
+
+const logout = async () => {
+  try {
+    await apiAuth.delete('/users/logout')
+    user.logout()
+    createSnackbar({
+      text: '登出成功',
+      showCloseButton: false,
+      snackbarProps: {
+        timeout: 2000,
+        color: 'green',
+        location: 'bottom'
+      }
+    })
+    // 登出後回訂單首頁
+    router.push('/')
+  } catch (error) {
+    console.log(error)
+    const text = error?.response?.data?.message || '發生錯誤，請稍後再試'
+    createSnackbar({
+      text,
+      showCloseButton: false,
+      snackbarProps: {
+        timeout: 2000,
+        color: 'red',
+        location: 'bottom'
+      }
+    })
+  }
+}
 
 </script>
