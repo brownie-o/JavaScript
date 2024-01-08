@@ -34,7 +34,7 @@ export const create = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const token = jwt.sign({ _id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '7 s' })
+    const token = jwt.sign({ _id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '7 days' })
     req.user.tokens.push(token)
     await req.user.save()
     res.status(StatusCodes.OK).json({
@@ -62,7 +62,7 @@ export const login = async (req, res) => {
 // 登出 - 刪掉符合這次登入資訊的token
 export const logout = async (req, res) => {
   try {
-    // 把符合的token過濾掉
+    // 把符合的token過濾掉 (留下來的token不等於這次logout的token)
     req.tokens = req.user.tokens.filter(token => token !== req.token)
     await req.user.save()
     res.status(StatusCodes.OK).json({
@@ -81,7 +81,7 @@ export const logout = async (req, res) => {
 // 舊換新
 export const extend = async (req, res) => {
   try {
-    // 找到登入的token是第幾個
+    // 找到登入的token在原始陣列是第幾個
     const idx = req.user.tokens.findIndex(token => token === req.token)
     // 簽新的token
     const token = jwt.sign({ _id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '7 days' })
@@ -103,7 +103,7 @@ export const extend = async (req, res) => {
   }
 }
 
-// 用token取使用者的個人資訊
+// 當使用者進到網頁時，用token取使用者的個人資訊
 export const getProfile = (req, res) => {
   try {
     res.status(StatusCodes.OK).json({

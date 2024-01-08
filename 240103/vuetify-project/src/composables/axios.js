@@ -41,8 +41,9 @@ apiAuth.interceptors.response.use((res)=> {
       const user = useUserStore()
       // 傳送舊換新請求
       return apiAuth.patch('/users/extend')
+        // { data } = 舊換新成功後回傳的success.on.message的 result
         .then(({ data })=> {
-          // 更新pinia保存的token
+          // 更新 pinia的token 為新的result(token)
           user.token = data.result
           // 修改發生錯誤的原請求設定的JWT
           error.config.headers.Authorization = 'Bearer ' + user.token

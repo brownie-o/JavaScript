@@ -38,32 +38,37 @@ passport.use('jwt', new passportJWT.Strategy({
   jwtFromRequest: passportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: process.env.JWT_SECRET,
   passReqToCallback: true,
-  // 略過過期的檢查(允許過期) - 提供舊的時可以提供舊換新
+  // 略過過期的檢查(允許過期) - 提供舊的時可以舊換新
   ignoreExpiration: true
+  // payload = 解譯出來的資料
 }, async (req, payload, done) => {
   try {
-    // JWT的exp = 從1970到現在過了幾秒 (所以要*1000)
+    // payload.exp = JWT解譯出來的過期的日期 = 從1970到現在過了幾秒 (所以要*1000)
     // JS的 .getTime = 從1970到現在過了幾毫秒
-    const expired = payload.exp * 1000 < new Date().getTime()
+    const expired = payload.exp * 1000 < new Date().getTime() // 取當下日期 = Date().now
     /*
       http: //localhost:4000/users/test?aaa=111&bbb=2
       req.originalUrl = /users/test?aaa=111&bbb=2
       req.baseUrl = /users
       req.path = /test
       req.query = { aaa: 111, bbb: 222 }
-    */
+      */
+    // baseUrl = /users 定義by app.use('/users', routeUsers) in index.js
     const url = req.baseUrl + req.path
     // 如果JWT過期且不是後面兩個url的
     if (expired && url !== '/users/extend' && url !== '/users/logout') {
       throw new Error('EXPIRED')
     }
 
+    // 取這次請求的token
     // const token = req.headers.authroization.split(' ')
     const token = passportJWT.ExtractJwt.fromAuthHeaderAsBearerToken()(req)
+    // 檢查是否有此使用者的存在 (_id = 解譯出來的id, tokens有沒有包含現在的token)
     const user = await users.findOne({ _id: payload._id, tokens: token })
     if (!user) {
       throw new Error('JWT')
     }
+    // done(錯誤 /null = 成功, 成功時回傳的數據, pass additional related information)
     return done(null, { user, token }, null)
   } catch (error) {
     console.log(error)

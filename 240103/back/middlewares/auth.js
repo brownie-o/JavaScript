@@ -32,6 +32,9 @@ export const login = (req, res, next) => {
 }
 
 export const jwt = (req, res, next) => {
+  // 'jwt' = 使用jwt 進行驗證
+  // { session: false } = 不需要在伺服器上創建session
+  // (error, data, info) => {...} = 身分驗證後的callback function
   passport.authenticate('jwt', { session: false }, (error, data, info) => {
     if (error || !data) {
       if (info instanceof jsonwebtoken.JsonWebTokenError) {

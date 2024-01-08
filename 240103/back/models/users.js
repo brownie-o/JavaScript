@@ -70,6 +70,7 @@ schema.virtual('cartQuantity')
     // [...].reduce((total, current) => {}, 初始值)
     // 取cart 中有幾個商品的數量就好
     return this.cart.reduce((total, current) => {
+      // 計算每個陣列的數量加總
       return total + current.quantity
     }, 0)
   })
