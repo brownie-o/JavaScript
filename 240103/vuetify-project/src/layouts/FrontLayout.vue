@@ -3,7 +3,7 @@
 VNavigationDrawer(v-model="drawer" temporary location="left" v-if="isMobile")
   VList(nav)
     template(v-for="item in navItems" :key="item.to")
-      VListItem(:to="item.to")
+      VListItem(:to="item.to" v-if="item.show")
         template(#prepend)
           VIcon(:icon="item.icon")
         VListItemTitle {{ item.text }}
@@ -19,7 +19,7 @@ VAppBar(color = 'primary')
     //- 電腦版導覽列 
     template(v-else)
       template(v-for="item in navItems" :key="item.to")
-        VBtn(:to="item.to" :prepend-icon="item.icon") {{ item.text }}
+        VBtn(:to="item.to" :prepend-icon="item.icon" v-if="item.show") {{ item.text }}
 //- 頁面內容
 VMain
   RouterView
@@ -28,6 +28,9 @@ VMain
 <script setup>
 import { useDisplay } from 'vuetify';
 import { ref, computed } from 'vue';
+import { useUserStore } from '@/store/users';
+
+const user = useUserStore()
 
 // 判斷是否為手機板
 const { mobile } = useDisplay()
@@ -37,8 +40,14 @@ const isMobile = computed(() => mobile.value)
 const drawer = ref(false)
 
 // 導覽列項目
-const navItems = [
-  { to: '/register', text: '註冊', icon: 'mdi-account-plus' },
-  { to: '/login', text: '登入', icon: 'mdi-login' }
-]
+const navItems = computed(() => {
+  return [
+    { to: '/register', text: '註冊', icon: 'mdi-account-plus', show: !user.isLogin }, // 沒登入時才出現
+    { to: '/login', text: '登入', icon: 'mdi-login', show: !user.isLogin },
+    { to: '/cart', text: '購物車', icon: 'mdi-cart', show: user.isLogin }, // 登入後才看得到
+    { to: '/orders', text: '訂單', icon: 'mdi-list-box', show: user.isLogin },
+    { to: '/admin', text: '管理員', icon: 'mdi-cog', show: user.isLogin && user.isAdmin }
+  ]
+})
+
 </script>

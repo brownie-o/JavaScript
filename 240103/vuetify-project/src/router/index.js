@@ -1,5 +1,6 @@
 // Composables
 import { createRouter, createWebHashHistory } from 'vue-router'
+import { useUserStore } from '@/store/users'
 
 const routes = [
   {
@@ -11,7 +12,9 @@ const routes = [
         name: 'Home',
         component: () => import('@/views/front/HomeView.vue'),
         meta: {
-          title: '購物網'
+          title: '購物網',
+          login: false, // 是否登入後才能看
+          admin: false // 是否管理員才能看
         }
       },
       {
@@ -19,7 +22,9 @@ const routes = [
         name: 'Register',
         component: () => import('@/views/front/RegisterView.vue'),
         meta: {
-          title: '購物網 | 註冊'
+          title: '購物網 | 註冊',
+          login: false,
+          admin: false
         }
       },
       {
@@ -27,7 +32,9 @@ const routes = [
         name: 'Login',
         component: () => import('@/views/front/LoginView.vue'),
         meta: {
-          title: '購物網 | 登入'
+          title: '購物網 | 登入',
+          login: false,
+          admin: false
         }
       }
     ],
@@ -42,6 +49,25 @@ const router = createRouter({
 // 進到每一頁之後把頁面的標題改掉
 router.afterEach((to, from) => {
   document.title = to.meta.title
+})
+
+router.beforeEach((to, from, next) => {
+  const user = useUserStore()
+
+  if (user.isLogin && ['/register', '/login'].includes(to.path)) {
+    // 如果有登入，要去註冊或登入頁，重新導向回首頁
+    next('/')
+  } else if (to.meta.login && !user.isLogin) {
+    // to.meta.login => 檢查目標路由的元數據中是否有 'login' 屬性 
+    // 如果要去的頁面要登入，但是沒登入，重新導向回登入頁
+    next('/login')
+  } else if (to.meta.admin && !user.isAdmin) {
+    // 如果要去的頁面僅限管理員瀏覽，但不是管理員，重新導向回首頁
+    next('/')
+  } else{
+    // 不重新導向
+    next()
+  }
 })
 
 export default router

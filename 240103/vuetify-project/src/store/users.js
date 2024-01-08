@@ -36,4 +36,10 @@ export const useUserStore = defineStore('user', () => {
     isLogin,
     isAdmin
   }
+}, {
+  // store 的設定
+  persist: {
+    key: '20240103', // localstorage 的 key的名稱
+    paths: ['token'] // 存token就好
+  }
 })

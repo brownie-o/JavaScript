@@ -2,6 +2,7 @@
 import vue from '@vitejs/plugin-vue'
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 import ViteFonts from 'unplugin-fonts/vite'
+import VueDevTools from 'vite-plugin-vue-devtools'
 
 // Utilities
 import { defineConfig } from 'vite'
@@ -25,6 +26,7 @@ export default defineConfig({
         }],
       },
     }),
+    VueDevTools()
   ],
   define: { 'process.env': {} },
   resolve: {
