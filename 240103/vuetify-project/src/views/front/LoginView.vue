@@ -32,11 +32,14 @@ import * as yup from 'yup'
 import { useRouter } from 'vue-router' // Router: 做跳頁; Route: 取這頁的route
 import { useSnackbar } from 'vuetify-use-dialog'
 import { useApi } from '@/composables/axios' // 不用+.js 套件有特別設定會去找特定副檔名的東西
+import { useUserStore } from '@/store/users'
 
 const { api } = useApi()
 
 const router = useRouter()
 const createSnackbar = useSnackbar()
+
+const user = useUserStore()
 
 // 定義登入表單的資料格式
 const schema = yup.object({
@@ -68,10 +71,11 @@ const password = useField('password')
 // value: 表單裡面所有的值
 const submit = handleSubmit(async (values) => {
   try {
-    await api.post('/users/login', {
+    const { data } = await api.post('/users/login', {
       account: values.account,
       password: values.password
     })
+    user.login(data.result)
     createSnackbar({
       text: '登入成功',
       showCloseButton: false,
