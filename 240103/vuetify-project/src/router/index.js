@@ -39,6 +39,23 @@ const routes = [
       }
     ],
   },
+  {
+    path: '/admin',
+    component: () => import('@/layouts/AdminLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'AdminHome',
+        component: () => import('@/views/admin/HomeView.vue'),
+        meta: {
+          title: '購物網 | 管理',
+          // 要登入且role = admin才能進入此頁面
+          login: true,
+          admin: true
+        }
+      }
+    ]
+  }
 ]
 
 const router = createRouter({
