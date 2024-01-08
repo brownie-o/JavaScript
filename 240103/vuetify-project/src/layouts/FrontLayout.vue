@@ -28,7 +28,7 @@ VMain
 <script setup>
 import { useDisplay } from 'vuetify';
 import { ref, computed } from 'vue';
-import { useUserStore } from '@/store/users';
+import { useUserStore } from '@/store/user';
 
 const user = useUserStore()
 

@@ -32,7 +32,7 @@ import * as yup from 'yup'
 import { useRouter } from 'vue-router' // Router: 做跳頁; Route: 取這頁的route
 import { useSnackbar } from 'vuetify-use-dialog'
 import { useApi } from '@/composables/axios' // 不用+.js 套件有特別設定會去找特定副檔名的東西
-import { useUserStore } from '@/store/users'
+import { useUserStore } from '@/store/user'
 
 const { api } = useApi()
 

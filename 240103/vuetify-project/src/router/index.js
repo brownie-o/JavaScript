@@ -1,6 +1,6 @@
 // Composables
-import { createRouter, createWebHashHistory } from 'vue-router'
-import { useUserStore } from '@/store/users'
+import { createRouter, createWebHashHistory, START_LOCATION } from 'vue-router'
+import { useUserStore } from '@/store/user'
 
 const routes = [
   {
@@ -43,7 +43,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
-  routes,
+  routes
 })
 
 // 進到每一頁之後把頁面的標題改掉
@@ -51,8 +51,12 @@ router.afterEach((to, from) => {
   document.title = to.meta.title
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const user = useUserStore()
+
+  if (from === START_LOCATION) {
+    await user.getProfile()
+  }
 
   if (user.isLogin && ['/register', '/login'].includes(to.path)) {
     // 如果有登入，要去註冊或登入頁，重新導向回首頁
@@ -64,7 +68,7 @@ router.beforeEach((to, from, next) => {
   } else if (to.meta.admin && !user.isAdmin) {
     // 如果要去的頁面僅限管理員瀏覽，但不是管理員，重新導向回首頁
     next('/')
-  } else{
+  } else {
     // 不重新導向
     next()
   }

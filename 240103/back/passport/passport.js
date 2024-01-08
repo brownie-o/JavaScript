@@ -60,12 +60,13 @@ passport.use('jwt', new passportJWT.Strategy({
 
     // const token = req.headers.authroization.split(' ')
     const token = passportJWT.ExtractJwt.fromAuthHeaderAsBearerToken()(req)
-    const user = await users.findOne({ _id: payload._id, token })
+    const user = await users.findOne({ _id: payload._id, tokens: token })
     if (!user) {
       throw new Error('JWT')
     }
     return done(null, { user, token }, null)
   } catch (error) {
+    console.log(error)
     if (error.message === 'EXPIRED' || error.message === 'JWT') {
       return done(null, null, { message: 'JWT 無效' })
     } else {

@@ -35,6 +35,7 @@ export const jwt = (req, res, next) => {
   passport.authenticate('jwt', { session: false }, (error, data, info) => {
     if (error || !data) {
       if (info instanceof jsonwebtoken.JsonWebTokenError) {
+        console.log(error)
         // JWT 格式不對、SECRET 不對
         // 不用判斷是否過期 一定是JWT無效才會來這裡
         res.status(StatusCodes.UNAUTHORIZED).json({
