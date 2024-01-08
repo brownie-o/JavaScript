@@ -1,6 +1,6 @@
 // Utilities
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import UserRole from '@/enums/UserRole'
 
 export const useUserStore = defineStore('user', () => {
@@ -18,12 +18,22 @@ export const useUserStore = defineStore('user', () => {
     role.value = data.role
   }
 
+  const isLogin = computed(() => {
+    return token.value.length > 0
+  })
+
+  const isAdmin = computed(() => {
+    return role.value === UserRole.ADMIN
+  })
+
   return {
     token,
     account,
     email,
     cart, 
     role,
-    login
+    login,
+    isLogin,
+    isAdmin
   }
 })
