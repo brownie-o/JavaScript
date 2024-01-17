@@ -53,6 +53,26 @@ const routes = [
           login: true,
           admin: true
         }
+      },
+      {
+        path: 'products',
+        name: 'AdminProducts',
+        component: () => import('@/views/admin/ProductsView.vue'),
+        meta: {
+          title: '購物網 | 訂單管理',
+          login: true,
+          admin: true
+        }
+      },
+      {
+        path: 'orders',
+        name: 'AdminOrders',
+        component: () => ('@/views/admin/OrdersView.vue'),
+        meta: {
+          title: '購物網 | 訂單管理',
+          login: true,
+          admin: true
+        }
       }
     ]
   }
