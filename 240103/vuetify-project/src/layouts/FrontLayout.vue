@@ -6,6 +6,8 @@ VNavigationDrawer(v-model="drawer" temporary location="left" v-if="isMobile")
       VListItem(:to="item.to" v-if="item.show")
         template(#prepend)
           VIcon(:icon="item.icon")
+        template(#append)
+          VBadge(color="error" :content="user.cart" v-if="item.to === '/cart'" inline)
         VListItemTitle {{ item.text }}
     VListItem(v-if="user.isLogin" @click="logout")
       template(#prepend)
@@ -24,10 +26,13 @@ VAppBar(color = 'primary')
     template(v-else)
       template(v-for="item in navItems" :key="item.to")
         VBtn(:to="item.to" :prepend-icon="item.icon" v-if="item.show") {{ item.text }}
+          VBadge(color="error" :content="user.cart" v-if="item.to === '/cart'" floating)
       VBtn(prepend-icon="mdi-logout" v-if="user.isLogin" @click="logout") 登出
 //- 頁面內容
 VMain
-  RouterView
+  //- $route = vue 的 option api 取路由資訊
+  //- 綁定routerView的路徑是
+  RouterView(:key="$route.path")
 </template>
 
 <script setup>
