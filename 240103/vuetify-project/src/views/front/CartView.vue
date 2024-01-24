@@ -32,11 +32,16 @@ const user = useUserStore()
 const router = useRouter()
 
 const cart = ref([])
+
+const useSort = (a, b) => {
+  return a.product.price * a.quantity - b.product.price * b.quantity
+}
+
 const headers = [
   { title: '商品名稱', key: 'product.name' },
   { title: '單價', key: 'product.price' },
   { title: '數量', key: 'quantity' },
-  { title: '總價', key: 'total', value: item => item.product.price * item.quantity },
+  { title: '總價', key: 'total', value: item => item.product.price * item.quantity, sortRaw: useSort },
   { title: '操作', key: 'action' }
 ]
 
@@ -74,7 +79,7 @@ const addCart = async (product, quantity) => {
     })
     const idx = cart.value.findIndex(item => item.product._id === product)
     cart.value[idx].quantity += quantity
-    if (cart.value[idx].quantity <=0 ){
+    if (cart.value[idx].quantity <= 0) {
       cart.value.splice(idx, 1)
     }
   } catch (error) {
