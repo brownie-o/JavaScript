@@ -35,7 +35,8 @@
         <span v-show="item.edit">
           <!-- ref="inputs" inputs是什麼??? => 自訂的名稱 對應到下面的 -->
           <!-- ref: obtain a direct reference to a specific DOM element or child component -->
-          <input type="text" v-model="item.model" ref="inputs" @keydown.enter="saveItem(item.id)" @keydown.esc="cancelItem(item.id)" @focusout="cancelItem(item.id)">
+          <input type="text" v-model="item.model" ref="inputs" @keydown.enter="saveItem(item.id)"
+            @keydown.esc="cancelItem(item.id)" @focusout="cancelItem(item.id)">
         </span>
         <span v-show="!item.eidt" @dblclick="editItem(item.id, i)">
           <del v-if="item.done">{{ item.text }}</del>
@@ -53,14 +54,17 @@
   <script>
     // setup寫法 要把 nextTick解構
     const { createApp, ref, reactive, computed, watch, onMounted, nextTick } = Vue
+
     createApp({
       setup() {
+
         // ref() 各型態皆可用 要加.value
-        // reactice 僅陣列、物件可用 不用加.value
+        // reactive 僅陣列、物件可用 不用加.value，可深層監聽
+
         const input = ref('')
         const search = ref('')
         const items = reactive([])
-        const filter = ref('全部')
+        let filter = ref('全部')
         let id = 1
         // setup 的元素 ref 寫法，宣告同名資料，要在下面宣告
         // 如果 ref 被包在 v-for 裡預設值就是陣列，不在v-for裡預設是null
@@ -71,16 +75,17 @@
 
           items.push({
             done: false,
-            text: input.value,
+            text: input.value, // 要顯示的
             id: id++,
             edit: false,
-            model: input.value
+            model: input.value // 暫存
           })
 
           input.value = ''
         }
 
         const findItmsIdxById = (id) => {
+          // item => item.id === id  =  function(item) {return item.id === id}
           return items.findIndex(item => item.id === id)
         }
 
@@ -88,9 +93,10 @@
         const editItem = async (id, i) => {
           const idx = findItmsIdxById(id)
           items[idx].edit = true
+          // 開啟編輯後，等待下一次渲染，出現輸入欄位後才能focus
           // setup的 nextTick() 寫法
           await nextTick()
-          console.log(i)
+          // console.log(i)
           inputs.value[idx].focus()
         }
 
@@ -111,7 +117,9 @@
           items.splice(idx, 1)
         }
 
+        // 全部標記為完成
         const markItem = (value) => {
+          // .map() = 把陣列每個東西執行這個function, 把每個東西變成function return 的值
           items.map(item => {
             item.done = value
             // 為什麼要return item??
@@ -140,12 +148,17 @@
           else return '3px solid blue'
         })
 
+        // 過濾
+        const updateFilter = (value) => {
+          filter.value = value;
+        };
+        
+        // 壞掉
         const filteredItems = computed(() => {
           return items.filter(item => {
             if (filter.value === '搜尋') {
               return item.text.includes(search.value)
             } else if (filter.value === '全部' || search.value.length === 0) {
-              filter.value = '全部'
               return true
             } else if (filter.value === '已完成') {
               return item.done === true
