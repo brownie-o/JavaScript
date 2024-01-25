@@ -105,6 +105,22 @@ const routes = [
         }
       }
     ]
+  },
+  {
+    path: '/404',
+    name: 'NotFound',
+    component: () => import('@/views/NotFoundView.vue'),
+    meta: {
+      title: '購物網 | 找不到',
+      login: false,
+      admin: false
+    }
+  },
+  {
+    // 前面的頁面(/sth.)路徑都不符合, 就會進到 '/:catchAll(.*)*'
+    path: '/:catchAll(.*)*',
+    name: 'All',
+    redirect: '/404' // 網址重新導向為404
   }
 ]
 
