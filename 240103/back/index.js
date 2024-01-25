@@ -6,9 +6,12 @@ import routeUsers from './routes/users.js'
 import routeProducts from './routes/products.js'
 import routeOrders from './routes/orders.js'
 import { StatusCodes } from 'http-status-codes'
+import mongoSanitize from 'express-mongo-sanitize'
 import './passport/passport.js'
 
 const app = express()
+
+app.use(mongoSanitize())
 
 // cors: 允許哪些地方的跨域請求
 app.use(cors({
@@ -57,5 +60,6 @@ app.all('*', (req, res) => {
 app.listen(process.env.PORT || 4000, async () => {
   console.log('伺服器啟動')
   await mongoose.connect(process.env.DB_URL)
+  mongoose.set('sanitizeFilter', true)
   console.log('資料庫連線成功')
 })
