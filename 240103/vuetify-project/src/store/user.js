@@ -13,6 +13,7 @@ export const useUserStore = defineStore('user', () => {
   const cart = ref(0)
   const role = ref(UserRole.USER)
 
+  // data 從哪來??
   const login = (data) => {
     if (data.token) {
       token.value = data.token

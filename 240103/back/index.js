@@ -19,8 +19,9 @@ app.use(cors({
   // origin: 請求的來源 (如果用postman, origin 會是 undefined, 後端的請求也是)
   // callback(錯誤, 是否允許)
   origin (origin, callback) {
+    console.log('origin', origin)
     // 允許postman/後端, github, localhost發送請求
-    if (origin === undefined || origin.includes('github') || origin.includes('localhost')) {
+    if (origin === undefined || origin.includes('github') || origin.includes('localhost') || origin.includes('192.168') || origin.includes('devtunnels.ms')) {
       callback(null, true)
     } else {
       callback(new Error('CORS'), false)

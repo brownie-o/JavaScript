@@ -47,9 +47,9 @@ const schema = new Schema({
   timestamps: true
 })
 
-// 資料驗證完後，進資料庫之前 執行function
+// 資料驗證完後，進資料庫之前 執行function (加密)
 // 新增資料或使用 .save() 語法時會執行
-// next 繼續執行下一步: 新增進資料庫
+// next 繼續執行下一步: 保存/新增進資料庫
 schema.pre('save', function (next) {
   // this 代表準備要被儲存的資料
   const user = this

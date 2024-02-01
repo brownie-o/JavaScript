@@ -41,7 +41,7 @@ export const create = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    // jwt.sign(保存的資料, SECRET, 設定)
+    // jwt.sign(保存的資料, SECRET, 設定) 寫簽JWT時的設定
     const token = jwt.sign(
       { _id: req.user._id.toString() },
       process.env.JWT_SECRET,
