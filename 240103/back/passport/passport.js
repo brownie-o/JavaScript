@@ -42,6 +42,7 @@ passport.use('jwt', new passportJWT.Strategy({
   ignoreExpiration: true
   // payload = 解譯出來的資料
 }, async (req, payload, done) => {
+  // 成功驗證使用者這次請求的JWT後就會進來
   try {
     // payload.exp = JWT解譯出來的過期的日期 = 從1970到現在過了幾秒 (所以要*1000)
     // JS的 .getTime = 從1970到現在過了幾毫秒

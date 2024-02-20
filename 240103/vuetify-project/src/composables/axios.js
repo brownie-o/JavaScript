@@ -7,11 +7,11 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_API
 })
 
-// 攔截器
 const apiAuth = axios.create({
   baseURL: import.meta.env.VITE_API
 })
 
+// 攔截器
 // 1. 呼叫axios.get / axios.post 時
 // 2. interceptors.request 請求攔截器
 // 3. 送出請求

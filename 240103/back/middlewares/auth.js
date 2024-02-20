@@ -40,7 +40,7 @@ export const jwt = (req, res, next) => {
       if (info instanceof jsonwebtoken.JsonWebTokenError) {
         console.log(error)
         // JWT 格式不對、SECRET 不對
-        // 不用判斷是否過期 一定是JWT無效才會來這裡
+        // passport.js 已經忽略過期(ignoreExpiration: true) 不用判斷是否過期 一定是JWT無效才會來這裡
         res.status(StatusCodes.UNAUTHORIZED).json({
           success: false,
           message: 'JWT 無效'

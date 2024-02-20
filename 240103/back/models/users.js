@@ -5,7 +5,7 @@ import UserRole from '../enums/UserRole.js'
 
 const cartSchema = new Schema({
   product: {
-    type: ObjectId,
+    type: ObjectId, // 為什麼要是objectId
     ref: 'products',
     required: [true, '缺少商品欄位']
   },
