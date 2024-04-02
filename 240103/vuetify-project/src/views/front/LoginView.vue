@@ -82,7 +82,7 @@ const submit = handleSubmit(async (values) => {
       snackbarProps: {
         timeout: 2000,
         color: 'green',
-        loaction: 'bottom'
+        location: 'bottom'
       }
     })
     router.push('/')

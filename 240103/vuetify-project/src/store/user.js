@@ -13,7 +13,7 @@ export const useUserStore = defineStore('user', () => {
   const cart = ref(0)
   const role = ref(UserRole.USER)
 
-  // data login function呼叫時回傳的data (LoginView.vue 登入時) <=back/contorllers/users.js的 login data.result
+  // data login function呼叫時回傳的data (LoginView.vue 登入時) <=back/controllers/users.js的 login data.result
   const login = (data) => {
     if (data.token) {
       token.value = data.token

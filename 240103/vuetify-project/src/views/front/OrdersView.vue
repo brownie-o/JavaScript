@@ -40,6 +40,7 @@ const headers = [
 onMounted(async () => {
   try {
     const { data } = await apiAuth.get('/orders')
+    console.log(data.result)
     orders.value.push(...data.result)
   } catch (error) {
     console.log(error)

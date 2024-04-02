@@ -51,9 +51,10 @@ export const create = async (req, res) => {
   }
 }
 
+// 取得自己的訂單
 export const get = async (req, res) => {
   try {
-    const result = await orders.find().populate('user', 'account').populate('cart.product')
+    const result = await orders.find({ user: req.user._id }).populate('cart.product')
     res.status(StatusCodes.OK).json({
       success: true,
       message: '',
@@ -67,6 +68,7 @@ export const get = async (req, res) => {
   }
 }
 
+// 取全部訂單
 export const getAll = async (req, res) => {
   try {
     const result = await orders.find().populate('user', 'account').populate('cart.product')
